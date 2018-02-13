@@ -1,1 +1,1 @@
-# This is a test for git
+# G-Shock is king
