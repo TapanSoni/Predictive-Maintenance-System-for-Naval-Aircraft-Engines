@@ -1,0 +1,2 @@
+This is a test
+Testing Git Integration for PyCharm
