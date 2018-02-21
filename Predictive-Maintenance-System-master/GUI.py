@@ -2,7 +2,11 @@
 from tkinter import *
 from tkinter import filedialog
 
-
+"""
+This is the browsefile() function. It is activated when the 
+user presses the button "Browse" and it brings up the File
+Explorer where the user can select the source file
+"""
 def browsefile():
     window.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
     print(window.fileName)
