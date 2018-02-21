@@ -1,3 +1,38 @@
+"""
+-----------------------------------------------------------------------------
+Rowan Computer Science Dept Spring 2018 Software Engineering Team Ostriches
+Predictive Maintenance System for ASRC Federal Mission Solutions Engineering
+
+Team Ostriches Members:
+Product Owner:  Craig Wert
+Scrum Master:   John Stranahan
+Developer:      Tapan Soni
+Developer:      Michael Matthews
+Developer:      Joshua Jackson
+Developer:      Nicholas La Sala
+
+-----------------------------------------------------------------------------
+
+Description:
+This is the graphical user interface for the Predictive Maintenance System.
+It has an input field for the source file (.csv) file, and a run button
+which runs the source file through the predictive algorithm and then
+it prints out either a "Yes" or a "No" in the output console window.
+"Yes" if the aircraft engine needs maintenance, and "No", if the aircraft
+engine doesn't need maintenance.
+
+-----------------------------------------------------------------------------
+
+Manual:
+To use this program, launch the program. Next, use the browse button, by
+clicking on it, to select the source file. It has to be a .csv file. After
+that, click the run button, and then the program will do some magic behind
+the scenes, and output either a "Yes" for yes - the engine needs maintenance,
+or "No" for no - the engine doesn't need maintenance.
+
+-----------------------------------------------------------------------------
+"""
+
 # Imports
 from tkinter import *
 from tkinter import filedialog
