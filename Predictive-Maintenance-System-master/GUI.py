@@ -76,30 +76,207 @@
 #
 # root.mainloop()
 
-import tkinter as tk
 
-window = tk.Tk()
-window.geometry("400x400")  # size of the window
-window.title("Predictive Maintenance System")  # title of the window -- Predictive Maintenence System
+# label_1 = Label(window, text="Name")
+# label_2 = Label(window, text="Password")
+#
+# entry_1 = Entry(window)
+# entry_2 = Entry(window)
+#
+# label_1.grid(row=0, sticky=E) # Text prompt - stick parameter is right aligned or left aligned -- Takes param as N E S W
+# label_2.grid(row=1, sticky=E) # Text prompt
+#
+# entry_1.grid(row=0, column=1) # Text entry
+# entry_2.grid(row=1, column=1)# Text entry
+#
+# checkBox = Checkbutton(window, text="Keep me logged in")
+# checkBox.grid(columnspan=2, sticky=W)
+#
+# window.mainloop()
 
-# Label
-title = tk.Label(text="Predictive Maintenance System", font=("Inconsolta", 18))
-title.grid(column=1, row=0)
+# def printName(event):
+#     print("Hello this is Darth Vader")
+#
+#
+# # command -- param that says that when the button is clicked call this function - in this case, it's printName
+# button_1 = Button(window, text="Print name")
+# # <Button-1> is left mouse click
+# button_1.bind("<Button-1>", printName) # Takes 2 param - 1) What event you are waiting on to occur, and 2) what function you want to call when that happens
+# button_1.pack()
+#
+# window.mainloop()
 
-# Entry field
-output1_field = tk.Text(master=window, height=1, width=40)
-output1_field.grid(column=1, row=4)
+#
+# def leftClick(event):
+#     print("Left")
+#
+#
+# def rightClick(event):
+#     print("Right")
+#
+#
+# def midClick(event):
+#     print("Middle")
+#
+#
+# frame = Frame(window, width=350, height=400)
+# frame.bind("<Button-1>", leftClick)
+# frame.bind("<Button-2>", midClick)
+# frame.bind("<Button-3>", rightClick)
+#
+# frame.grid()
 
-# File browse button this upload CSV file
-fileButton = tk.Button(text="Browse", bg="yellow")
-fileButton.grid(column=2, row=4)
 
-# File Run button this will run the application
-fileButton_2 = tk.Button(text="Run", bg="green")
-fileButton_2.grid(column=1, row=8)
+# class SWENGButtons:
+#
+#     def __init__(self, master):
+#         frame = Frame(master)
+#         frame.pack()
+#
+#         self.printButton = Button(frame, text="Print message", command=self.printMessage)
+#         self.printButton.pack(side=LEFT)
+#
+#         self.quitButton = Button(frame, text="Quit", command=frame.quit)
+#         self.quitButton.pack(side=LEFT)
+#
+#     def printMessage(self):
+#         print("WOW! This works!")
+#
+#
+# window = tk.Tk()
+# someObject = SWENGButtons(window)
+# window.mainloop()
 
-# Output field
-output2_field = tk.Text(master=window, height=10, width=30)
-output2_field.grid(column=1, row=16)
+
+# import tkinter as tk
+# from tkinter.filedialog import *
+# from tkinter import *
+#
+# class GUI:
+#
+#     def __init__(self, masterWindow):
+#         masterWindow.geometry("400x400")
+#         masterWindow.title("Predictive Maintenance System")
+#
+#         # Everything will be added to the frame
+#         frame = Frame(masterWindow)
+#         frame.pack()
+#
+#         # GUI for asking for a file
+#         self.getFileNameButton = Button(frame, text="Browse", side=LEFT, command=self.getFileInput)
+#         self.getFileNameButton.grid(row=0, column=0, sticky=E)
+#
+#     def getFileInput(self):
+#         self.directory = askdirectory()
+#         print(self.directory)
+#
+#
+# masterWindow = tk.Tk()
+# someObject = GUI(masterWindow)
+# masterWindow.mainloop()
+
+
+# window = tk.Tk()
+# window.geometry("400x300")  # size of the window
+# window.title("Predictive Maintenance System")  # title of the window -- Predictive Maintenence System
+#
+# # Label
+# title = tk.Label(text="Predictive Maintenance System", font=("Inconsolta", 18))
+# title.grid(column=1, row=0)
+#
+# # Entry field
+# output1_field = tk.Text(master=window, height=1, width=40)
+# output1_field.grid(column=1, row=4)
+#
+# # File browse button this upload CSV file
+# fileButton = tk.Button(text="Browse", bg="yellow")
+# fileButton.grid(column=2, row=4)
+#
+#
+# # File Run button this will run the application
+# fileButton_2 = tk.Button(text="Run", bg="green")
+# fileButton_2.grid(column=1, row=8)
+#
+# # Output field
+# output2_field = tk.Text(master=window, height=10, width=30)
+# output2_field.grid(column=1, row=16)
+#
+# window.mainloop()
+
+from tkinter import *
+from tkinter import filedialog
+
+window = Tk()
+
+
+def browseFile():
+    window.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
+    print(window.fileName)
+    fileNameDisplay.config(text=window.fileName)
+
+
+# Window configurations
+
+window.geometry("350x150")
+window.title("Predictive Maintenance System")
+window.config(background="#EEF4EB")
+
+# Entry field for the file
+fileNamePrompt = Label(window, text="Input file")
+
+# Entry field for output field
+outputConsolePrompt = Label(window, text="Maintenance Needed (Yes or No)")
+
+# File name entry window
+fileNameDisplay = Label(window, bg="white", width="30")
+
+# File name browse button
+fileNameBrowseButton = Button(window, text="Browse", command=browseFile)
+fileNameBrowseButton.config(background="#EDDEA4")
+
+# Run button
+runButton = Button(window, text="Run")
+runButton.config(background="#79FF6D")
+
+# Output console
+outputConsole = Label(window, bg="white", width="30")
+
+# Fake labels
+fake_1 = Label(window)
+fake_2 = Label(window)
+
+fake_1.config(background="#EEF4EB")
+fake_2.config(background="#EEF4EB")
+
+# Gridding the widgets in the window using grid
+
+fileNamePrompt.grid(row=0, column=0, sticky=NSEW)
+
+fileNameDisplay.grid(row=0, column=1, sticky=NSEW)
+
+fileNameBrowseButton.grid(row=0, column=2, sticky=NSEW)
+
+fake_1.grid(row=1, sticky=NSEW)
+
+runButton.grid(row=2, column=1, sticky=NSEW)
+
+fake_2.grid(row=3, sticky=NSEW)
+
+outputConsolePrompt.grid(row=4, column=1, sticky=NSEW)
+
+outputConsole.grid(row=5, column=1, sticky=NSEW)
+
+# The widgets will fill with the parent
+
+window.grid_rowconfigure(0, weight=1)
+window.grid_rowconfigure(1, weight=1)
+window.grid_rowconfigure(2, weight=1)
+window.grid_rowconfigure(3, weight=1)
+window.grid_rowconfigure(4, weight=1)
+window.grid_rowconfigure(5, weight=1)
+
+window.grid_columnconfigure(0, weight=1)
+window.grid_columnconfigure(1, weight=1)
+window.grid_columnconfigure(2, weight=1)
 
 window.mainloop()
