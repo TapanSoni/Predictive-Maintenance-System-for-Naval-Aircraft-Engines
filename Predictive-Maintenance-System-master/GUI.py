@@ -1,5 +1,6 @@
 """
 -----------------------------------------------------------------------------
+
 Rowan Computer Science Dept Spring 2018 Software Engineering Team Ostriches
 Predictive Maintenance System for ASRC Federal Mission Solutions Engineering
 
@@ -92,19 +93,12 @@ fake_2.config(background="#EEF4EB")
 
 # Giving position to the widgets and telling them to fill the area if resized
 fileNamePrompt.grid(row=0, column=0, sticky=NSEW)
-
 fileNameDisplay.grid(row=0, column=1, sticky=NSEW)
-
 fileNameBrowseButton.grid(row=0, column=2, sticky=NSEW)
-
 fake_1.grid(row=1, sticky=NSEW)
-
 runButton.grid(row=2, column=1, sticky=NSEW)
-
 fake_2.grid(row=3, sticky=NSEW)
-
 outputConsolePrompt.grid(row=4, column=1, sticky=NSEW)
-
 outputConsole.grid(row=5, column=1, sticky=NSEW)
 
 # The widgets will fill with the parent
@@ -120,3 +114,5 @@ window.grid_columnconfigure(1, weight=1)
 window.grid_columnconfigure(2, weight=1)
 
 window.mainloop()
+
+# END GUI.py
