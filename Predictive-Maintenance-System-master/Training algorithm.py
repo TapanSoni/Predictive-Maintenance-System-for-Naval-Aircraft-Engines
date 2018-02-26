@@ -15,15 +15,21 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
-test="test for git";
 #need to field from the csv file.
 # need fields for clasifcation algorithm
 
-#test array 1
-X = np.array([[-1, -1], [-2, -1], [1, 1], [2, 1]])
-#test array 2
-y = np.array([1, 1, 2, 2])
+#test array 1 represent the training data
+X = np.array([[0], [1], [2], [3]])
+#test array 2 represents the tags
+y = np.array([0,0,1,1])
+#test valdation set
+v= np.array([[2,1],[3,0],[5,1],[6,1],[9,0]])
 #classifier
-clf = SVC();
+clf = KNeighborsClassifier(n_neighbors=3);
 #training classfier with both arrays
+
+#weighted desired score
+dscore =.07;
+
 clf.fit(X, y)
+clf.score(X,y,[dscore]);
