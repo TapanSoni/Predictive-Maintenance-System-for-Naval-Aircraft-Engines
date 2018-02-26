@@ -34,11 +34,11 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis;
 
 
 
-#test array 1 represent the training data
+#test array 1 represent the training data, sample
 X = np.array([[0], [1], [2], [3],[4],[5],[6],[8],[9]]);
-#test array 2 represents the tags
+#target values, sample
 y = np.array([1,1,0,0,1,0,0,1,1]);
-#test valdation set, not used yet
+#test valdation set, not used yet, might not be needed
 v= np.array([[2,1],[3,0],[5,1],[6,1],[9,0],[5,1],[4,0]]);
 #classifier initilized
 clf = KNeighborsClassifier(n_neighbors=9);
