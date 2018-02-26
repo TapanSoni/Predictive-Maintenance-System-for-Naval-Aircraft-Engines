@@ -1,3 +1,7 @@
+#version 1.0
+
+#install numpy, scipy, scikit to workspace
+
 import sklearn;
 import numpy;
 from sklearn import svm;
@@ -39,8 +43,8 @@ dscore =[.7,[9]];
 #fits sample data sets to classifier
 clf.fit(X, y);
 
-#sample prediction
-print(clf.predict([[2]]))
+#sample prediction, results not always as predicated
+print(clf.predict([[2.5]]))
 
 print(clf.predict_proba([[0.5]]))
 #not working scoring
