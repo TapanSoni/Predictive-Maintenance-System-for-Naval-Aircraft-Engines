@@ -6,11 +6,11 @@ Predictive Maintenance System for ASRC Federal Mission Solutions Engineering
 
 Team Ostriches Members:
 Product Owner:  Craig Wert
-Scrum Master:   John Stranahan
-Developer:      Tapan Soni
-Developer:      Michael Matthews
-Developer:      Joshua Jackson
-Developer:      Nicholas La Sala
+ Scrum Master:  John Stranahan
+    Developer:  Tapan Soni
+    Developer:  Michael Matthews
+    Developer:  Joshua Jackson
+    Developer:  Nicholas La Sala
 
 -----------------------------------------------------------------------------
 
@@ -53,8 +53,7 @@ def browsefile():
 window = Tk()
 
 # Changed the icon to the Rowan University Logo
-window.iconbitmap(
-    r'C:\Users\Tapan\PycharmProjects\SoftwareEngineeringFinalProject\Predictive-Maintenance-System-master\RowanLogo.ico')
+window.iconbitmap(r'RowanLogo.ico')
 
 # Window configurations
 window.geometry("370x300")
