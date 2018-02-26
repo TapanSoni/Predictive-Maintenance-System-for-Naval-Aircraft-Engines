@@ -27,8 +27,10 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis;
 
 #need to use data split
 
-test1 = open('dataSpeed1.csv',"rb")
-reader1 = csv.reader(test1)
+
+#unable to find .csv path issue probably
+#test1 = open('dataSpeed1.csv',"rb")
+#reader1 = csv.reader(test1)
 
 
 
