@@ -1,26 +1,35 @@
 #install numpy, scipy, scikit to workspace
 
+import csv
+import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+#imports we will use
+
 import sklearn;
 import numpy;
 from sklearn import svm;
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
-import numpy as np
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import NearestNeighbors
+
+#imports we probably won't use
+
 from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import make_moons, make_circles, make_classification
 from sklearn.neural_network import MLPClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.neighbors import NearestNeighbors
 from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis;
 
 
-#takes CSV not functional
-#T.get_param([CSV])
+#need to use data split
+
+test1 = open('dataSpeed1.csv',"rb")
+reader1 = csv.reader(test1)
+
 
 
 #test array 1 represent the training data
@@ -44,3 +53,7 @@ print(clf.predict([[2.5]]))
 print(clf.predict_proba([[0.5]]))
 #not working scoring
 #print(clf.score(X,y,[dscore]));
+
+
+#serialize object, not sure what needs to be added or how to use it
+clf.pickle
