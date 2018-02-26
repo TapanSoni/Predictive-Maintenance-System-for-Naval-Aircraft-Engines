@@ -41,7 +41,7 @@ y = np.array([1,1,0,0,1,0,0,1,1]);
 #test valdation set, not used yet, might not be needed
 v= np.array([[2,1],[3,0],[5,1],[6,1],[9,0],[5,1],[4,0]]);
 #classifier initilized
-clf = KNeighborsClassifier(n_neighbors=9);
+clf = KNeighborsClassifier(n_neighbors=3);
 
 #weighted score, tracks accuracy
 dscore =[.7,[9]];
@@ -50,7 +50,7 @@ dscore =[.7,[9]];
 clf.fit(X, y);
 
 #sample prediction, results not always as predicated
-print(clf.predict([[2.5]]))
+print(clf.predict([[1.5]]))
 #Shows probability of 0 and 1.
 print(clf.predict_proba([[0.5]]))
 #not working scoring
@@ -58,4 +58,4 @@ print(clf.predict_proba([[0.5]]))
 
 
 #serialize object, not sure what needs to be added or how to use it
-clf.pickle
+#clf.pickle
