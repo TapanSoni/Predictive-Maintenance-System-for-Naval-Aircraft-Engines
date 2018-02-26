@@ -18,32 +18,29 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis;
 
-#need to field from the csv file.
-# need fields for clasifcation algorithm
 
-#test array 1 represent the training data
-
-#take CSV not functional
+#takes CSV not functional
 #T.get_param([CSV])
 
+
+#test array 1 represent the training data
 X = np.array([[0], [1], [2], [3],[4],[5],[6],[8],[9]]);
 #test array 2 represents the tags
 y = np.array([1,1,0,0,1,0,0,1,1]);
-#test valdation set
+#test valdation set, not used yet
 v= np.array([[2,1],[3,0],[5,1],[6,1],[9,0],[5,1],[4,0]]);
-#classifier
+#classifier initilized
 clf = KNeighborsClassifier(n_neighbors=9);
-#training classfier with both arrays
 
-#weighted desired score
+#weighted score, tracks accuracy
 dscore =[.7,[9]];
 
-#fits sample data sets to classifier
+#fits sample data sets to classifier, trains classifier
 clf.fit(X, y);
 
 #sample prediction, results not always as predicated
 print(clf.predict([[2.5]]))
-
+#Shows probability of 0 and 1.
 print(clf.predict_proba([[0.5]]))
 #not working scoring
 #print(clf.score(X,y,[dscore]));
