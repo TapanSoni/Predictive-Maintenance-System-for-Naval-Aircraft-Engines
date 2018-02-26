@@ -50,9 +50,11 @@ dscore =[.7,[9]];
 clf.fit(X, y);
 
 #sample prediction, results not always as predicated
-print(clf.predict([[1.5]]))
-#Shows probability of 0 and 1.
-print(clf.predict_proba([[0.5]]))
+print(clf.predict([[0.5]]))
+
+#Shows probability of 0 and 1.  Not sure why it does not seem accurate
+print(clf.predict_proba([[0.9]]))
+
 #not working scoring
 #print(clf.score(X,y,[dscore]));
 
