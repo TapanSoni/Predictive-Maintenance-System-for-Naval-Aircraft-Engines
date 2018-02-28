@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import NearestNeighbors
-
+from sklearn.metrics import accuracy_score
 #imports we probably won't use
 
 from sklearn.preprocessing import StandardScaler
@@ -40,6 +40,7 @@ X = np.array([[0], [1], [2], [3],[4],[5],[6],[8],[9]]);
 y = np.array([1,1,0,0,1,0,0,1,1]);
 #test valdation set, not used yet, might not be needed
 v= np.array([[2,1],[3,0],[5,1],[6,1],[9,0],[5,1],[4,0]]);
+xtrain,xtest,ytrain,ytest= train_test_split(X,y,test_size=0.33, random_state=42)
 #classifier initilized
 clf = KNeighborsClassifier(n_neighbors=3);
 
@@ -49,14 +50,19 @@ dscore =[.7,[9]];
 #fits sample data sets to classifier, trains classifier
 clf.fit(X, y);
 
+def train(xtrain,ytrain):
+    return
+
 #sample prediction, results not always as predicated
-print(clf.predict([[0.5]]))
+prediction = clf.predict([[0.5],[2.5],[3.3]]);
+print(prediction)
 
 #Shows probability of 0 and 1.  Not sure why it does not seem accurate
 print(clf.predict_proba([[0.9]]))
 
 #not working scoring
-#print(clf.score(X,y,[dscore]));
+#score= clf.score(ytest, prediction)
+#print(score)
 
 
 #serialize object, not sure what needs to be added or how to use it
