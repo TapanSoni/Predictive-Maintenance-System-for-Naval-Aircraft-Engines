@@ -38,6 +38,7 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis;
 X = np.array([[0], [1], [2], [3],[4],[5],[6],[8],[9]]);
 #target values, sample
 y = np.array([1,1,0,0,1,0,0,1,1]);
+
 #test valdation set, not used yet, might not be needed
 v= np.array([[2,1],[3,0],[5,1],[6,1],[9,0],[5,1],[4,0]]);
 xtrain,xtest,ytrain,ytest= train_test_split(X,y,test_size=0.33, random_state=42)
@@ -56,13 +57,17 @@ def train(xtrain,ytrain):
 #sample prediction, results not always as predicated
 prediction = clf.predict([[0.5],[2.5],[3.3]]);
 print(prediction)
-
+print(ytest)
+prediction=prediction.reshape(-1,1)
+print(prediction)
+ytest=ytest.reshape(-1,1)
+print(ytest)
 #Shows probability of 0 and 1.  Not sure why it does not seem accurate
 print(clf.predict_proba([[0.9]]))
 
 #not working scoring
-#score= clf.score(ytest, prediction)
-#print(score)
+score= clf.score(ytest, prediction)
+print(score)
 
 
 #serialize object, not sure what needs to be added or how to use it
