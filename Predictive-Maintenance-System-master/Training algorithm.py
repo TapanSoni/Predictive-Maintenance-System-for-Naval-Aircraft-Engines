@@ -47,8 +47,11 @@ xtrain,xtest,ytrain,ytest= train_test_split(X,y,test_size=0.33, random_state=42)
 #classifier initilized
 clf = KNeighborsClassifier(n_neighbors=3);
 
+
 #weighted score, tracks accuracy
 dscore =[.7,[9]];
+
+
 
 #fits sample data sets to classifier, trains classifier
 neighbor = clf.fit(X, y);
@@ -74,6 +77,24 @@ print(score)
 
 #serialize object, not sure what needs to be added or how to use it
 #clf.pickle
+
+#SVM test,  might be a better shape for our problem
+
+#won't be worth is without support vectors.
+#The validation set could be support vectors
+print("test SVM")
+A= [[2,0],[1,1],[3,0]]
+b=[0,0,1]
+vector = svm.SVC()
+
+vector.fit(A,b)
+s=vector.support_vectors_
+print(vector.predict([[2,2]]))
+print(s)
+print("end svm")
+#End SVM
+
+
 
 
 
