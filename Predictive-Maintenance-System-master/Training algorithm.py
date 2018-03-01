@@ -79,9 +79,50 @@ print(score)
 
 #####################
 #Mike's section
+#length 589223
 whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
-max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
-whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+#max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
+#whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+
+print(whole_data_set.size/30)
+
+import plotly.plotly as py
+import plotly.graph_objs as go
+import matplotlib.pyplot as plt
+
+#print(np.random.randn(500))
+x = whole_data_set[:,0]
+#values = [go.Histogram(x=x)]
+#py.iplot(values, filename='test')
+
+plt.hist(x)
+plt.title("Column 1")
+plt.xlabel("Value")
+plt.ylabel("Frequency")
+
+fig = plt.gcf()
+
+plot_url = py.plot_mpl(fig, filename='testing&432')
+
+for column in range(0,30):
+    #column = 1
+    temp = whole_data_set[0][column]
+    temp_min = whole_data_set[0][column]
+
+    for x in range(1,589223):
+        current = whole_data_set[x][column]
+        if(current> temp):
+            temp = current
+        if(current< temp_min):
+            temp_min = current
+        #print(whole_data_set[x][1])
+
+    print('Max:',temp)
+    print('Min: ',temp_min)
+    #print(avg/(whole_data_set.size/30))
+    print('SD: ',np.std(whole_data_set[:,column]))
+    print('Var: ',np.var(whole_data_set[:,column]))
+    print('Avg: ',np.mean(whole_data_set[:,column]))
 
 trainingData_first_half = whole_data_set[:117844] #getting the first 20% of the data set
 trainingData_second_half = whole_data_set[589223-117844:589223] #getting the last 20% of the data set
@@ -97,6 +138,6 @@ data = numpy.concatenate((trainingData_first_half, trainingData_second_half), ax
 classy = KNeighborsClassifier(n_neighbors=1);
 classy = classy.fit(data, tags)
 
-for x in range(200000,205000):
-    print(classy.predict([whole_data_set[x]]))
+#for x in range(200000,205000):
+#    print(classy.predict([whole_data_set[x]]))
 
