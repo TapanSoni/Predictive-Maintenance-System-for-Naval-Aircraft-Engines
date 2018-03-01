@@ -51,7 +51,7 @@ clf = KNeighborsClassifier(n_neighbors=3);
 dscore =[.7,[9]];
 
 #fits sample data sets to classifier, trains classifier
-clf.fit(X, y);
+neighbor = clf.fit(X, y);
 
 def train(xtrain,ytrain):
     return
