@@ -72,3 +72,31 @@ print(score)
 
 #serialize object, not sure what needs to be added or how to use it
 #clf.pickle
+
+
+
+#####################
+#Mike's section
+whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
+
+trainingData_first_half = whole_data_set[:117844] #getting the first 20% of the data set
+trainingData_second_half = whole_data_set[589223-117844:589223] #getting the last 20% of the data set
+
+#tags_first_half = np.full((117844,1),0)
+#tags_second_half = np.full((117844,1),1)
+
+tags = []
+for i in range(0, 117844): #making the first half of the tagging array which will all be initilzed to '0'
+    tags.append(0)
+for i in range(0, 117844): #making the rest of the tagging array which will all be '1'
+    tags.append(1)
+
+data = numpy.concatenate((trainingData_first_half, trainingData_second_half), axis = 0) #concates the first 20% and last 20% of dataset
+
+classy = KNeighborsClassifier(n_neighbors=3);
+classy = classy.fit(data, tags)
+
+#an actual row from the dataset note that I manually inputed it, I trying to figure out a way of extracting rows from
+#the 'data' variable
+print(classy.predict([[7.1481,	21,	39248,	2678,	335.23,	335.23,	4.4812e+05,	117.27,	4.4812e+05,	117.27,	817.95,	9116.1,	0.86869,	47.291,	15.75,	685.13,	1.0361,	2.9983,	43.875,	0.18376,	1.9545,	0.18376,	1.9545,	4.1877e+05,	4.1877e+05,	1,	1,	1.0143,	0.99643,	0.98214]]))
+
