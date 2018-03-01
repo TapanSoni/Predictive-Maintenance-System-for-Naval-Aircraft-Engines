@@ -23,6 +23,8 @@ from sklearn.gaussian_process.kernels import RBF
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis;
+from sklearn import preprocessing
+
 
 
 #need to use data split
@@ -78,12 +80,11 @@ print(score)
 #####################
 #Mike's section
 whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
+max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
+whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 
 trainingData_first_half = whole_data_set[:117844] #getting the first 20% of the data set
 trainingData_second_half = whole_data_set[589223-117844:589223] #getting the last 20% of the data set
-
-#tags_first_half = np.full((117844,1),0)
-#tags_second_half = np.full((117844,1),1)
 
 tags = []
 for i in range(0, 117844): #making the first half of the tagging array which will all be initilzed to '0'
@@ -93,10 +94,9 @@ for i in range(0, 117844): #making the rest of the tagging array which will all 
 
 data = numpy.concatenate((trainingData_first_half, trainingData_second_half), axis = 0) #concates the first 20% and last 20% of dataset
 
-classy = KNeighborsClassifier(n_neighbors=3);
+classy = KNeighborsClassifier(n_neighbors=1);
 classy = classy.fit(data, tags)
 
-#an actual row from the dataset note that I manually inputed it, I trying to figure out a way of extracting rows from
-#the 'data' variable
-print(classy.predict([[7.1481,	21,	39248,	2678,	335.23,	335.23,	4.4812e+05,	117.27,	4.4812e+05,	117.27,	817.95,	9116.1,	0.86869,	47.291,	15.75,	685.13,	1.0361,	2.9983,	43.875,	0.18376,	1.9545,	0.18376,	1.9545,	4.1877e+05,	4.1877e+05,	1,	1,	1.0143,	0.99643,	0.98214]]))
+for x in range(200000,205000):
+    print(classy.predict([whole_data_set[x]]))
 
