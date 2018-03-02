@@ -94,27 +94,30 @@ print(s)
 print("end svm")
 #End SVM
 
-
-
-
+#####################
+#####################
 #####################
 #Mike's section
-#length 589223
+#Number of Rows in dataset 589223
+
 whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
 print("Imported Data")
+
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
 whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 print("Normalized Data")
-print(whole_data_set)
+
+####################
+#trying to make a histogram section
+"""
 import plotly.plotly as py
 import plotly.graph_objs as go
 import matplotlib.pyplot as plt
 
-#print(np.random.randn(500))
 x = whole_data_set[:,0]
 #values = [go.Histogram(x=x)]
 #py.iplot(values, filename='test')
-"""
+
 plt.hist(x)
 plt.title("Column 1")
 plt.xlabel("Value")
@@ -123,6 +126,10 @@ plt.ylabel("Frequency")
 fig = plt.gcf()
 
 plot_url = py.plot_mpl(fig, filename='testing&432')
+"""
+
+#####################
+#Trying to generate realistic random data section
 """
 #new_data = numpy.zeros(shape=(589223,30))
 
@@ -134,7 +141,6 @@ for column in range(0,30):
     flag = False
 
     for x in range(1,589223):
-        """
         current = whole_data_set[x][column]
         if(current> temp):
             temp = current
@@ -148,7 +154,7 @@ for column in range(0,30):
 
     if(flag==True):
         print('Column: ', column, '\n&olumn', column+1)
-    """
+        
     #for i in range(0,589223):
     #    new_data[i][column] = random.uniform(temp_min,temp)
 
@@ -157,17 +163,14 @@ for column in range(0,30):
     #print('Min: ',temp_min)
     #print(avg/(whole_data_set.size/30))
 
-"""
     print('Range: ', temp - temp_min)
     print('SD: ',np.std(whole_data_set[:,column]))
     print('Var: ',np.var(whole_data_set[:,column]))
     print('Avg: ',np.mean(whole_data_set[:,column]))
 """
 
-#print(whole_data_set.size/30)
-
-trainingData = whole_data_set[:412463] #getting the first 20% of the data set
-validationData = whole_data_set[412464:whole_data_set.size//30]
+trainingData = whole_data_set[:412463] #spliting the first 70% of the data set
+validationData = whole_data_set[412464:whole_data_set.size//30] #splitting the remaining 30%
 
 tags = []
 for i in range(0, 294616): #making the first half of the tagging array which will all be initilzed to '0'
@@ -175,15 +178,15 @@ for i in range(0, 294616): #making the first half of the tagging array which wil
 for i in range(0, 294616): #making the rest of the tagging array which will all be '1'
     tags.append(1)
 
-trainingTags = tags[:412463]
+trainingTags = tags[:412463] #splitting tags with same 70/30 ratio
 validationTags = tags[412464:whole_data_set.size//30]
 print("Generated Tags")
 
-index = 1
+neighbor = 1
 
-while index<100:
-    classy = KNeighborsClassifier(n_neighbors=index);
+while neighbor<100:
+    classy = KNeighborsClassifier(n_neighbors=neighbor);
     classy = classy.fit(trainingData, trainingTags) #change name of classy
-    print("Testing for Kneighbor:", index)
+    print("Testing for Kneighbor:", neighbor)
     print(classy.score(validationData,validationTags)) #how successful the test was
-    index += 2
+    neighbor += 2
