@@ -195,8 +195,53 @@ neighbor = 1
 #     print("Testing for Kneighbor:", neighbor)
 #     print(classy.score(validationData,validationTags)) #how successful the test was
 #     neighbor += 2
+from sklearn import tree
+from sklearn.linear_model import SGDClassifier
+from sklearn.externals.six import StringIO
+from IPython.display import Image
+from sklearn.tree import export_graphviz
+import pydotplus
+
+Decision Tree
+print("Decision Tree: ")
+Dclf = tree.DecisionTreeClassifier()
+Dclf = Dclf.fit(trainingData, trainingTags)
+
+index = 0
+
+yea = 0
+nah = 0
+
+while index < validationData.size/30:
+    if(Dclf.predict([validationData[index]]) == [0]):
+        nah += 1
+    else:
+        yea += 1
+    print(Dclf.predict([validationData[index]]))
+    index += 1
+print(Dclf.score(validationData,validationTags))
+print("yea: ", yea)
+print("nah: ", nah)
+
+#GradientBoostingClassifier
+from sklearn.datasets import make_hastie_10_2
+from sklearn.ensemble import GradientBoostingClassifier
+clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
+print(clf.score(validationData, validationTags))
 
 
+
+################
+#Trying to graph decision tree
+import graphviz
+
+# dot_data = StringIO()
+# export_graphviz(Dclf, out_file=dot_data, filled=True, rounded=True, special_characters=True)
+# graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
+# Image(graph.create_png())
+
+#dot_data = tree.export_graphviz(Dclf, out_file="test")
+#graph = graphviz.Source(dot_data)
 
 print("********* %s seconds *********" % (time.time() - start_time))
 # END TIMER -- DO ALL THE TESTING BEFORE
