@@ -182,11 +182,11 @@ trainingTags = tags[:412463] #splitting tags with same 70/30 ratio
 validationTags = tags[412464:whole_data_set.size//30]
 print("Generated Tags")
 
-neighbor = 1
+neighbor = -1
+classy = KNeighborsClassifier(n_neighbors=neighbor);
 
-while neighbor<100:
-    classy = KNeighborsClassifier(n_neighbors=neighbor);
-    classy = classy.fit(trainingData, trainingTags) #change name of classy
-    print("Testing for Kneighbor:", neighbor)
-    print(classy.score(validationData,validationTags)) #how successful the test was
-    neighbor += 2
+classy = classy.fit(trainingData, trainingTags) #change name of classy
+print("Testing for Kneighbor:", neighbor)
+print(classy.score(validationData,validationTags)) #how successful the test was
+neighbor += 2
+#while neighbor<100:
