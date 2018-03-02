@@ -8,6 +8,7 @@ from sklearn.neighbors import KNeighborsClassifier
 import random as random
 import sklearn;
 import numpy;
+import time
 from sklearn import svm;
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
@@ -100,6 +101,10 @@ print("end svm")
 #Mike's section
 #Number of Rows in dataset 589223
 
+# START TIMER -- DO THE TESTING AFTER THIS
+start_time = time.time()
+
+
 whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
 print("Imported Data")
 
@@ -184,9 +189,14 @@ print("Generated Tags")
 
 neighbor = 1
 
-while neighbor<100:
-    classy = KNeighborsClassifier(n_neighbors=neighbor);
-    classy = classy.fit(trainingData, trainingTags) #change name of classy
-    print("Testing for Kneighbor:", neighbor)
-    print(classy.score(validationData,validationTags)) #how successful the test was
-    neighbor += 2
+# while neighbor<100:
+#     classy = KNeighborsClassifier(n_neighbors=neighbor);
+#     classy = classy.fit(trainingData, trainingTags) #change name of classy
+#     print("Testing for Kneighbor:", neighbor)
+#     print(classy.score(validationData,validationTags)) #how successful the test was
+#     neighbor += 2
+
+
+
+print("********* %s seconds *********" % (time.time() - start_time))
+# END TIMER -- DO ALL THE TESTING BEFORE
