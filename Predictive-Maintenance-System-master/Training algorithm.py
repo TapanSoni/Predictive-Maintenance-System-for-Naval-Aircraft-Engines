@@ -36,7 +36,6 @@ from sklearn import preprocessing
 #reader1 = csv.reader(test1)
 
 
-
 #test array 1 represent the training data, sample
 X = np.array([[0], [1], [2], [3],[4],[5],[6],[8],[9]]);
 #target values, sample
@@ -44,7 +43,7 @@ y = np.array([1,1,0,0,1,0,0,1,1]);
 
 #test valdation set, not used yet, might not be needed
 v= np.array([[2,1],[3,0],[5,1],[6,1],[9,0],[5,1],[4,0]]);
-xtrain,xtest,ytrain,ytest= train_test_split(X,y,test_size=0.33, random_state=42)
+xtrain,xtest,ytrain,ytest= train_test_split(X,y,test_size=0.33, random_state=42) #M&M - I don't think we should use this function since it'll randomize the sequence of the data, we want to have it randomized but kept in chronological order
 #classifier initilized
 clf = KNeighborsClassifier(n_neighbors=3);
 
@@ -98,16 +97,15 @@ print("end svm")
 
 
 
-
 #####################
 #Mike's section
 #length 589223
 whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
-#max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
-#whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
-
-print(whole_data_set.size/30)
-
+print("Imported Data")
+max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
+whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+print("Normalized Data")
+print(whole_data_set)
 import plotly.plotly as py
 import plotly.graph_objs as go
 import matplotlib.pyplot as plt
@@ -126,7 +124,7 @@ fig = plt.gcf()
 
 plot_url = py.plot_mpl(fig, filename='testing&432')
 """
-new_data = numpy.zeros(shape=(589223,30))
+#new_data = numpy.zeros(shape=(589223,30))
 
 for column in range(0,30):
     #column = 1
@@ -151,8 +149,8 @@ for column in range(0,30):
     if(flag==True):
         print('Column: ', column, '\n&olumn', column+1)
     """
-    for i in range(0,589223):
-        new_data[i][column] = random.uniform(temp_min,temp)
+    #for i in range(0,589223):
+    #    new_data[i][column] = random.uniform(temp_min,temp)
 
 
     #print('Max:',temp)
@@ -166,27 +164,26 @@ for column in range(0,30):
     print('Avg: ',np.mean(whole_data_set[:,column]))
 """
 
+#print(whole_data_set.size/30)
 
-print(new_data.size/30)
-print(whole_data_set.size/30)
-
-data = numpy.concatenate((whole_data_set,new_data))
-print(data.size/30)
-
-trainingData_first_half = data[:117844] #getting the first 20% of the data set
-trainingData_second_half = data[(data.size//30)-117844:data.size//30] #getting the last 20% of the data set
+trainingData = whole_data_set[:412463] #getting the first 20% of the data set
+validationData = whole_data_set[412464:whole_data_set.size//30]
 
 tags = []
-for i in range(0, 117844): #making the first half of the tagging array which will all be initilzed to '0'
+for i in range(0, 294616): #making the first half of the tagging array which will all be initilzed to '0'
     tags.append(0)
-for i in range(0, 117844): #making the rest of the tagging array which will all be '1'
+for i in range(0, 294616): #making the rest of the tagging array which will all be '1'
     tags.append(1)
 
-data = numpy.concatenate((trainingData_first_half, trainingData_second_half), axis = 0) #concates the first 20% and last 20% of dataset
-print(data.size/30)
-classy = KNeighborsClassifier(n_neighbors=1);
-classy = classy.fit(data, tags) #change name of classy
+trainingTags = tags[:412463]
+validationTags = tags[412464:whole_data_set.size//30]
+print("Generated Tags")
 
-for x in range(500000,505000):
-    print(classy.predict([whole_data_set[x]]))
+index = 1
 
+while index<100:
+    classy = KNeighborsClassifier(n_neighbors=index);
+    classy = classy.fit(trainingData, trainingTags) #change name of classy
+    print("Testing for Kneighbor:", index)
+    print(classy.score(validationData,validationTags)) #how successful the test was
+    index += 2
