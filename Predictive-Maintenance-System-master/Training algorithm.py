@@ -5,6 +5,7 @@ import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 #imports we will use
 
+import random as random
 import sklearn;
 import numpy;
 from sklearn import svm;
@@ -94,7 +95,7 @@ import matplotlib.pyplot as plt
 x = whole_data_set[:,0]
 #values = [go.Histogram(x=x)]
 #py.iplot(values, filename='test')
-
+"""
 plt.hist(x)
 plt.title("Column 1")
 plt.xlabel("Value")
@@ -103,29 +104,56 @@ plt.ylabel("Frequency")
 fig = plt.gcf()
 
 plot_url = py.plot_mpl(fig, filename='testing&432')
+"""
+new_data = numpy.zeros(shape=(589223,30))
 
 for column in range(0,30):
     #column = 1
     temp = whole_data_set[0][column]
     temp_min = whole_data_set[0][column]
 
+    flag = False
+
     for x in range(1,589223):
+        """
         current = whole_data_set[x][column]
         if(current> temp):
             temp = current
         if(current< temp_min):
             temp_min = current
         #print(whole_data_set[x][1])
+        if(current==whole_data_set[(x+1)%589223][column]):
+            flag=True
+        else:
+            flag=False
 
-    print('Max:',temp)
-    print('Min: ',temp_min)
+    if(flag==True):
+        print('Column: ', column, '\n&olumn', column+1)
+    """
+    for i in range(0,589223):
+        new_data[i][column] = random.uniform(temp_min,temp)
+
+
+    #print('Max:',temp)
+    #print('Min: ',temp_min)
     #print(avg/(whole_data_set.size/30))
+
+"""
+    print('Range: ', temp - temp_min)
     print('SD: ',np.std(whole_data_set[:,column]))
     print('Var: ',np.var(whole_data_set[:,column]))
     print('Avg: ',np.mean(whole_data_set[:,column]))
+"""
 
-trainingData_first_half = whole_data_set[:117844] #getting the first 20% of the data set
-trainingData_second_half = whole_data_set[589223-117844:589223] #getting the last 20% of the data set
+
+print(new_data.size/30)
+print(whole_data_set.size/30)
+
+data = numpy.concatenate((whole_data_set,new_data))
+print(data.size/30)
+
+trainingData_first_half = data[:117844] #getting the first 20% of the data set
+trainingData_second_half = data[(data.size//30)-117844:data.size//30] #getting the last 20% of the data set
 
 tags = []
 for i in range(0, 117844): #making the first half of the tagging array which will all be initilzed to '0'
@@ -134,10 +162,10 @@ for i in range(0, 117844): #making the rest of the tagging array which will all 
     tags.append(1)
 
 data = numpy.concatenate((trainingData_first_half, trainingData_second_half), axis = 0) #concates the first 20% and last 20% of dataset
-
+print(data.size/30)
 classy = KNeighborsClassifier(n_neighbors=1);
-classy = classy.fit(data, tags)
+classy = classy.fit(data, tags) #change name of classy
 
-#for x in range(200000,205000):
-#    print(classy.predict([whole_data_set[x]]))
+for x in range(500000,505000):
+    print(classy.predict([whole_data_set[x]]))
 
