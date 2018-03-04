@@ -27,8 +27,6 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis;
 from sklearn import preprocessing
 
-
-
 #need to use data split
 
 
@@ -57,8 +55,6 @@ print(ytest)
 #weighted score, tracks accuracy
 dscore =[.7,[9]];
 
-
-
 #fits sample data sets to classifier, trains classifier
 neighbor = clf.fit(X, y);
 
@@ -79,7 +75,6 @@ print(clf.predict_proba([[0.9]]))
 #not working scoring
 score= clf.score(ytest, prediction)
 print(score)
-
 
 #serialize object, not sure what needs to be added or how to use it
 #clf.pickle
@@ -108,7 +103,6 @@ print("end svm")
 
 # START TIMER -- DO THE TESTING AFTER THIS
 start_time = time.time()
-
 
 whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
 print("Imported Data")
@@ -195,6 +189,9 @@ print("Generating New DATa")
     #possibly do somthing with averages and standard deviation
 
 #Todo: when generating new data feature that columns that were only ints in real data set will only be ints in generated data set
+#Todo: program can run more efficently by
+#    1.) parralizing reading of the dataset
+#    2.) exporting and importing generated random dataset, columns avgs. etc so it doesn't have to be everytime the progarm is run
 for x in range(0,30):
     row = []
     for y in range(0,589223):
@@ -298,9 +295,6 @@ clf = LinearSVC()
 clf.fit(trainingData, trainingTags)
 print(clf.score(validationData,validationTags))
 print(clf.decision_function(validationData))
-
-
-
 
 ################
 #Trying to graph decision tree
