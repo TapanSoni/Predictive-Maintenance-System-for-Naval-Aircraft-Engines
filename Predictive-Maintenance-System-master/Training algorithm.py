@@ -244,11 +244,12 @@ print("Generated Tags")
 print("Kneighbor:")
 neighbor = 1
 
+#Todo: Knearest neighbor is taken extremely long now that our datasize has double see if this can be imporved
 # while neighbor<100:
-classy = KNeighborsClassifier(n_neighbors=neighbor);
-classy = classy.fit(trainingData, trainingTags) #change name of classy
+#classy = KNeighborsClassifier(n_neighbors=neighbor);
+#classy = classy.fit(trainingData, trainingTags) #change name of classy
 #     print("Testing for Kneighbor:", neighbor)
-print(classy.score(validationData,validationTags)) #how successful the test was
+#print(classy.score(validationData,validationTags)) #how successful the test was
 #     neighbor += 2
 from sklearn import tree
 from sklearn.linear_model import SGDClassifier
