@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 trainingData = []
 trainingTags = []
@@ -31,6 +32,11 @@ def split(whole_data_set,tags, percentage):
         trainingTags.append(tags[indexsForTrainingData[index]])
         index += 1
 
+    # trainingData = np.asarray(trainingData)
+    # trainingTags = np.asarray(trainingTags)
+    # validationTags = np.asarray(validationTags)
+    # validationData = np.asarray(validationData)
+
 def getTrainingData():
     return trainingData
 
@@ -42,4 +48,8 @@ def getValidationData():
 
 def getValidationTags():
     return validationTags
+
+# def getData():
+#     return np.concatenate((trainingData,trainingTags,validationData,validationTags), axis=0)
+
 

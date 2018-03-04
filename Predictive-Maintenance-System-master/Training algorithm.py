@@ -27,6 +27,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis;
 from sklearn import preprocessing
 
+"""
 #need to use data split
 
 
@@ -94,7 +95,7 @@ print(vector.predict([[2,2]]))
 print(s)
 print("end svm")
 #End SVM
-
+"""
 #####################
 #####################
 #####################
@@ -148,12 +149,12 @@ min = findingMinAndMax.getMax()
 max = findingMinAndMax.getMin()
 
 import GenerateData as gen
-new_data_set = gen.generate(min,max)
+#new_data_set = gen.generate(min,max)
 print("Generated New DATa")
 
 #combines the old and new dataset in that order
 #Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
-whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
+#whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
 
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
 whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
@@ -166,7 +167,7 @@ print("Generated Tags")
 
 import SplitData as split
 
-split.split(whole_data_set,tags,.4)
+data = split.split(whole_data_set,tags,.4)
 
 trainingData = split.getTrainingData()
 trainingTags = split.getTrainingTags()
@@ -176,15 +177,11 @@ validationTags = split.getValidationTags()
 print("Split DATA")
 
 print("Kneighbor:")
-neighbor = 1
 
-#Todo: Knearest neighbor is taken extremely long now that our datasize has double see if this can be improved
-# while neighbor<100:
-#classy = KNeighborsClassifier(n_neighbors=neighbor);
-#classy = classy.fit(trainingData, trainingTags) #change name of classy
-#     print("Testing for Kneighbor:", neighbor)
-#print(classy.score(validationData,validationTags)) #how successful the test was
-#     neighbor += 2
+import KNeighbor as kneighbor
+
+kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
+
 from sklearn import tree
 from sklearn.linear_model import SGDClassifier
 from sklearn.externals.six import StringIO
