@@ -101,14 +101,15 @@ print("end svm")
 #Mike's section
 #Number of Rows in dataset 589223
 
+#Todo: Break up this file into each different type of classifier also data processing, generation
+
 # START TIMER -- DO THE TESTING AFTER THIS
 start_time = time.time()
 
 whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
 print("Imported Data")
 
-#max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
-#whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+
 print("Normalized Data")
 
 ####################
@@ -198,6 +199,8 @@ for x in range(0,30):
         new_data_set[y][x] = random.uniform(min[x], max[x])
 
 whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
+max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
+whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 
 tags = []
 for i in range(0, 824912): #making the first 70% of tags 0
@@ -292,9 +295,9 @@ from sklearn.svm import LinearSVC
 
 print("LinearSVC:")
 clf = LinearSVC()
-clf.fit(trainingData, trainingTags)
-print(clf.score(validationData,validationTags))
-print(clf.decision_function(validationData))
+#clf.fit(trainingData, trainingTags)
+#print(clf.score(validationData,validationTags))
+#print(clf.decision_function(validationData))
 
 ################
 #Trying to graph decision tree
