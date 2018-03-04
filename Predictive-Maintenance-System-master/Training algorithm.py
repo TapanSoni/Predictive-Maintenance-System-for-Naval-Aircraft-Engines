@@ -149,12 +149,12 @@ min = findingMinAndMax.getMax()
 max = findingMinAndMax.getMin()
 
 import GenerateData as gen
-new_data_set = gen.generate(min,max)
+#new_data_set = gen.generate(min,max)
 print("Generated New DATa")
 
 #combines the old and new dataset in that order
 #Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
-whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
+#whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
 
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
 whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
@@ -183,7 +183,7 @@ import KNeighbor as kneighbor
 
 import dtree as tree
 
-tree.classify(trainingData,trainingTags,validationData,validationTags)
+#tree.classify(trainingData,trainingTags,validationData,validationTags)
 
 from sklearn import tree
 from sklearn.linear_model import SGDClassifier
@@ -201,15 +201,10 @@ from sklearn.ensemble import GradientBoostingClassifier
 #clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
 #print(clf.score(validationData, validationTags))
 
-################
-#LinearSVC
-from sklearn.svm import LinearSVC
 
-print("LinearSVC:")
-clf = LinearSVC()
-#clf.fit(trainingData, trainingTags)
-#print(clf.score(validationData,validationTags))
-#print(clf.decision_function(validationData))
+import LinearSVC as linear
+
+linear.classify(trainingData,trainingTags,validationData,validationTags)
 
 ################
 #Trying to graph decision tree
