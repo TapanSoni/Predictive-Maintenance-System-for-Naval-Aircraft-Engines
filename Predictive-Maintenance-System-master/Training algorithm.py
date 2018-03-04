@@ -149,12 +149,12 @@ min = findingMinAndMax.getMax()
 max = findingMinAndMax.getMin()
 
 import GenerateData as gen
-#new_data_set = gen.generate(min,max)
+new_data_set = gen.generate(min,max)
 print("Generated New DATa")
 
 #combines the old and new dataset in that order
 #Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
-#whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
+whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
 
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
 whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
@@ -176,11 +176,14 @@ validationTags = split.getValidationTags()
 
 print("Split DATA")
 
-print("Kneighbor:")
 
 import KNeighbor as kneighbor
 
-kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
+#kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
+
+import dtree as tree
+
+tree.classify(trainingData,trainingTags,validationData,validationTags)
 
 from sklearn import tree
 from sklearn.linear_model import SGDClassifier
@@ -189,29 +192,6 @@ from IPython.display import Image
 from sklearn.tree import export_graphviz
 import pydotplus
 
-#Decision Tree
-print("Decision Tree: ")
-Dclf = tree.DecisionTreeClassifier()
-Dclf = Dclf.fit(trainingData, trainingTags)
-
-#index = 0
-
-#Comparing the predicting of 0 vs 1 for dtree
-"""
-yea = 0
-nah = 0
-
-# while index < validationData.size/30:
-#     if(Dclf.predict([validationData[index]]) == [0]):
-#         nah += 1
-#     else:
-#         yea += 1
-#     print(Dclf.predict([validationData[index]]))
-#     index += 1
-print("yea: ", yea)
-print("nah: ", nah)
-"""
-print(Dclf.score(validationData,validationTags))
 
 
 #GradientBoostingClassifier

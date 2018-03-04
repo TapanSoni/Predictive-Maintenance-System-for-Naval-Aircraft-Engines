@@ -3,6 +3,7 @@
 from sklearn.neighbors import KNeighborsClassifier
 
 def classify(neighbor,trainingData,trainingTags,validationData,validationTags):
+    print("Kneighbor:")
     classy = KNeighborsClassifier(n_neighbors=neighbor);
     classy = classy.fit(trainingData, trainingTags) #change name of classy
     print(classy.score(validationData,validationTags)) #how successful the test was
