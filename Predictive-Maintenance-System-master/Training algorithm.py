@@ -44,10 +44,15 @@ y = np.array([1,1,0,0,1,0,0,1,1]);
 
 #test valdation set, not used yet, might not be needed
 v= np.array([[2,1],[3,0],[5,1],[6,1],[9,0],[5,1],[4,0]]);
-xtrain,xtest,ytrain,ytest= train_test_split(X,y,test_size=0.33, random_state=42) #M&M - I don't think we should use this function since it'll randomize the sequence of the data, we want to have it randomized but kept in chronological order
+xtrain,xtest,ytrain,ytest= train_test_split(X,y,test_size=0.33, random_state=2, shuffle=False) #M&M - I don't think we should use this function since it'll randomize the sequence of the data, we want to have it randomized but kept in chronological order
 #classifier initilized
 clf = KNeighborsClassifier(n_neighbors=3);
 
+print("Will it blend?")
+print(xtrain)
+print(xtest)
+print(ytrain)
+print(ytest)
 
 #weighted score, tracks accuracy
 dscore =[.7,[9]];
@@ -174,17 +179,53 @@ for column in range(0,30):
     print('Avg: ',np.mean(whole_data_set[:,column]))
 """
 
-trainingData = whole_data_set[:412463] #spliting the first 70% of the data set
-validationData = whole_data_set[412464:whole_data_set.size//30] #splitting the remaining 30%
 
 tags = []
-for i in range(0, 294616): #making the first half of the tagging array which will all be initilzed to '0'
+for i in range(0, 294611): #making the first half of the tagging array which will all be initilzed to '0'
     tags.append(0)
-for i in range(0, 294616): #making the rest of the tagging array which will all be '1'
+for i in range(0, 294612): #making the rest of the tagging array which will all be '1'
     tags.append(1)
 
-trainingTags = tags[:412463] #splitting tags with same 70/30 ratio
-validationTags = tags[412464:whole_data_set.size//30]
+index = 0
+
+trainingData = []
+trainingTags = []
+validationData = []
+validationTags = []
+# print(whole_data_set.size//30)
+# print(len(tags))
+
+import math
+
+indexsForTrainingData = []
+
+#Randomly puts 40% of the data into valdation sequencly
+while index < whole_data_set.size//30 and (len(validationData)) < math.floor((whole_data_set.size//30)*.4): #change .4 to whichever percentage you'd like togo to valadation set
+    if(random.randint(0,1)==0):
+        validationData.append(whole_data_set[index])
+        validationTags.append(tags[index])
+    else:
+        indexsForTrainingData.append(index)
+        #validationData.append(whole_data_set[index])
+        #validationTags.append(tags[index])
+    index += 1
+
+while(index < whole_data_set.size//30):
+    indexsForTrainingData.append(index)
+    index += 1
+
+index = 0
+
+while index < len(indexsForTrainingData):
+    trainingData.append(whole_data_set[indexsForTrainingData[index]])
+    trainingTags.append(tags[indexsForTrainingData[index]])
+    index += 1
+
+# print(len(trainingData))
+# print(len(trainingTags))
+# #print(validationData.size//30)
+# print(len(validationTags))
+
 print("Generated Tags")
 
 neighbor = 1
@@ -202,7 +243,7 @@ from IPython.display import Image
 from sklearn.tree import export_graphviz
 import pydotplus
 
-Decision Tree
+#Decision Tree
 print("Decision Tree: ")
 Dclf = tree.DecisionTreeClassifier()
 Dclf = Dclf.fit(trainingData, trainingTags)
@@ -212,13 +253,13 @@ index = 0
 yea = 0
 nah = 0
 
-while index < validationData.size/30:
-    if(Dclf.predict([validationData[index]]) == [0]):
-        nah += 1
-    else:
-        yea += 1
-    print(Dclf.predict([validationData[index]]))
-    index += 1
+# while index < validationData.size/30:
+#     if(Dclf.predict([validationData[index]]) == [0]):
+#         nah += 1
+#     else:
+#         yea += 1
+#     print(Dclf.predict([validationData[index]]))
+#     index += 1
 print(Dclf.score(validationData,validationTags))
 print("yea: ", yea)
 print("nah: ", nah)
