@@ -138,52 +138,16 @@ plot_url = py.plot_mpl(fig, filename='testing&432')
 
 #new_data = numpy.zeros(shape=(589223,30))
 
-#goes through dataset looking for column averages, mins, maxs, and Standard Deviation
-#also it will tell you which columns have exactly the same data
+import FindMinAndMax as find
 
-min = []
-max = []
+findingMinAndMax = find.FindMinAndMax(whole_data_set)
+#Todo: Figure out a way to have the main method called automatically
+findingMinAndMax.main()
 
-for column in range(0,30):
-    #column = 1
-    temp = whole_data_set[0][column]
-    temp_min = whole_data_set[0][column]
-
-    flag = False
-
-    for x in range(1,589223):
-        current = whole_data_set[x][column]
-        if(current> temp):
-            temp = current
-        if(current< temp_min):
-            temp_min = current
-        #print(whole_data_set[x][1])
-        if(current==whole_data_set[(x+1)%589223][column]):
-            flag=True
-        else:
-            flag=False
-
-    if(flag==True):
-        print('Column: ', column, '\n&olumn', column+1)
-        
-    #for i in range(0,589223):
-    #    new_data[i][column] = random.uniform(temp_min,temp)
-
-    max.append(temp)
-    min.append(temp_min)
-    #print('Max:',temp)
-    #print('Min: ',temp_min)
-    #print(avg/(whole_data_set.size/30))
-
-    # print('Range: ', temp - temp_min)
-    # print('SD: ',np.std(whole_data_set[:,column]))
-    # print('Var: ',np.var(whole_data_set[:,column]))
-    # print('Avg: ',np.mean(whole_data_set[:,column]))
-
-new_data_set = np.zeros((589223,30))
+min = findingMinAndMax.getMax()
+max = findingMinAndMax.getMin()
 
 print("Generating New DATa")
-
 #Generates new data randomly based upon lower bound and maxium bound on actual data set
 #note this algorithm can be imporved in the followin ways
     #have stages of data that its based upon for the example since the engine is deterioting the frist 10% will look different than the second 10% etc.
@@ -193,6 +157,8 @@ print("Generating New DATa")
 #Todo: program can run more efficently by
 #    1.) parralizing reading of the dataset
 #    2.) exporting and importing generated random dataset, columns avgs. etc so it doesn't have to be everytime the progarm is run
+new_data_set = np.zeros((589223, 30))
+
 for x in range(0,30):
     row = []
     for y in range(0,589223):
