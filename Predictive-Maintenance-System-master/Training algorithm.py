@@ -110,6 +110,8 @@ start_time = time.time()
 import importCSV as read
 
 whole_data_set = read.readIn('/Users/MM/Downloads/data.txt')
+max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
+whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 
 print("Imported Data")
 
@@ -139,25 +141,8 @@ plot_url = py.plot_mpl(fig, filename='testing&432')
 
 #new_data = numpy.zeros(shape=(589223,30))
 
-import FindMinAndMax as find
-
-findingMinAndMax = find.FindMinAndMax(whole_data_set)
-#Todo: Figure out a way to have the main method called automatically
-findingMinAndMax.main()
-
-min = findingMinAndMax.getMax()
-max = findingMinAndMax.getMin()
-
-import GenerateData as gen
-#new_data_set = gen.generate(min,max)
 print("Generated New DATa")
 
-#combines the old and new dataset in that order
-#Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
-#whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
-
-max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
-whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 print("Normalized Data")
 
 import GenerateTags as tag
@@ -173,8 +158,26 @@ trainingData = split.getTrainingData()
 trainingTags = split.getTrainingTags()
 validationData = split.getValidationData()
 validationTags = split.getValidationTags()
-
 print("Split DATA")
+
+import FindMinAndMax as find
+
+findingMinAndMax = find.FindMinAndMax(trainingData)
+#Todo: Figure out a way to have the main method called automatically
+findingMinAndMax.main()
+
+min = findingMinAndMax.getMax()
+max = findingMinAndMax.getMin()
+
+import GenerateData as gen
+new_data_set = gen.generate(min,max,len(trainingData))
+
+newTags = tag.generate(.7,new_data_set.size//30)
+
+#combines the old and new dataset in that order
+#Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
+trainingData = np.concatenate((trainingData,new_data_set), axis = 0)
+trainingTags = np.concatenate((trainingTags,newTags), axis=0)
 
 
 import KNeighbor as kneighbor
@@ -183,7 +186,7 @@ import KNeighbor as kneighbor
 
 import dtree as tree
 
-#tree.classify(trainingData,trainingTags,validationData,validationTags)
+tree.classify(trainingData,trainingTags,validationData,validationTags)
 
 from sklearn import tree
 from sklearn.linear_model import SGDClassifier
@@ -192,8 +195,6 @@ from IPython.display import Image
 from sklearn.tree import export_graphviz
 import pydotplus
 
-
-
 #GradientBoostingClassifier
 from sklearn.datasets import make_hastie_10_2
 from sklearn.ensemble import GradientBoostingClassifier
@@ -201,10 +202,9 @@ from sklearn.ensemble import GradientBoostingClassifier
 #clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
 #print(clf.score(validationData, validationTags))
 
-
 import LinearSVC as linear
 
-linear.classify(trainingData,trainingTags,validationData,validationTags)
+#linear.classify(trainingData,trainingTags,validationData,validationTags)
 
 ################
 #Trying to graph decision tree

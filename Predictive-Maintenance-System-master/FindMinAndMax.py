@@ -20,13 +20,13 @@ class FindMinAndMax:
 
             flag = False
 
-            for x in range(1, 589223):
+            for x in range(1, len(self.data)):
                 current = self.data [x][column]
                 if (current > temp):
                     temp = current
                 if (current < temp_min):
                     temp_min = current
-                if (current == self.data [(x + 1) % 589223][column]):
+                if (current == self.data [(x + 1) % len(self.data)][column]):
                     flag = True
                 else:
                     flag = False

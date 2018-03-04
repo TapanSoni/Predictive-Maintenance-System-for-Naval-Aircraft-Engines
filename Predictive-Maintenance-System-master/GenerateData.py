@@ -10,12 +10,12 @@
 
 import numpy as np
 import random
-def generate(min, max):
-    new_data_set = np.zeros((589223, 30))
+def generate(min, max,size):
+    new_data_set = np.zeros((size, 30))
 
     for x in range(0,30):
         row = []
-        for y in range(0,589223):
+        for y in range(0,size):
             new_data_set[y][x] = random.uniform(min[x], max[x])
 
     return new_data_set
