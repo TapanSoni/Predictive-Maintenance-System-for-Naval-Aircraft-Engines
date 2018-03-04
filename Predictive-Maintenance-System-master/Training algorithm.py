@@ -113,8 +113,8 @@ start_time = time.time()
 whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
 print("Imported Data")
 
-max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
-whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+#max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
+#whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 print("Normalized Data")
 
 ####################
@@ -140,8 +140,14 @@ plot_url = py.plot_mpl(fig, filename='testing&432')
 
 #####################
 #Trying to generate realistic random data section
-"""
+
 #new_data = numpy.zeros(shape=(589223,30))
+
+#goes through dataset looking for column averages, mins, maxs, and Standard Deviation
+#also it will tell you which columns have exactly the same data
+
+min = []
+max = []
 
 for column in range(0,30):
     #column = 1
@@ -168,22 +174,38 @@ for column in range(0,30):
     #for i in range(0,589223):
     #    new_data[i][column] = random.uniform(temp_min,temp)
 
-
+    max.append(temp)
+    min.append(temp_min)
     #print('Max:',temp)
     #print('Min: ',temp_min)
     #print(avg/(whole_data_set.size/30))
 
-    print('Range: ', temp - temp_min)
-    print('SD: ',np.std(whole_data_set[:,column]))
-    print('Var: ',np.var(whole_data_set[:,column]))
-    print('Avg: ',np.mean(whole_data_set[:,column]))
-"""
+    # print('Range: ', temp - temp_min)
+    # print('SD: ',np.std(whole_data_set[:,column]))
+    # print('Var: ',np.var(whole_data_set[:,column]))
+    # print('Avg: ',np.mean(whole_data_set[:,column]))
 
+new_data_set = np.zeros((589223,30))
+
+print("Generating New DATa")
+
+#Generates new data randomly based upon lower bound and maxium bound on actual data set
+#note this algorithm can be imporved in the followin ways
+    #have stages of data that its based upon for the example since the engine is deterioting the frist 10% will look different than the second 10% etc.
+    #possibly do somthing with averages and standard deviation
+
+#Todo: when generating new data feature that columns that were only ints in real data set will only be ints in generated data set
+for x in range(0,30):
+    row = []
+    for y in range(0,589223):
+        new_data_set[y][x] = random.uniform(min[x], max[x])
+
+whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
 
 tags = []
-for i in range(0, 294611): #making the first half of the tagging array which will all be initilzed to '0'
+for i in range(0, 824912): #making the first 70% of tags 0
     tags.append(0)
-for i in range(0, 294612): #making the rest of the tagging array which will all be '1'
+for i in range(0, 353534): #making the rest of the tagging array which will all be '1'
     tags.append(1)
 
 index = 0
@@ -192,8 +214,6 @@ trainingData = []
 trainingTags = []
 validationData = []
 validationTags = []
-# print(whole_data_set.size//30)
-# print(len(tags))
 
 import math
 
@@ -206,8 +226,6 @@ while index < whole_data_set.size//30 and (len(validationData)) < math.floor((wh
         validationTags.append(tags[index])
     else:
         indexsForTrainingData.append(index)
-        #validationData.append(whole_data_set[index])
-        #validationTags.append(tags[index])
     index += 1
 
 while(index < whole_data_set.size//30):
@@ -221,20 +239,16 @@ while index < len(indexsForTrainingData):
     trainingTags.append(tags[indexsForTrainingData[index]])
     index += 1
 
-# print(len(trainingData))
-# print(len(trainingTags))
-# #print(validationData.size//30)
-# print(len(validationTags))
-
 print("Generated Tags")
 
+print("Kneighbor:")
 neighbor = 1
 
 # while neighbor<100:
-#     classy = KNeighborsClassifier(n_neighbors=neighbor);
-#     classy = classy.fit(trainingData, trainingTags) #change name of classy
+classy = KNeighborsClassifier(n_neighbors=neighbor);
+classy = classy.fit(trainingData, trainingTags) #change name of classy
 #     print("Testing for Kneighbor:", neighbor)
-#     print(classy.score(validationData,validationTags)) #how successful the test was
+print(classy.score(validationData,validationTags)) #how successful the test was
 #     neighbor += 2
 from sklearn import tree
 from sklearn.linear_model import SGDClassifier
@@ -248,8 +262,10 @@ print("Decision Tree: ")
 Dclf = tree.DecisionTreeClassifier()
 Dclf = Dclf.fit(trainingData, trainingTags)
 
-index = 0
+#index = 0
 
+#Comparing the predicting of 0 vs 1 for dtree
+"""
 yea = 0
 nah = 0
 
@@ -260,15 +276,29 @@ nah = 0
 #         yea += 1
 #     print(Dclf.predict([validationData[index]]))
 #     index += 1
-print(Dclf.score(validationData,validationTags))
 print("yea: ", yea)
 print("nah: ", nah)
+"""
+print(Dclf.score(validationData,validationTags))
+
 
 #GradientBoostingClassifier
 from sklearn.datasets import make_hastie_10_2
 from sklearn.ensemble import GradientBoostingClassifier
-clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
-print(clf.score(validationData, validationTags))
+#print("Gradient Boosting Classifier: ")
+#clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
+#print(clf.score(validationData, validationTags))
+
+################
+#LinearSVC
+from sklearn.svm import LinearSVC
+
+print("LinearSVC:")
+clf = LinearSVC()
+clf.fit(trainingData, trainingTags)
+print(clf.score(validationData,validationTags))
+print(clf.decision_function(validationData))
+
 
 
 
