@@ -151,17 +151,17 @@ import GenerateData as gen
 new_data_set = gen.generate(min,max)
 print("Generated New DATa")
 
+#combines the old and new dataset in that order
+#Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequencal order
 whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
 
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
 whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 print("Normalized Data")
 
-tags = []
-for i in range(0, 824912): #making the first 70% of tags 0
-    tags.append(0)
-for i in range(0, 353534): #making the rest of the tagging array which will all be '1'
-    tags.append(1)
+import GenerateTags as tag
+
+tags = tag.generate(.7, whole_data_set.size//30)
 
 index = 0
 
