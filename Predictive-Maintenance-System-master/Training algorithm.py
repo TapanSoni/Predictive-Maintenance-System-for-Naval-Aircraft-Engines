@@ -152,7 +152,7 @@ new_data_set = gen.generate(min,max)
 print("Generated New DATa")
 
 #combines the old and new dataset in that order
-#Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequencal order
+#Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
 whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
 
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
@@ -162,44 +162,23 @@ print("Normalized Data")
 import GenerateTags as tag
 
 tags = tag.generate(.7, whole_data_set.size//30)
-
-index = 0
-
-trainingData = []
-trainingTags = []
-validationData = []
-validationTags = []
-
-import math
-
-indexsForTrainingData = []
-
-#Randomly puts 40% of the data into valdation sequencly
-while index < whole_data_set.size//30 and (len(validationData)) < math.floor((whole_data_set.size//30)*.4): #change .4 to whichever percentage you'd like togo to valadation set
-    if(random.randint(0,1)==0):
-        validationData.append(whole_data_set[index])
-        validationTags.append(tags[index])
-    else:
-        indexsForTrainingData.append(index)
-    index += 1
-
-while(index < whole_data_set.size//30):
-    indexsForTrainingData.append(index)
-    index += 1
-
-index = 0
-
-while index < len(indexsForTrainingData):
-    trainingData.append(whole_data_set[indexsForTrainingData[index]])
-    trainingTags.append(tags[indexsForTrainingData[index]])
-    index += 1
-
 print("Generated Tags")
+
+import SplitData as split
+
+split.split(whole_data_set,tags,.4)
+
+trainingData = split.getTrainingData()
+trainingTags = split.getTrainingTags()
+validationData = split.getValidationData()
+validationTags = split.getValidationTags()
+
+print("Split DATA")
 
 print("Kneighbor:")
 neighbor = 1
 
-#Todo: Knearest neighbor is taken extremely long now that our datasize has double see if this can be imporved
+#Todo: Knearest neighbor is taken extremely long now that our datasize has double see if this can be improved
 # while neighbor<100:
 #classy = KNeighborsClassifier(n_neighbors=neighbor);
 #classy = classy.fit(trainingData, trainingTags) #change name of classy
