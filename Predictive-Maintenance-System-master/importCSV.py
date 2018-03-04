@@ -4,4 +4,5 @@
 
 import numpy as np
 
-whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
+def readIn(filePath):
+    return np.genfromtxt(filePath, delimiter='\t') #File path for file you'd like to import

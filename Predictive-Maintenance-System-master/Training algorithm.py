@@ -106,11 +106,11 @@ print("end svm")
 # START TIMER -- DO THE TESTING AFTER THIS
 start_time = time.time()
 
-whole_data_set = np.genfromtxt('/Users/MM/Downloads/data.txt', delimiter='\t') #File path for file you'd like to import
+import importCSV as read
+
+whole_data_set = read.readIn('/Users/MM/Downloads/data.txt')
+
 print("Imported Data")
-
-
-print("Normalized Data")
 
 ####################
 #trying to make a histogram section
@@ -199,8 +199,10 @@ for x in range(0,30):
         new_data_set[y][x] = random.uniform(min[x], max[x])
 
 whole_data_set = np.concatenate((whole_data_set,new_data_set), axis = 0)
+
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
 whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+print("Normalized Data")
 
 tags = []
 for i in range(0, 824912): #making the first 70% of tags 0
