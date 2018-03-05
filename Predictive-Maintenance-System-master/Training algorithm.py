@@ -110,6 +110,11 @@ start_time = time.time()
 import importCSV as read
 
 whole_data_set = read.readIn('/Users/MM/Downloads/data.txt')
+
+import matplotlib.pyplot as plt
+plt.hist(whole_data_set[0])
+plt.show()
+
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
 whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 
@@ -152,7 +157,7 @@ print("Generated Tags")
 
 import SplitData as split
 
-data = split.split(whole_data_set,tags,.4)
+data = split.split(whole_data_set,tags,.49)
 
 trainingData = split.getTrainingData()
 trainingTags = split.getTrainingTags()
