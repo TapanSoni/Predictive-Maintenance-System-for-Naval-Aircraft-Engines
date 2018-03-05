@@ -112,9 +112,15 @@ import importCSV as read
 whole_data_set = read.readIn('/Users/MM/Downloads/data.txt')
 
 import matplotlib.pyplot as plt
-plt.hist(whole_data_set[0])
+
+row = 1
+plt.hist(whole_data_set[row])
+plt.ylabel('# of Times')
+plt.xlabel('Row #: ' + str(row))
 plt.show()
 
+
+"""
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
 whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 
@@ -183,7 +189,7 @@ newTags = tag.generate(.7,new_data_set.size//30)
 #Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
 trainingData = np.concatenate((trainingData,new_data_set), axis = 0)
 trainingTags = np.concatenate((trainingTags,newTags), axis=0)
-
+"""
 
 import KNeighbor as kneighbor
 
@@ -191,7 +197,7 @@ import KNeighbor as kneighbor
 
 import dtree as tree
 
-tree.classify(trainingData,trainingTags,validationData,validationTags)
+#tree.classify(trainingData,trainingTags,validationData,validationTags)
 
 from sklearn import tree
 from sklearn.linear_model import SGDClassifier
