@@ -110,50 +110,39 @@ start_time = time.time()
 import importCSV as read
 
 whole_data_set = read.readIn('/Users/MM/Downloads/data.txt')
+print("Imported Data")
+
+
 
 import matplotlib.pyplot as plt
 
-row = 1
-plt.hist(whole_data_set[row])
-plt.ylabel('# of Times')
+# for row in range(15,30):
+#     plt.hist(whole_data_set[:,row])
+#     plt.ylabel('# of Times')
+#     plt.xlabel('Row #: ' + str(row))
+#     plt.savefig("row" + str(row) + ".png")
+#     print("Saved row: " + str(row))
+#     #del plt
+
+#plt.show()
+
+import sys
+
+row = int(sys.argv[1])
+
+print(type(row))
+
+plt.hist(whole_data_set[:,row])
+plt.ylabel('# of T= imes')
 plt.xlabel('Row #: ' + str(row))
-plt.show()
+plt.savefig("row" + str(row) + ".png")
+print("Saved row: " + str(row))
+
 
 
 """
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
 whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
-
-print("Imported Data")
-
-####################
-#trying to make a histogram section
-"""
-import plotly.plotly as py
-import plotly.graph_objs as go
-import matplotlib.pyplot as plt
-
-x = whole_data_set[:,0]
-#values = [go.Histogram(x=x)]
-#py.iplot(values, filename='test')
-
-plt.hist(x)
-plt.title("Column 1")
-plt.xlabel("Value")
-plt.ylabel("Frequency")
-
-fig = plt.gcf()
-
-plot_url = py.plot_mpl(fig, filename='testing&432')
-"""
-
-#####################
-#Trying to generate realistic random data section
-
-#new_data = numpy.zeros(shape=(589223,30))
-
-print("Generated New DATa")
-
 print("Normalized Data")
 
 import GenerateTags as tag
@@ -182,6 +171,7 @@ max = findingMinAndMax.getMin()
 
 import GenerateData as gen
 new_data_set = gen.generate(min,max,len(trainingData))
+print("Generated New DATa")
 
 newTags = tag.generate(.7,new_data_set.size//30)
 
