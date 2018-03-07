@@ -28,6 +28,10 @@ def split(whole_data_set,tags, percentage):
     index = 0
 
     while index < len(indexsForTrainingData):
+        # for I in range(0,len(validationData)):
+        #     if(np.array_equal(whole_data_set[indexsForTrainingData[index]], validationData[I])):
+        #         print("We've got serious overfitting going on!")
+        #     else:
         trainingData.append(whole_data_set[indexsForTrainingData[index]])
         trainingTags.append(tags[indexsForTrainingData[index]])
         index += 1
@@ -36,6 +40,17 @@ def split(whole_data_set,tags, percentage):
     # trainingTags = np.asarray(trainingTags)
     # validationTags = np.asarray(validationTags)
     # validationData = np.asarray(validationData)
+
+#todo: Figure out what percentge of the rows a exactlly the same
+    # for I in range(0,len(validationData)):
+    #     for Y in range(I, len(trainingData)):
+    #         if(np.array_equal(trainingData[Y], validationData[I])):
+    #             print("Overfit!")
+    #             print("Y: ", Y/len(trainingData))
+    #             print("I: ", I/len(validationData))
+    #             np.insert(trainingData, Y, validationData[I], 0)
+    #             np.delete(validationData, I, 0)
+
 
 def getTrainingData():
     return trainingData

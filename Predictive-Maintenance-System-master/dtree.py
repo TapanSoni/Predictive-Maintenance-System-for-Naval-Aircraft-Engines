@@ -25,3 +25,9 @@ def classify(trainingData,trainingTags,validationData,validationTags):
     print("nah: ", nah)
     """
     print(Dclf.score(validationData,validationTags))
+
+    tree.export_graphviz(Dclf,out_file = 'tree.dot')
+    import graphviz
+    dot_data = tree.export_graphviz(Dclf, out_file=None)
+    graph = graphviz.Source(dot_data)
+    graph.render("iris")

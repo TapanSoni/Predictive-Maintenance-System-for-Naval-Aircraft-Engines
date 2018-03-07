@@ -102,8 +102,6 @@ print("end svm")
 #Mike's section
 #Number of Rows in dataset 589223
 
-#Todo: Break up this file into each different type of classifier also data processing, generation
-
 # START TIMER -- DO THE TESTING AFTER THIS
 start_time = time.time()
 
@@ -112,8 +110,18 @@ import importCSV as read
 whole_data_set = read.readIn('/Users/MM/Downloads/data.txt')
 print("Imported Data")
 
+#print(whole_data_set.size//30 - len(set(whole_data_set)))
 
+#rows = 0
 
+# for I in range (0,whole_data_set.size//30):
+#     for Y in range (I, whole_data_set.size//30):
+#         if(I != Y and np.array_equal(whole_data_set[I],whole_data_set[Y])):
+#             print("equal row #: ", rows)
+#             rows += 1
+#             print("I:", I)
+
+print("Totally done")
 import matplotlib.pyplot as plt
 
 # for row in range(15,30):
@@ -128,19 +136,16 @@ import matplotlib.pyplot as plt
 
 import sys
 
-row = int(sys.argv[1])
+#row = int(sys.argv[1])
 
-print(type(row))
+# print(type(row))
+#
+# plt.hist(whole_data_set[:,row])
+# plt.ylabel('# of T= imes')
+# plt.xlabel('Row #: ' + str(row))
+# plt.savefig("row" + str(row) + ".png")
+# print("Saved row: " + str(row))
 
-plt.hist(whole_data_set[:,row])
-plt.ylabel('# of T= imes')
-plt.xlabel('Row #: ' + str(row))
-plt.savefig("row" + str(row) + ".png")
-print("Saved row: " + str(row))
-
-
-
-"""
 max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
 whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 print("Normalized Data")
@@ -152,7 +157,7 @@ print("Generated Tags")
 
 import SplitData as split
 
-data = split.split(whole_data_set,tags,.49)
+data = split.split(whole_data_set,tags,.1)
 
 trainingData = split.getTrainingData()
 trainingTags = split.getTrainingTags()
@@ -164,7 +169,7 @@ import FindMinAndMax as find
 
 findingMinAndMax = find.FindMinAndMax(trainingData)
 #Todo: Figure out a way to have the main method called automatically
-findingMinAndMax.main()
+#findingMinAndMax.main()
 
 min = findingMinAndMax.getMax()
 max = findingMinAndMax.getMin()
@@ -179,7 +184,22 @@ newTags = tag.generate(.7,new_data_set.size//30)
 #Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
 trainingData = np.concatenate((trainingData,new_data_set), axis = 0)
 trainingTags = np.concatenate((trainingTags,newTags), axis=0)
-"""
+
+from sklearn.neural_network import MLPClassifier
+
+#neural network
+# net = MLPClassifier(solver='lbfgs', shuffle=False,random_state=1, verbose=True)
+# net.fit(trainingData, trainingTags)
+# print(net.score(validationData,validationTags))
+
+#Naive Bayes
+from sklearn.naive_bayes import GaussianNB
+
+guas = GaussianNB()
+guas.fit(trainingData,trainingTags)
+print(guas.score(validationData,validationTags))
+
+
 
 import KNeighbor as kneighbor
 
