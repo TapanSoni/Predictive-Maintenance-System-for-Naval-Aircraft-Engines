@@ -41,7 +41,7 @@ def split(whole_data_set,tags, percentage):
     # validationTags = np.asarray(validationTags)
     # validationData = np.asarray(validationData)
 
-#todo: Figure out what percentge of the rows a exactlly the same
+# Figure out what percentge of the rows a exactlly the same
     # for I in range(0,len(validationData)):
     #     for Y in range(I, len(trainingData)):
     #         if(np.array_equal(trainingData[Y], validationData[I])):
@@ -66,5 +66,3 @@ def getValidationTags():
 
 # def getData():
 #     return np.concatenate((trainingData,trainingTags,validationData,validationTags), axis=0)
-
-

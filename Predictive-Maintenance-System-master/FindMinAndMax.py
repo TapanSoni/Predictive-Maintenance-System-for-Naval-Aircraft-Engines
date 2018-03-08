@@ -11,7 +11,6 @@ class FindMinAndMax:
     def __init__(self,data):
         self.data = data
         self.main()
-        #Todo: Is it possible to call the main function from within the construcotr????
 
     def main(self):
         for column in range(0, 30):

@@ -146,8 +146,8 @@ import sys
 # plt.savefig("row" + str(row) + ".png")
 # print("Saved row: " + str(row))
 
-max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
-whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+#max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
+#whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 print("Normalized Data")
 
 import GenerateTags as tag
@@ -168,8 +168,6 @@ print("Split DATA")
 import FindMinAndMax as find
 
 findingMinAndMax = find.FindMinAndMax(trainingData)
-#Todo: Figure out a way to have the main method called automatically
-#findingMinAndMax.main()
 
 min = findingMinAndMax.getMax()
 max = findingMinAndMax.getMin()
@@ -178,12 +176,40 @@ import GenerateData as gen
 new_data_set = gen.generate(min,max,len(trainingData))
 print("Generated New DATa")
 
+# row = int(sys.argv[1])
+#
+# print(type(row))
+#
+# plt.hist(new_data_set[:,row])
+# plt.ylabel('# of T= imes')
+# plt.xlabel('Row #: ' + str(row))
+# plt.savefig("generated row" + str(row) + ".png")
+# print("Saved row: " + str(row))
+
 newTags = tag.generate(.7,new_data_set.size//30)
 
 #combines the old and new dataset in that order
 #Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
 trainingData = np.concatenate((trainingData,new_data_set), axis = 0)
 trainingTags = np.concatenate((trainingTags,newTags), axis=0)
+
+# oldIndex = 0
+# newIndex = 0
+# newtrainingData = numpy.empty()
+# newtrainingTags = numpy.empty()
+#
+# while(oldIndex < len(trainingData) and newIndex < len(new_data_set)):
+#     if (oldIndex < len(trainingData) and random.randint(0, 1) == 0):
+#         newtrainingData.append(trainingData[oldIndex])
+#         newtrainingTags.append(trainingTags[oldIndex])
+#         oldIndex += 1
+#     else:
+#         newtrainingData.append(new_data_set[newIndex])
+#         newtrainingData.append(newTags[newIndex])
+#         newIndex += 1
+#
+
+
 
 from sklearn.neural_network import MLPClassifier
 

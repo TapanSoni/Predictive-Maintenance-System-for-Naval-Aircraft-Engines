@@ -1,4 +1,4 @@
-#Todo: Knearest neighbor is taken extremely long now that our datasize has double see if this can be improved
+# Knearest neighbor is taken extremely long now that our datasize has double see if this can be improved
 
 from sklearn.neighbors import KNeighborsClassifier
 
