@@ -32,110 +32,116 @@ def bandr():
     whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
     print("Data imported")
 
+    import GenerateTags as tag
 
+    tags = tag.generate(.7, whole_data_set.size // 30)
+    print("Generated Tags")
 
-    #Generate tags
-    for i in range (0, math.floor(.7 * (whole_data_set.size//30))):
-        tags.append(0)
-    for i in range(0, ((whole_data_set.size//30)) - math.floor(.7 * (whole_data_set.size//30))):
-        tags.append(1)
+    import SplitData as split
 
-    # Split the data
+    data = split.split(whole_data_set, tags, .1)
 
-    index = 0
-    while index < whole_data_set.size//30 and (len(validationData)) < math.floor(whole_data_set.size//30 * .1):
-        if(random.randint(0,1)==0):
-            validationData.append(whole_data_set[index])
-            validationTags.append(tags[index])
-        else:
-            indexesForTrainingData.append(index)
-        index += 1
+    trainingData = split.getTrainingData()
+    trainingTags = split.getTrainingTags()
+    validationData = split.getValidationData()
+    validationTags = split.getValidationTags()
+    print("Split DATA")
 
-    while (index < whole_data_set.size // 30):
-        indexesForTrainingData.append(index)
-        index += 1
+    import FindMinAndMax as find
 
-    index = 0
+    findingMinAndMax = find.FindMinAndMax(trainingData)
 
-    while index < len(indexesForTrainingData):
-        trainingData.append(whole_data_set[indexesForTrainingData[index]])
-        trainingTags.append(tags[indexesForTrainingData[index]])
-        index += 1
+    min = findingMinAndMax.getMax()
+    max = findingMinAndMax.getMin()
 
+    import GenerateData as gen
+    new_data_set = gen.generate(min, max, len(trainingData))
+    print("Generated New DATa")
 
-    # Find min and max
+    # row = int(sys.argv[1])
+    #
+    # print(type(row))
+    #
+    # plt.hist(new_data_set[:,row])
+    # plt.ylabel('# of T= imes')
+    # plt.xlabel('Row #: ' + str(row))
+    # plt.savefig("generated row" + str(row) + ".png")
+    # print("Saved row: " + str(row))
 
-    min = []
-    max = []
+    newTags = tag.generate(.7, new_data_set.size // 30)
 
-    for column in range(0, 30):
-        temp = trainingData[0][column]
-        temp_min = trainingData[0][column]
-
-        flag = False
-
-        for x in range(1, len(trainingData)):
-            current = trainingData[x][column]
-            if(current > temp):
-                temp = current
-            if(current < temp_min):
-                temp_min = current
-            if(current == trainingData[(x + 1) % len(trainingData)][column]):
-                flag = True
-            else:
-                flag = False
-
-
-        if(flag == True):
-            print('Column: ', column, '\ncolumn', column + 1)
-
-        max.append(temp)
-        min.append(temp_min)
-
-
-    # Generate Data
-
-    new_data_set = np.zeros((len(trainingData), 30))
-
-    for x in range(0, 30):
-        row = []
-
-        for y in range(0, len(trainingData)):
-            if (x == 0):
-                got_a_number = False
-                while (not got_a_number):
-                    number = random.uniform(min[x], max[x])
-                    if (not math.floor(number) == 5):
-                        got_a_number = True
-                        new_data_set[y][x] = number
-            else:
-                new_data_set[y][x] = random.uniform(min[x], max[x])
-
-
-    newTags = []
-
-    for i in range (0, math.floor(.7 * whole_data_set.size//30)):
-        newTags.append(0)
-    for i in range(0, (whole_data_set.size//30) - math.floor(.7 * whole_data_set.size//30)):
-        newTags.append(1)
-
-    trainingData = np.concatenate((trainingData, new_data_set), axis = 0)
+    # combines the old and new dataset in that order
+    # Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
+    trainingData = np.concatenate((trainingData, new_data_set), axis=0)
     trainingTags = np.concatenate((trainingTags, newTags), axis=0)
 
+    # oldIndex = 0
+    # newIndex = 0
+    # newtrainingData = numpy.empty()
+    # newtrainingTags = numpy.empty()
+    #
+    # while(oldIndex < len(trainingData) and newIndex < len(new_data_set)):
+    #     if (oldIndex < len(trainingData) and random.randint(0, 1) == 0):
+    #         newtrainingData.append(trainingData[oldIndex])
+    #         newtrainingTags.append(trainingTags[oldIndex])
+    #         oldIndex += 1
+    #     else:
+    #         newtrainingData.append(new_data_set[newIndex])
+    #         newtrainingData.append(newTags[newIndex])
+    #         newIndex += 1
+    #
+
+    from sklearn.neural_network import MLPClassifier
+
+    # neural network
+    # net = MLPClassifier(solver='lbfgs', shuffle=False,random_state=1, verbose=True)
+    # net.fit(trainingData, trainingTags)
+    # print(net.score(validationData,validationTags))
+
+    # Naive Bayes
     from sklearn.naive_bayes import GaussianNB
 
-    gaus = GaussianNB()
-    gaus.fit(trainingData, trainingTags)
-    print(gaus.score(validationData, validationTags))
+    guas = GaussianNB()
+    guas.fit(trainingData, trainingTags)
+    print(guas.score(validationData, validationTags))
 
-    # K-Neighbor
+    import KNeighbor as kneighbor
 
-    from sklearn.neighbors import KNeighborsClassifier
+    # kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
 
-    print("K-Neighbor")
-    classy = KNeighborsClassifier(n_neighbors=1)
-    classy = classy.fit(trainingData, trainingTags)
-    print(classy.score(validationData, validationTags))
+    import dtree as tree
+
+    # tree.classify(trainingData,trainingTags,validationData,validationTags)
+
+    from sklearn import tree
+    from sklearn.linear_model import SGDClassifier
+    from sklearn.externals.six import StringIO
+    from IPython.display import Image
+    from sklearn.tree import export_graphviz
+    import pydotplus
+
+    # GradientBoostingClassifier
+    from sklearn.datasets import make_hastie_10_2
+    from sklearn.ensemble import GradientBoostingClassifier
+    # print("Gradient Boosting Classifier: ")
+    # clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
+    # print(clf.score(validationData, validationTags))
+
+    import LinearSVC as linear
+
+    # linear.classify(trainingData,trainingTags,validationData,validationTags)
+
+    ################
+    # Trying to graph decision tree
+    import graphviz
+
+    # dot_data = StringIO()
+    # export_graphviz(Dclf, out_file=dot_data, filled=True, rounded=True, special_characters=True)
+    # graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
+    # Image(graph.create_png())
+
+    # dot_data = tree.export_graphviz(Dclf, out_file="test")
+    # graph = graphviz.Source(dot_data)
 
 
 anotherWindow = Tk()
