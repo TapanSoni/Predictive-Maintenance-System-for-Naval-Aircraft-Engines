@@ -103,8 +103,10 @@ def bandr():
 
     guas = GaussianNB()
     guas.fit(trainingData, trainingTags)
-    print(guas.score(validationData, validationTags))
+    percentagevariable = guas.score(validationData, validationTags)
+    #print(percentagevariable)
 
+    #anotherWindow.outputConsole.config(text=percentagevariable)
     import KNeighbor as kneighbor
 
     # kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
