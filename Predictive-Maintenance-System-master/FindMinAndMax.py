@@ -1,20 +1,17 @@
-#goes through dataset looking for column averages, mins, maxs, and Standard Deviation
-#also it will tell you which columns have exactly the same data
-
-import numpy as np
+#Goes through dataset looking for column averages, mins, maxs, and Standard Deviation
 
 min = []
 max = []
 
 class FindMinAndMax:
 
+    #The one parameter number for this function is the actual dataset
     def __init__(self,data):
         self.data = data
         self.main()
 
     def main(self):
         for column in range(0, 30):
-            # column = 1
             temp = self.data [0][column]
             temp_min = self.data [0][column]
 
@@ -26,13 +23,6 @@ class FindMinAndMax:
                     temp = current
                 if (current < temp_min):
                     temp_min = current
-                if (current == self.data [(x + 1) % len(self.data)][column]):
-                    flag = True
-                else:
-                    flag = False
-
-            if (flag == True):
-                print('Column: ', column, '\n&olumn', column + 1)
 
             max.append(temp)
             min.append(temp_min)

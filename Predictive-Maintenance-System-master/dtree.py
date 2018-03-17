@@ -2,7 +2,7 @@ from sklearn import tree
 
 #Decision Tree Classifier
 
-def classify(trainingData,trainingTags,validationData,validationTags):
+def classify(trainingData,trainingTags,validationData,validationTags,predict):
     print("Decision Tree: ")
     Dclf = tree.DecisionTreeClassifier()
     Dclf = Dclf.fit(trainingData, trainingTags)
@@ -25,6 +25,9 @@ def classify(trainingData,trainingTags,validationData,validationTags):
     print("nah: ", nah)
     """
     print(Dclf.score(validationData,validationTags))
+
+    return Dclf.predict(predict)
+
 
     # tree.export_graphviz(Dclf,out_file = 'tree.dot')
     # import graphviz

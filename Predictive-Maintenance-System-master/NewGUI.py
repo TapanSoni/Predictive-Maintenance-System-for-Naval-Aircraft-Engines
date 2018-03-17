@@ -6,20 +6,8 @@ import numpy as np
 import random
 import time
 
-def browsefile():
-    return np.genfromtxt(anotherWindow.fileName, delimiter='\t')
-
-def readIn():
-    whole_data_set = browsefile()
-    return whole_data_set
-
 def bandr():
-    tags = []
-    trainingData = []
-    trainingTags = []
-    validationData = []
-    validationTags = []
-    indexesForTrainingData = []
+    start_time = time.time()
 
     # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
@@ -27,18 +15,20 @@ def bandr():
     fileNameDisplay.config(text=anotherWindow.fileName)
 
     #Import data into to a multidimenional array
-    #Array
     whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
     print("Data imported")
 
     import GenerateTags as tag
 
+    #Generates an array filled with 0's & 1's
     tags = tag.generate(.7, whole_data_set.size // 30)
     print("Generated Tags")
 
+    #Splits the data into 2 sections training and validation
+    #Note that this is done for both tags and the actual data
     import SplitData as split
 
-    data = split.split(whole_data_set, tags, .1)
+    split.split(whole_data_set, tags, .1)
 
     trainingData = split.getTrainingData()
     trainingTags = split.getTrainingTags()
@@ -46,6 +36,7 @@ def bandr():
     validationTags = split.getValidationTags()
     print("Split DATA")
 
+    #Finds the minimum and maximum of each feature for the training set
     import FindMinAndMax as find
 
     findingMinAndMax = find.FindMinAndMax(trainingData)
@@ -53,10 +44,12 @@ def bandr():
     min = findingMinAndMax.getMax()
     max = findingMinAndMax.getMin()
 
+    #Generates new random data within the bounds of each feature
     import GenerateData as gen
     new_data_set = gen.generate(min, max, len(trainingData))
     print("Generated New Data")
 
+    #Generates new tags to go along with the new data
     newTags = tag.generate(.7, new_data_set.size // 30)
 
     # combines the old and new dataset in that order
@@ -64,26 +57,37 @@ def bandr():
     trainingData = np.concatenate((trainingData, new_data_set), axis=0)
     trainingTags = np.concatenate((trainingTags, newTags), axis=0)
 
+    #The prediction row is the last row of the whole data set that was removed from the file
+    #To see if the differnet classifiers would guess the the right tag (tag should be 1, with our current tagging scheme)
+    predictionRow = [[9.3,27,76935,3560.4,693.42,693.42,8.78470e+05,155.91,8.7847e+05,155.91,1061.8,9802.7,1.7843,89.865,
+                      22.883,771.02,1.0527,4.6245,90.136,0.21602,2.5985,0.21602,2.5985,8.4139e+05,8.4139e+05,1,1,1.2,1,1]]
+
+    timeForClassifier = time.time() #start timer for the classifier
+
     from sklearn.neural_network import MLPClassifier
 
-    # neural network
+    # neural network (note might not want to use generated data with neural net)
     # net = MLPClassifier(solver='lbfgs', shuffle=False,random_state=1, verbose=True)
     # net.fit(trainingData, trainingTags)
     # print(net.score(validationData,validationTags))
+    #
+    # percentageVariable = net.predict(predictionRow)
 
     # Naive Bayes
     from sklearn.naive_bayes import GaussianNB
 
-    guas = GaussianNB()
-    guas.fit(trainingData, trainingTags)
+    # guas = GaussianNB()
+    # guas.fit(trainingData, trainingTags)
+    # print(guas.score(validationData,validationTags))
+    # percentageVariable = guas.predict(predictionRow)
 
     import KNeighbor as kneighbor
 
-    # kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
+    percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
 
     import dtree as tree
 
-    # tree.classify(trainingData,trainingTags,validationData,validationTags)
+    # percentageVariable = tree.classify(trainingData,trainingTags,validationData,validationTags,predictionRow)
 
     from sklearn import tree
     from sklearn.linear_model import SGDClassifier
@@ -98,10 +102,25 @@ def bandr():
     # print("Gradient Boosting Classifier: ")
     # clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
     # print(clf.score(validationData, validationTags))
+    #
+    # percentageVariable = clf.predict(predictionRow)
 
     import LinearSVC as linear
 
-    # linear.classify(trainingData,trainingTags,validationData,validationTags)
+    #percentageVariable = linear.classify(trainingData,trainingTags,validationData,validationTags,predictionRow)
+
+    timeForClassifier = time.time() - timeForClassifier #end timer for classifier
+
+    if percentageVariable >.5:
+        outputConsole.config(text="No - Everything is OK")
+    else:
+        outputConsole.config(text="Yes - Maintenance needed")
+
+    totaltimeTaken = time.time() - start_time
+    print("********* %s seconds *********" % totaltimeTaken)
+    timestampC.config(text="Classifier Run Time: %s seconds" % timeForClassifier)
+    timestamp.config(text="  Total Time Elapsed: %s seconds" % totaltimeTaken)
+
 
 anotherWindow = Tk()
 
@@ -120,6 +139,8 @@ classifierConsole = Label(anotherWindow, bg="white", width="30")
 fake_1 = Label(anotherWindow)
 fake_2 = Label(anotherWindow)
 fake_3 = Label(anotherWindow)
+timestamp = Label(anotherWindow, bg = "#F0F0F0", width="30")
+timestampC = Label(anotherWindow, bg = "#F0F0F0", width="30")
 
 # Buttons
 fileNameBrowseButton = Button(anotherWindow, text="Browse", command=bandr)
@@ -143,6 +164,8 @@ fake_1.grid(row=1, sticky=NSEW)
 runButton.grid(row=2, column=1, sticky=NSEW)
 outputConsolePrompt.grid(row=3, column=1, sticky=NSEW)
 outputConsole.grid(row=4, column=1, sticky=NSEW)
+timestampC.grid(row=6, column=1, sticky=NSEW)
+timestamp.grid(row=7, column=1, sticky=NSEW)
 
 # The widgets will fill with the parent
 anotherWindow.grid_rowconfigure(0, weight=1)
