@@ -146,8 +146,8 @@ import sys
 # plt.savefig("row" + str(row) + ".png")
 # print("Saved row: " + str(row))
 
-#max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
-#whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
+whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
 print("Normalized Data")
 
 import GenerateTags as tag
@@ -193,6 +193,9 @@ newTags = tag.generate(.7,new_data_set.size//30)
 trainingData = np.concatenate((trainingData,new_data_set), axis = 0)
 trainingTags = np.concatenate((trainingTags,newTags), axis=0)
 
+#max_abs_scaler = preprocessing.MaxAbsScaler() #normalizes data
+#whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+
 # oldIndex = 0
 # newIndex = 0
 # newtrainingData = numpy.empty()
@@ -221,15 +224,15 @@ from sklearn.neural_network import MLPClassifier
 #Naive Bayes
 from sklearn.naive_bayes import GaussianNB
 
-guas = GaussianNB()
-guas.fit(trainingData,trainingTags)
-print(guas.score(validationData,validationTags))
+# guas = GaussianNB()
+# guas.fit(trainingData,trainingTags)
+# print(guas.score(validationData,validationTags))
 
 
 
 import KNeighbor as kneighbor
 
-#kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
+kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
 
 import dtree as tree
 

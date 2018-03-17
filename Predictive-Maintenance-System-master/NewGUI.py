@@ -7,16 +7,13 @@ import random
 import time
 
 def browsefile():
-
     return np.genfromtxt(anotherWindow.fileName, delimiter='\t')
-
 
 def readIn():
     whole_data_set = browsefile()
     return whole_data_set
 
 def bandr():
-
     tags = []
     trainingData = []
     trainingTags = []
@@ -24,11 +21,13 @@ def bandr():
     validationTags = []
     indexesForTrainingData = []
 
-
     # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
     print(anotherWindow.fileName)
     fileNameDisplay.config(text=anotherWindow.fileName)
+
+    #Import data into to a multidimenional array
+    #Array
     whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
     print("Data imported")
 
@@ -56,17 +55,7 @@ def bandr():
 
     import GenerateData as gen
     new_data_set = gen.generate(min, max, len(trainingData))
-    print("Generated New DATa")
-
-    # row = int(sys.argv[1])
-    #
-    # print(type(row))
-    #
-    # plt.hist(new_data_set[:,row])
-    # plt.ylabel('# of T= imes')
-    # plt.xlabel('Row #: ' + str(row))
-    # plt.savefig("generated row" + str(row) + ".png")
-    # print("Saved row: " + str(row))
+    print("Generated New Data")
 
     newTags = tag.generate(.7, new_data_set.size // 30)
 
@@ -74,22 +63,6 @@ def bandr():
     # Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
     trainingData = np.concatenate((trainingData, new_data_set), axis=0)
     trainingTags = np.concatenate((trainingTags, newTags), axis=0)
-
-    # oldIndex = 0
-    # newIndex = 0
-    # newtrainingData = numpy.empty()
-    # newtrainingTags = numpy.empty()
-    #
-    # while(oldIndex < len(trainingData) and newIndex < len(new_data_set)):
-    #     if (oldIndex < len(trainingData) and random.randint(0, 1) == 0):
-    #         newtrainingData.append(trainingData[oldIndex])
-    #         newtrainingTags.append(trainingTags[oldIndex])
-    #         oldIndex += 1
-    #     else:
-    #         newtrainingData.append(new_data_set[newIndex])
-    #         newtrainingData.append(newTags[newIndex])
-    #         newIndex += 1
-    #
 
     from sklearn.neural_network import MLPClassifier
 
@@ -103,10 +76,7 @@ def bandr():
 
     guas = GaussianNB()
     guas.fit(trainingData, trainingTags)
-    percentagevariable = guas.score(validationData, validationTags)
-    #print(percentagevariable)
 
-    #anotherWindow.outputConsole.config(text=percentagevariable)
     import KNeighbor as kneighbor
 
     # kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
@@ -132,19 +102,6 @@ def bandr():
     import LinearSVC as linear
 
     # linear.classify(trainingData,trainingTags,validationData,validationTags)
-
-    ################
-    # Trying to graph decision tree
-    import graphviz
-
-    # dot_data = StringIO()
-    # export_graphviz(Dclf, out_file=dot_data, filled=True, rounded=True, special_characters=True)
-    # graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
-    # Image(graph.create_png())
-
-    # dot_data = tree.export_graphviz(Dclf, out_file="test")
-    # graph = graphviz.Source(dot_data)
-
 
 anotherWindow = Tk()
 
@@ -205,4 +162,3 @@ anotherWindow.grid_columnconfigure(1, weight=1)
 anotherWindow.grid_columnconfigure(2, weight=1)
 
 anotherWindow.mainloop()
-
