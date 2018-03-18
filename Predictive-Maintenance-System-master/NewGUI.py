@@ -5,6 +5,7 @@ import math
 import numpy as np
 import random
 import time
+import pickle
 
 def bandr():
     start_time = time.time()
@@ -120,6 +121,9 @@ def bandr():
     print("********* %s seconds *********" % totaltimeTaken)
     timestampC.config(text="Classifier Run Time: %s seconds" % timeForClassifier)
     timestamp.config(text="  Total Time Elapsed: %s seconds" % totaltimeTaken)
+
+    pickledObject = pickle.dumps(kneighbor.classify(1, trainingData, trainingTags, validationData, validationTags))
+
 
 
 anotherWindow = Tk()

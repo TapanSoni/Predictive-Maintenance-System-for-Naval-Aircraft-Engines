@@ -31,6 +31,8 @@ that, click the run button, and then the program will do some magic behind
 the scenes, and output either a "Yes" for yes - the engine needs maintenance,
 or "No" for no - the engine doesn't need maintenance.
 
+Last Edit: 3/10/18 by Tapan Soni
+
 -----------------------------------------------------------------------------
 """
 
@@ -38,13 +40,16 @@ or "No" for no - the engine doesn't need maintenance.
 from tkinter import *
 from tkinter import filedialog
 
+selection = -1
+runClicked = 0
+
 """
 This is the browsefile() function. It is activated when the 
 user presses the button "Browse" and it brings up the File
 Explorer where the user can select the source file
 """
 def browsefile():
-    window.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
+    window.fileName = filedialog.askopenfilename(filetypes=( ("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
     print(window.fileName)
     fileNameDisplay.config(text=window.fileName)
 
@@ -54,6 +59,8 @@ def clickKN():
     dt.config(bg="#F0F0F0")
     lsvc.config(bg="#F0F0F0")
     classifierConsole.config(text="K-Nearest Neighbor SELECTED")
+    selection = 1
+    print(selection)
 
 
 def clickDT():
@@ -61,6 +68,8 @@ def clickDT():
     dt.config(bg="orange")
     lsvc.config(bg="#F0F0F0")
     classifierConsole.config(text="Decision Tree SELECTED")
+    selection = 2
+    print(selection)
 
 
 def clickLSVC():
@@ -68,6 +77,13 @@ def clickLSVC():
     dt.config(bg="#F0F0F0")
     lsvc.config(bg="orange")
     classifierConsole.config(text="Linear SVC SELECTED")
+    selection = 3
+    print(selection)
+
+
+def clickRun():
+    runClicked = 1
+    print(runClicked)
 
 
 # Creating the main window
@@ -93,7 +109,7 @@ fileNameDisplay = Label(window, bg="white", width="30")
 fileNameBrowseButton = Button(window, text="Browse", command=browsefile)
 
 # Run button
-runButton = Button(window, text="Run")
+runButton = Button(window, text="Run", command=clickRun)
 
 # Output console
 outputConsole = Label(window, bg="white", width="30")
@@ -162,8 +178,6 @@ window.grid_rowconfigure(10, weight=1)
 window.grid_columnconfigure(0, weight=1)
 window.grid_columnconfigure(1, weight=1)
 window.grid_columnconfigure(2, weight=1)
-
-
 
 window.mainloop()
 
