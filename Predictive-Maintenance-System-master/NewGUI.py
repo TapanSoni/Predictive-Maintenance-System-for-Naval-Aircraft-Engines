@@ -122,12 +122,18 @@ def bandr():
     timestampC.config(text="Classifier Run Time: %s seconds" % timeForClassifier)
     timestamp.config(text="  Total Time Elapsed: %s seconds" % totaltimeTaken)
 
-    pickledObject = pickle.dumps(kneighbor.classify(1, trainingData, trainingTags, validationData, validationTags))
+    # Pickling the classifier
+    fileToStore = "testfile"
+
+    fileObject = open(fileToStore, 'wb')
+
+    pickle.dump(kneighbor.classify(1, trainingData, trainingTags, validationData, validationTags, new_data_set), fileObject)
+
+    fileObject.close()
 
 
 
 anotherWindow = Tk()
-
 
 anotherWindow.iconbitmap(r'RowanLogo.ico')
 anotherWindow.geometry("370x200")
@@ -137,8 +143,8 @@ fileNamePrompt = Label(anotherWindow, text="Source")
 outputConsolePrompt = Label(anotherWindow, text="Maintenance Needed (Yes or No)")
 
 # Labels for output or showing selections
-fileNameDisplay = Label(anotherWindow, bg="white", width="30") # Where the source file will be shown
-outputConsole = Label(anotherWindow, bg="white", width="30") # For the output
+fileNameDisplay = Label(anotherWindow, bg="white", width="30")  # Where the source file will be shown
+outputConsole = Label(anotherWindow, bg="white", width="30")  # For the output
 classifierConsole = Label(anotherWindow, bg="white", width="30")
 fake_1 = Label(anotherWindow)
 fake_2 = Label(anotherWindow)
@@ -147,27 +153,28 @@ timestamp = Label(anotherWindow, bg = "#F0F0F0", width="30")
 timestampC = Label(anotherWindow, bg = "#F0F0F0", width="30")
 
 # Buttons
-fileNameBrowseButton = Button(anotherWindow, text="Browse", command=bandr)
+# fileNameBrowseButton = Button(anotherWindow, text="Browse", command=bandr)
 
-runButton = Button(anotherWindow, text="Run")
+runButton = Button(anotherWindow, text="Browse & Run", command=bandr)
 
 # Configurations of the widgets
 fileNamePrompt.config(font="fixedsys 9")
 outputConsolePrompt.config(font="fixedsys 9")
-fileNameBrowseButton.config(background="#EDDEA4", font="fixedsys 9")
+# fileNameBrowseButton.config(background="#EDDEA4", font="fixedsys 9")
 runButton.config(background="#79FF6D", font="fixedsys 9")
 fake_1.config(background="#EEF4EB")
 fake_2.config(background="#EEF4EB")
 anotherWindow.config(background="#EEF4EB")
 
+
 # Giving position to the widgets and telling them to fill the area if resized
-fileNamePrompt.grid(row=0, column=0, sticky=NSEW)
-fileNameDisplay.grid(row=0, column=1, sticky=NSEW)
-fileNameBrowseButton.grid(row=0, column=2, sticky=NSEW)
+fileNamePrompt.grid(row=0, column=1, sticky=NSEW)
+fileNameDisplay.grid(row=1, column=1, sticky=NSEW)
+# fileNameBrowseButton.grid(row=0, column=2, sticky=NSEW)
 fake_1.grid(row=1, sticky=NSEW)
-runButton.grid(row=2, column=1, sticky=NSEW)
-outputConsolePrompt.grid(row=3, column=1, sticky=NSEW)
-outputConsole.grid(row=4, column=1, sticky=NSEW)
+runButton.grid(row=3, column=1, sticky=NSEW)
+outputConsolePrompt.grid(row=4, column=1, sticky=NSEW)
+outputConsole.grid(row=5, column=1, sticky=NSEW)
 timestampC.grid(row=6, column=1, sticky=NSEW)
 timestamp.grid(row=7, column=1, sticky=NSEW)
 
