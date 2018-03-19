@@ -35,6 +35,4 @@ def generate(min, max,size):
             else:
                 new_data_set[y][x] = random.uniform(min[x], max[x])
 
-    max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
-    new_data_set = max_abs_scaler.fit_transform(new_data_set)
-    return new_data_set
+     return new_data_set

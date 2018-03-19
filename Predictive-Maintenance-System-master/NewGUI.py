@@ -130,7 +130,6 @@ def bandr():
     print("********* %s seconds *********" % totaltimeTaken)
     timestampC.config(text="Classifier Run Time: %s seconds" % timeForClassifier)
     timestamp.config(text="  Total Time Elapsed: %s seconds" % totaltimeTaken)
-
     # Pickling the classifier
     # fileToStore = "testfile"
     #
@@ -139,8 +138,6 @@ def bandr():
     # pickle.dump(kneighbor.classify(1, trainingData, trainingTags, validationData, validationTags, new_data_set), fileObject)
     #
     # fileObject.close()
-
-
 
 anotherWindow = Tk()
 
@@ -174,7 +171,6 @@ runButton.config(background="#79FF6D", font="fixedsys 9")
 fake_1.config(background="#EEF4EB")
 fake_2.config(background="#EEF4EB")
 anotherWindow.config(background="#EEF4EB")
-
 
 # Giving position to the widgets and telling them to fill the area if resized
 fileNamePrompt.grid(row=0, column=1, sticky=NSEW)
