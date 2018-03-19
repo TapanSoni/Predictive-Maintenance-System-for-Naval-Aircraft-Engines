@@ -12,7 +12,7 @@ def bandr():
     start_time = time.time()
 
     tagPercentage = .7
-    valPercentage = .7
+    valPercentage = .3
 
     # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
@@ -68,8 +68,11 @@ def bandr():
 
     #The prediction row is the last row of the whole data set that was removed from the file
     #To see if the differnet classifiers would guess the the right tag (tag should be 1, with our current tagging scheme)
-    predictionRow = [[9.3,27,76935,3560.4,693.42,693.42,8.78470e+05,155.91,8.7847e+05,155.91,1061.8,9802.7,1.7843,89.865,
-                      22.883,771.02,1.0527,4.6245,90.136,0.21602,2.5985,0.21602,2.5985,8.4139e+05,8.4139e+05,1,1,1.2,1,1]]
+    predictionRow = [[ 0.88235484,0.88888889,0.66007962,0.86468924,0.70113635,0.70113635
+    ,0.65998294,0.86466262,0.65998294,0.86466262,0.79052779,0.94375827
+    ,0.60797992,0.5966,0.78434617,0.91454678,0.99136213,0.7804214
+    ,0.60791774,0.93109982,0.86464809,0.93109982,0.86464809,0.65393367
+    ,0.65393367,1.,0.90909091,1.,1.,1.]]
 
     timeForClassifier = time.time() #start timer for the classifier
 
@@ -92,11 +95,10 @@ def bandr():
 
     import KNeighbor as kneighbor
 
-    #percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
-
+    percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
     import dtree as tree
 
-    # percentageVariable = tree.classify(trainingData,trainingTags,validationData,validationTags,predictionRow)
+    #percentageVariable = tree.classify(trainingData,trainingTags,validationData,validationTags,predictionRow)
 
     from sklearn import tree
     from sklearn.linear_model import SGDClassifier
@@ -107,12 +109,11 @@ def bandr():
 
     # GradientBoostingClassifier
     from sklearn.datasets import make_hastie_10_2
-    from sklearn.ensemble import GradientBoostingClassifier
-    print("Gradient Boosting Classifier: ")
-    clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
-    print(clf.score(validationData, validationTags))
-
-    percentageVariable = clf.predict(predictionRow)
+    # from sklearn.ensemble import GradientBoostingClassifier
+    # print("Gradient Boosting Classifier: ")
+    # clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
+    # print(clf.score(validationData, validationTags))
+    # percentageVariable = clf.predict(predictionRow)
 
     import LinearSVC as linear
 
@@ -131,13 +132,13 @@ def bandr():
     timestamp.config(text="  Total Time Elapsed: %s seconds" % totaltimeTaken)
 
     # Pickling the classifier
-    fileToStore = "testfile"
-
-    fileObject = open(fileToStore, 'wb')
-
-    pickle.dump(kneighbor.classify(1, trainingData, trainingTags, validationData, validationTags, new_data_set), fileObject)
-
-    fileObject.close()
+    # fileToStore = "testfile"
+    #
+    # fileObject = open(fileToStore, 'wb')
+    #
+    # pickle.dump(kneighbor.classify(1, trainingData, trainingTags, validationData, validationTags, new_data_set), fileObject)
+    #
+    # fileObject.close()
 
 
 
