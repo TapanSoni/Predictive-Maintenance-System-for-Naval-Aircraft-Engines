@@ -130,6 +130,7 @@ def bandr():
     print("********* %s seconds *********" % totaltimeTaken)
     timestampC.config(text="Classifier Run Time: %s seconds" % timeForClassifier)
     timestamp.config(text="  Total Time Elapsed: %s seconds" % totaltimeTaken)
+
     # Pickling the classifier
     # fileToStore = "testfile"
     #
@@ -138,6 +139,7 @@ def bandr():
     # pickle.dump(kneighbor.classify(1, trainingData, trainingTags, validationData, validationTags, new_data_set), fileObject)
     #
     # fileObject.close()
+
 
 anotherWindow = Tk()
 
