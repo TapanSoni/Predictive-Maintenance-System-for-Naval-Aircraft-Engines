@@ -34,5 +34,4 @@ def generate(min, max,size):
                         new_data_set[y][x] = number
             else:
                 new_data_set[y][x] = random.uniform(min[x], max[x])
-
-     return new_data_set
+    return new_data_set
