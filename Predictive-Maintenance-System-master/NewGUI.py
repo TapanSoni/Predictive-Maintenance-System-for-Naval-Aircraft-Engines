@@ -5,10 +5,14 @@ import math
 import numpy as np
 import random
 import time
+from sklearn import preprocessing
 import pickle
 
 def bandr():
     start_time = time.time()
+
+    tagPercentage = .7
+    valPercentage = .7
 
     # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
@@ -19,17 +23,21 @@ def bandr():
     whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
     print("Data imported")
 
+    max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
+    whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+    print("Data Nomalized")
+
     import GenerateTags as tag
 
     #Generates an array filled with 0's & 1's
-    tags = tag.generate(.7, whole_data_set.size // 30)
+    tags = tag.generate(tagPercentage, whole_data_set.size // 30)
     print("Generated Tags")
 
     #Splits the data into 2 sections training and validation
     #Note that this is done for both tags and the actual data
     import SplitData as split
 
-    split.split(whole_data_set, tags, .1)
+    split.split(whole_data_set, tags, valPercentage)
 
     trainingData = split.getTrainingData()
     trainingTags = split.getTrainingTags()
@@ -51,7 +59,7 @@ def bandr():
     print("Generated New Data")
 
     #Generates new tags to go along with the new data
-    newTags = tag.generate(.7, new_data_set.size // 30)
+    newTags = tag.generate(tagPercentage, new_data_set.size // 30)
 
     # combines the old and new dataset in that order
     # Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
@@ -84,7 +92,7 @@ def bandr():
 
     import KNeighbor as kneighbor
 
-    percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
+    #percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
 
     import dtree as tree
 
@@ -100,11 +108,11 @@ def bandr():
     # GradientBoostingClassifier
     from sklearn.datasets import make_hastie_10_2
     from sklearn.ensemble import GradientBoostingClassifier
-    # print("Gradient Boosting Classifier: ")
-    # clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
-    # print(clf.score(validationData, validationTags))
-    #
-    # percentageVariable = clf.predict(predictionRow)
+    print("Gradient Boosting Classifier: ")
+    clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
+    print(clf.score(validationData, validationTags))
+
+    percentageVariable = clf.predict(predictionRow)
 
     import LinearSVC as linear
 
