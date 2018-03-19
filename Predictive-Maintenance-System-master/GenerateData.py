@@ -11,6 +11,8 @@
 import numpy as np
 import random
 import math
+from sklearn import preprocessing
+
 
 #Generate takes three parameters
 #   min - the minimum bound
@@ -33,4 +35,6 @@ def generate(min, max,size):
             else:
                 new_data_set[y][x] = random.uniform(min[x], max[x])
 
+    max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
+    new_data_set = max_abs_scaler.fit_transform(new_data_set)
     return new_data_set
