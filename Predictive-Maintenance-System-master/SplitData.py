@@ -20,15 +20,22 @@ validationTags = []
 #   - The tags
 #   - The percentage of rows that you want to go to the validation set
 def split(whole_data_set,tags, percentage):
+
     index = 0
 
     import math
 
+    average = 0
+
+    x = []
+
     #Randomly puts 40% of the data into valdation sequencly
     while index < whole_data_set.size//30 and (len(validationData)) < math.floor((whole_data_set.size//30)* percentage): #change .4 to whichever percentage you'd like togo to valadation set
-        if(random.randint(0,1)==0):
+        if(random.random()<percentage):
             validationData.append(whole_data_set[index])
             validationTags.append(tags[index])
+            average += index
+            x.append(index)
         else:
             trainingData.append(whole_data_set[index])
             trainingTags.append(tags[index])
@@ -39,6 +46,11 @@ def split(whole_data_set,tags, percentage):
         trainingData.append(whole_data_set[index])
         trainingTags.append(tags[index])
         index += 1
+
+
+    print(x[len(validationTags)-1])
+
+    print("Validation is this percentage: ", len(validationTags)/(len(validationTags)+len(trainingTags)))
 
 
 def getTrainingData():

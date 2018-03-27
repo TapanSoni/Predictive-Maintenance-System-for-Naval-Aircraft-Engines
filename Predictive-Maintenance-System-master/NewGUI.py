@@ -23,6 +23,14 @@ def bandr():
     whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
     print("Data imported")
 
+    # count = 0
+    # for index in range(0,whole_data_set.size//30-2):
+    #     for secondIndex in range(index+1,whole_data_set.size//30):
+    #         if np.array_equal(whole_data_set[index], whole_data_set[secondIndex]):
+    #             whole_data_set = np.delete(whole_data_set,secondIndex,0)
+    #             count += 1
+    # print("Count: ", count)
+
     max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
     whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
     print("Data Nomalized")
@@ -88,14 +96,14 @@ def bandr():
     # Naive Bayes
     from sklearn.naive_bayes import GaussianNB
 
-    # guas = GaussianNB()
-    # guas.fit(trainingData, trainingTags)
-    # print(guas.score(validationData,validationTags))
-    # percentageVariable = guas.predict(predictionRow)
+    guas = GaussianNB()
+    guas.fit(trainingData, trainingTags)
+    print(guas.score(validationData,validationTags))
+    percentageVariable = guas.predict(predictionRow)
 
     import KNeighbor as kneighbor
 
-    percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
+    #percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
     import dtree as tree
 
     #percentageVariable = tree.classify(trainingData,trainingTags,validationData,validationTags,predictionRow)
