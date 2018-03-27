@@ -103,6 +103,7 @@ print("end svm")
 #Number of Rows in dataset 589223
 
 # START TIMER -- DO THE TESTING AFTER THIS
+random.seed(666)
 start_time = time.time()
 
 import importCSV as read
