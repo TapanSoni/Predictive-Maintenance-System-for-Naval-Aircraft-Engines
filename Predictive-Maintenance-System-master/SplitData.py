@@ -8,7 +8,7 @@
 
 import random
 import numpy as np
-random.seed(666)
+
 trainingData = []
 trainingTags = []
 validationData = []
