@@ -8,11 +8,14 @@ import time
 from sklearn import preprocessing
 import pickle
 
+
+random.seed(1331)
 def bandr():
     start_time = time.time()
 
     tagPercentage = .7
     valPercentage = .3
+
 
     # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
