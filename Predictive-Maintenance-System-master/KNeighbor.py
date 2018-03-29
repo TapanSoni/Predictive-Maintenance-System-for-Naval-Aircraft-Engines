@@ -1,3 +1,26 @@
+"""
+-----------------------------------------------------------------------------
+
+Rowan Computer Science Dept Spring 2018 Software Engineering Team Ostriches
+Predictive Maintenance System for ASRC Federal Mission Solutions Engineering
+
+Team Ostriches Members:
+Product Owner:  Craig Wert
+ Scrum Master:  John Stranahan
+    Developer:  Tapan Soni
+    Developer:  Michael Matthews
+    Developer:  Joshua Jackson
+    Developer:  Nicholas La Sala
+
+-----------------------------------------------------------------------------
+
+Description:
+
+
+
+-----------------------------------------------------------------------------
+"""
+
 # Knearest neighbor is taken extremely long now that our datasize has double see if this can be improved
 import pickle
 from sklearn.neighbors import KNeighborsClassifier

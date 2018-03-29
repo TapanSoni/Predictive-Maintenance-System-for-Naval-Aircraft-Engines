@@ -1,3 +1,26 @@
+"""
+-----------------------------------------------------------------------------
+
+Rowan Computer Science Dept Spring 2018 Software Engineering Team Ostriches
+Predictive Maintenance System for ASRC Federal Mission Solutions Engineering
+
+Team Ostriches Members:
+Product Owner:  Craig Wert
+ Scrum Master:  John Stranahan
+    Developer:  Tapan Soni
+    Developer:  Michael Matthews
+    Developer:  Joshua Jackson
+    Developer:  Nicholas La Sala
+
+-----------------------------------------------------------------------------
+
+Description:
+
+
+
+-----------------------------------------------------------------------------
+"""
+
 from tkinter import *
 from tkinter import filedialog
 
@@ -18,12 +41,12 @@ def bandr():
 
     # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
-    print(anotherWindow.fileName)
+    #print(anotherWindow.fileName)
     fileNameDisplay.config(text=anotherWindow.fileName)
 
     #Import data into to a multidimenional array
-    whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
-    print("Data imported")
+    #whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
+    #print("Data imported")
 
     # count = 0
     # for index in range(0,whole_data_set.size//30-2):
@@ -33,9 +56,38 @@ def bandr():
     #             count += 1
     # print("Count: ", count)
 
-    max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
-    whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+    #max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
+    #whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
     print("Data Nomalized")
+
+    testingData = []
+    index = 50
+
+    # while(index<whole_data_set.size//30):
+    #     testingData.append(whole_data_set[index])
+    #     #whole_data_set = np.delete(whole_data_set, index, 0)
+    #     index += 100
+    #     print(index)
+
+    import pickle
+    #outputTest = open("testData.pkl", 'wb') #open output file
+    # outputWhole = open("wholeData.pkl", 'wb')
+    #pickle.dump(testingData, outputTest)
+    #pickle.dump(whole_data_set, outputWhole)
+
+    pkl_file_test = open('testData.pkl', 'rb') # open input file
+    pkl_file_whole = open('wholeData.pkl', 'rb') # open input file
+
+    whole_data_set = pickle.load(pkl_file_whole)
+    testData = pickle.load(pkl_file_test)
+
+    #outputTest.close() #close output file
+    #outputWhole.close()
+    pkl_file_test.close() # close input file
+    pkl_file_whole.close()
+
+    # print("Test DATA size: ", len(testData))
+    # print("Whole DATA size: ", len(whole_data_set))
 
     import GenerateTags as tag
 
@@ -113,9 +165,9 @@ def bandr():
     from sklearn import tree
     from sklearn.linear_model import SGDClassifier
     from sklearn.externals.six import StringIO
-    from IPython.display import Image
+    #from IPython.display import Image
     from sklearn.tree import export_graphviz
-    import pydotplus
+    #import pydotplus
 
     # GradientBoostingClassifier
     from sklearn.datasets import make_hastie_10_2
