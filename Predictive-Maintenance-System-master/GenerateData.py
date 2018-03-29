@@ -1,3 +1,26 @@
+"""
+-----------------------------------------------------------------------------
+
+Rowan Computer Science Dept Spring 2018 Software Engineering Team Ostriches
+Predictive Maintenance System for ASRC Federal Mission Solutions Engineering
+
+Team Ostriches Members:
+Product Owner:  Craig Wert
+ Scrum Master:  John Stranahan
+    Developer:  Tapan Soni
+    Developer:  Michael Matthews
+    Developer:  Joshua Jackson
+    Developer:  Nicholas La Sala
+
+-----------------------------------------------------------------------------
+
+Description:
+
+
+
+-----------------------------------------------------------------------------
+"""
+
 #Generates new data randomly based upon lower bound and maxium bound on actual data set
 #note this algorithm can be imporved in the followin ways
     #have stages of data that its based upon for the example since the engine is deterioting the frist 10% will look different than the second 10% etc.
