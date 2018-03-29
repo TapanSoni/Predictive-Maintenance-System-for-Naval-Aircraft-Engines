@@ -128,14 +128,6 @@ def bandr():
     trainingData = np.concatenate((trainingData, new_data_set), axis=0)
     trainingTags = np.concatenate((trainingTags, newTags), axis=0)
 
-    #The prediction row is the last row of the whole data set that was removed from the file
-    #To see if the differnet classifiers would guess the the right tag (tag should be 1, with our current tagging scheme)
-    predictionRow = [[ 0.88235484,0.88888889,0.66007962,0.86468924,0.70113635,0.70113635
-    ,0.65998294,0.86466262,0.65998294,0.86466262,0.79052779,0.94375827
-    ,0.60797992,0.5966,0.78434617,0.91454678,0.99136213,0.7804214
-    ,0.60791774,0.93109982,0.86464809,0.93109982,0.86464809,0.65393367
-    ,0.65393367,1.,0.90909091,1.,1.,1.]]
-
     timeForClassifier = time.time() #start timer for the classifier
 
     from sklearn.neural_network import MLPClassifier
