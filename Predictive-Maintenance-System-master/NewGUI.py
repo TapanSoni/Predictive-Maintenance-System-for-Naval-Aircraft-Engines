@@ -16,7 +16,6 @@ def bandr():
     tagPercentage = .7
     valPercentage = .3
 
-
     # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
     print(anotherWindow.fileName)
@@ -99,14 +98,14 @@ def bandr():
     # Naive Bayes
     from sklearn.naive_bayes import GaussianNB
 
-    guas = GaussianNB()
-    guas.fit(trainingData, trainingTags)
-    print(guas.score(validationData,validationTags))
-    percentageVariable = guas.predict(predictionRow)
+    # guas = GaussianNB()
+    # guas.fit(trainingData, trainingTags)
+    # print(guas.score(validationData,validationTags))
+    # percentageVariable = guas.predict(predictionRow)
 
     import KNeighbor as kneighbor
 
-    #percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
+    percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
     import dtree as tree
 
     #percentageVariable = tree.classify(trainingData,trainingTags,validationData,validationTags,predictionRow)

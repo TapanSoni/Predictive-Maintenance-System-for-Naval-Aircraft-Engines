@@ -22,10 +22,6 @@ def generate(min, max,size):
 
     for x in range(0,30):
         for y in range(0,size):
-            #This if is here because when generating values for column 0 there are no 5's in the entire column
-            #This can be found by looking at the histogram
-            #This could possible be done for other the columns as well such as 1,3-5,7,9,12,13,17-22
-
             if(x==0):
                 got_a_number = False
                 while(not got_a_number):
