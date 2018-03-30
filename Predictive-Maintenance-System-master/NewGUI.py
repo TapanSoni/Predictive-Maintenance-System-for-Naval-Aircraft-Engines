@@ -21,7 +21,7 @@ def bandr():
     print(anotherWindow.fileName)
     fileNameDisplay.config(text=anotherWindow.fileName)
 
-    #Import data into to a multidimenional array
+    #Import data into to a  array
     whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
     print("Data imported")
 
