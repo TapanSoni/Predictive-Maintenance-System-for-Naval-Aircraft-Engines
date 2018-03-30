@@ -45,8 +45,8 @@ def bandr():
     fileNameDisplay.config(text=anotherWindow.fileName)
 
     #Import data into to a multidimenional array
-    #whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
-    #print("Data imported")
+    testData = np.genfromtxt(anotherWindow.fileName, delimiter=',')
+    print("Data imported")
 
     # count = 0
     # for index in range(0,whole_data_set.size//30-2):
@@ -75,16 +75,16 @@ def bandr():
     #pickle.dump(testingData, outputTest)
     #pickle.dump(whole_data_set, outputWhole)
 
-    pkl_file_test = open('testData.pkl', 'rb') # open input file
-    pkl_file_whole = open('wholeData.pkl', 'rb') # open input file
+    #pkl_file_test = open('testData.pkl', 'rb') # open input file
+    #pkl_file_whole = open('wholeData.pkl', 'rb') # open input file
 
-    whole_data_set = pickle.load(pkl_file_whole)
-    testData = pickle.load(pkl_file_test)
+    #whole_data_set_pickle = pickle.load(pkl_file_whole)
+    #testData = pickle.load(pkl_file_test)
 
     #outputTest.close() #close output file
     #outputWhole.close()
-    pkl_file_test.close() # close input file
-    pkl_file_whole.close()
+    #pkl_file_test.close() # close input file
+    #pkl_file_whole.close()
 
     # print("Test DATA size: ", len(testData))
     # print("Whole DATA size: ", len(whole_data_set))
@@ -92,41 +92,41 @@ def bandr():
     import GenerateTags as tag
 
     #Generates an array filled with 0's & 1's
-    tags = tag.generate(tagPercentage, whole_data_set.size // 30)
+    # tags = tag.generate(tagPercentage, whole_data_set.size // 30)
     print("Generated Tags")
 
     #Splits the data into 2 sections training and validation
     #Note that this is done for both tags and the actual data
     import SplitData as split
 
-    split.split(whole_data_set, tags, valPercentage)
-
-    trainingData = split.getTrainingData()
-    trainingTags = split.getTrainingTags()
-    validationData = split.getValidationData()
-    validationTags = split.getValidationTags()
-    print("Split DATA")
+    # split.split(whole_data_set, tags, valPercentage)
+    #
+    # trainingData = split.getTrainingData()
+    # trainingTags = split.getTrainingTags()
+    # validationData = split.getValidationData()
+    # validationTags = split.getValidationTags()
+    # print("Split DATA")
 
     #Finds the minimum and maximum of each feature for the training set
     import FindMinAndMax as find
 
-    findingMinAndMax = find.FindMinAndMax(trainingData)
-
-    min = findingMinAndMax.getMax()
-    max = findingMinAndMax.getMin()
+    # findingMinAndMax = find.FindMinAndMax(trainingData)
+    #
+    # min = findingMinAndMax.getMax()
+    # max = findingMinAndMax.getMin()
 
     #Generates new random data within the bounds of each feature
     import GenerateData as gen
-    new_data_set = gen.generate(min, max, len(trainingData))
-    print("Generated New Data")
+    # new_data_set = gen.generate(min, max, len(trainingData))
+    # print("Generated New Data")
 
     #Generates new tags to go along with the new data
-    newTags = tag.generate(tagPercentage, new_data_set.size // 30)
+    # newTags = tag.generate(tagPercentage, new_data_set.size // 30)
 
     # combines the old and new dataset in that order
     # Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
-    trainingData = np.concatenate((trainingData, new_data_set), axis=0)
-    trainingTags = np.concatenate((trainingTags, newTags), axis=0)
+    # trainingData = np.concatenate((trainingData, new_data_set), axis=0)
+    # trainingTags = np.concatenate((trainingTags, newTags), axis=0)
 
     timeForClassifier = time.time() #start timer for the classifier
 
@@ -147,9 +147,27 @@ def bandr():
     # print(guas.score(validationData,validationTags))
     # percentageVariable = guas.predict(predictionRow)
 
-    import KNeighbor as kneighbor
+    #import KNeighbor as kneighbor
 
-    percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
+    # kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
+
+    pkl_file = open('classy.pkl', 'rb') #open input file
+
+    classy = pickle.load(pkl_file) #unpickle pickled file
+    average = 0
+
+    #testData = np.asarray(testData)
+
+    #np.savetxt('testData.csv', testData, delimiter=',')
+
+    #np.savetxt('wholedataset.csv', whole_data_set_pickle, delimiter=',')
+
+    for index in range(0, len(testData)):
+        average += classy.predict([testData[index]]).item(0)
+
+    print("Average: ", average/len(testData))
+    pkl_file.close() #close input file
+
     import dtree as tree
 
     #percentageVariable = tree.classify(trainingData,trainingTags,validationData,validationTags,predictionRow)
@@ -175,10 +193,10 @@ def bandr():
 
     timeForClassifier = time.time() - timeForClassifier #end timer for classifier
 
-    if percentageVariable >.5:
-        outputConsole.config(text="No - Everything is OK")
-    else:
-        outputConsole.config(text="Yes - Maintenance needed")
+    # if percentageVariable >.5:
+    #     outputConsole.config(text="No - Everything is OK")
+    # else:
+    #     outputConsole.config(text="Yes - Maintenance needed")
 
     totaltimeTaken = time.time() - start_time
     print("********* %s seconds *********" % totaltimeTaken)
