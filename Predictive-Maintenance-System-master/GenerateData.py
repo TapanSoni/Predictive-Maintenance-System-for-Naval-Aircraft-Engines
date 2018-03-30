@@ -1,3 +1,26 @@
+"""
+-----------------------------------------------------------------------------
+
+Rowan Computer Science Dept Spring 2018 Software Engineering Team Ostriches
+Predictive Maintenance System for ASRC Federal Mission Solutions Engineering
+
+Team Ostriches Members:
+Product Owner:  Craig Wert
+ Scrum Master:  John Stranahan
+    Developer:  Tapan Soni
+    Developer:  Michael Matthews
+    Developer:  Joshua Jackson
+    Developer:  Nicholas La Sala
+
+-----------------------------------------------------------------------------
+
+Description:
+
+
+
+-----------------------------------------------------------------------------
+"""
+
 #Generates new data randomly based upon lower bound and maxium bound on actual data set
 #note this algorithm can be imporved in the followin ways
     #have stages of data that its based upon for the example since the engine is deterioting the frist 10% will look different than the second 10% etc.
@@ -22,15 +45,6 @@ def generate(min, max,size):
 
     for x in range(0,30):
         for y in range(0,size):
-            if(x==0):
-                got_a_number = False
-                while(not got_a_number):
-
-                    number = random.uniform(min[x],max[x])
-                    if (not math.floor(number)==5):
-                        got_a_number = True
-                        new_data_set[y][x] = number
-            else:
-                new_data_set[y][x] = random.uniform(min[x], max[x])
+            new_data_set[y][x] = random.uniform(min[x]/2, max[x]*2)
 
     return new_data_set

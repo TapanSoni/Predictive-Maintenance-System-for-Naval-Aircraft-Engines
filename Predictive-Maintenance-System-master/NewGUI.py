@@ -1,3 +1,26 @@
+"""
+-----------------------------------------------------------------------------
+
+Rowan Computer Science Dept Spring 2018 Software Engineering Team Ostriches
+Predictive Maintenance System for ASRC Federal Mission Solutions Engineering
+
+Team Ostriches Members:
+Product Owner:  Craig Wert
+ Scrum Master:  John Stranahan
+    Developer:  Tapan Soni
+    Developer:  Michael Matthews
+    Developer:  Joshua Jackson
+    Developer:  Nicholas La Sala
+
+-----------------------------------------------------------------------------
+
+Description:
+
+
+
+-----------------------------------------------------------------------------
+"""
+
 from tkinter import *
 from tkinter import filedialog
 
@@ -18,24 +41,46 @@ def bandr():
 
     # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
-    print(anotherWindow.fileName)
+    #print(anotherWindow.fileName)
     fileNameDisplay.config(text=anotherWindow.fileName)
 
-    #Import data into to a  array
-    whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
+    #Import data into to a multidimenional array
+    testData = np.genfromtxt(anotherWindow.fileName, delimiter=',')
     print("Data imported")
 
-    # count = 0
-    # for index in range(0,whole_data_set.size//30-2):
-    #     for secondIndex in range(index+1,whole_data_set.size//30):
-    #         if np.array_equal(whole_data_set[index], whole_data_set[secondIndex]):
-    #             whole_data_set = np.delete(whole_data_set,secondIndex,0)
-    #             count += 1
-    # print("Count: ", count)
-
-    max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
-    whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
+    #max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
+    #whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
     print("Data Nomalized")
+
+    testingData = []
+    index = 50
+
+    # while(index<whole_data_set.size//30):
+    #     testingData.append(whole_data_set[index])
+    #     #whole_data_set = np.delete(whole_data_set, index, 0)
+    #     index += 100
+    #     print(index)
+
+    import pickle
+    #outputTest = open("testData.pkl", 'wb') #open output file
+    # outputWhole = open("wholeData.pkl", 'wb')
+    #pickle.dump(testingData, outputTest)
+    #pickle.dump(whole_data_set, outputWhole)
+
+    #pkl_file_test = open('testData.pkl', 'rb') # open input file
+    pkl_file_whole = open('wholeData.pkl', 'rb') # open input file
+
+    whole_data_set = pickle.load(pkl_file_whole)
+    whole_data_set = np.asarray(whole_data_set)
+    #testData = pickle.load(pkl_file_test)
+
+    #outputTest.close() #close output file
+    #outputWhole.close()
+    #pkl_file_test.close() # close input file
+    pkl_file_whole.close()
+
+    # print("Test DATA size: ", len(testData))
+    # print("Whole DATA size: ", len(whole_data_set))
 
     import GenerateTags as tag
 
@@ -47,42 +92,38 @@ def bandr():
     #Note that this is done for both tags and the actual data
     import SplitData as split
 
-    split.split(whole_data_set, tags, valPercentage)
-
-    trainingData = split.getTrainingData()
-    trainingTags = split.getTrainingTags()
-    validationData = split.getValidationData()
-    validationTags = split.getValidationTags()
+    # split.split(whole_data_set, tags, valPercentage)
+    #
+    # trainingData = split.getTrainingData()
+    # trainingTags = split.getTrainingTags()
+    # validationData = split.getValidationData()
+    # validationTags = split.getValidationTags()
     print("Split DATA")
 
     #Finds the minimum and maximum of each feature for the training set
     import FindMinAndMax as find
 
-    findingMinAndMax = find.FindMinAndMax(trainingData)
+    # findingMinAndMax = find.FindMinAndMax(trainingData)
+    #
+    # minOf = findingMinAndMax.getMin()
+    # maxOf = findingMinAndMax.getMax()
+    #range = findingMinAndMax.getRan()
 
-    min = findingMinAndMax.getMax()
-    max = findingMinAndMax.getMin()
+    # for index in range(0,30):
+    #     print("Range for row ", index, ": ", maxOf[index]-minOf[index])
 
     #Generates new random data within the bounds of each feature
     import GenerateData as gen
-    new_data_set = gen.generate(min, max, len(trainingData))
-    print("Generated New Data")
+    # new_data_set = gen.generate(min, max, len(trainingData))
+    # print("Generated New Data")
 
     #Generates new tags to go along with the new data
-    newTags = tag.generate(tagPercentage, new_data_set.size // 30)
+    # newTags = tag.generate(tagPercentage, new_data_set.size // 30)
 
     # combines the old and new dataset in that order
     # Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
-    trainingData = np.concatenate((trainingData, new_data_set), axis=0)
-    trainingTags = np.concatenate((trainingTags, newTags), axis=0)
-
-    #The prediction row is the last row of the whole data set that was removed from the file
-    #To see if the differnet classifiers would guess the the right tag (tag should be 1, with our current tagging scheme)
-    predictionRow = [[ 0.88235484,0.88888889,0.66007962,0.86468924,0.70113635,0.70113635
-    ,0.65998294,0.86466262,0.65998294,0.86466262,0.79052779,0.94375827
-    ,0.60797992,0.5966,0.78434617,0.91454678,0.99136213,0.7804214
-    ,0.60791774,0.93109982,0.86464809,0.93109982,0.86464809,0.65393367
-    ,0.65393367,1.,0.90909091,1.,1.,1.]]
+    # trainingData = np.concatenate((trainingData, new_data_set), axis=0)
+    # trainingTags = np.concatenate((trainingTags, newTags), axis=0)
 
     timeForClassifier = time.time() #start timer for the classifier
 
@@ -105,7 +146,25 @@ def bandr():
 
     import KNeighbor as kneighbor
 
-    percentageVariable = kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags,predictionRow)
+    #kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
+
+    pkl_file = open('classy.pkl', 'rb') #open input file
+
+    classy = pickle.load(pkl_file) #unpickle pickled file
+    average = 0
+
+    #testData = np.asarray(testData)
+
+    #np.savetxt('testData.csv', testData, delimiter=',')
+
+    #np.savetxt('wholedataset.csv', whole_data_set_pickle, delimiter=',')
+
+    for index in range(0, len(testData)):
+        average += classy.predict([testData[index]]).item(0)
+
+    print("Average: ", average/len(testData))
+    pkl_file.close() #close input file
+
     import dtree as tree
 
     #percentageVariable = tree.classify(trainingData,trainingTags,validationData,validationTags,predictionRow)
@@ -113,9 +172,9 @@ def bandr():
     from sklearn import tree
     from sklearn.linear_model import SGDClassifier
     from sklearn.externals.six import StringIO
-    from IPython.display import Image
+    #from IPython.display import Image
     from sklearn.tree import export_graphviz
-    import pydotplus
+    #import pydotplus
 
     # GradientBoostingClassifier
     from sklearn.datasets import make_hastie_10_2
@@ -131,7 +190,7 @@ def bandr():
 
     timeForClassifier = time.time() - timeForClassifier #end timer for classifier
 
-    if percentageVariable >.5:
+    if average >.5:
         outputConsole.config(text="No - Everything is OK")
     else:
         outputConsole.config(text="Yes - Maintenance needed")
