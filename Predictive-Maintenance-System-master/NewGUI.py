@@ -48,14 +48,6 @@ def bandr():
     testData = np.genfromtxt(anotherWindow.fileName, delimiter=',')
     print("Data imported")
 
-    # count = 0
-    # for index in range(0,whole_data_set.size//30-2):
-    #     for secondIndex in range(index+1,whole_data_set.size//30):
-    #         if np.array_equal(whole_data_set[index], whole_data_set[secondIndex]):
-    #             whole_data_set = np.delete(whole_data_set,secondIndex,0)
-    #             count += 1
-    # print("Count: ", count)
-
     #max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
     #whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
     print("Data Nomalized")
@@ -76,15 +68,16 @@ def bandr():
     #pickle.dump(whole_data_set, outputWhole)
 
     #pkl_file_test = open('testData.pkl', 'rb') # open input file
-    #pkl_file_whole = open('wholeData.pkl', 'rb') # open input file
+    pkl_file_whole = open('wholeData.pkl', 'rb') # open input file
 
-    #whole_data_set_pickle = pickle.load(pkl_file_whole)
+    whole_data_set = pickle.load(pkl_file_whole)
+    whole_data_set = np.asarray(whole_data_set)
     #testData = pickle.load(pkl_file_test)
-
+    print(whole_data_set[0])
     #outputTest.close() #close output file
     #outputWhole.close()
     #pkl_file_test.close() # close input file
-    #pkl_file_whole.close()
+    pkl_file_whole.close()
 
     # print("Test DATA size: ", len(testData))
     # print("Whole DATA size: ", len(whole_data_set))
@@ -92,28 +85,32 @@ def bandr():
     import GenerateTags as tag
 
     #Generates an array filled with 0's & 1's
-    # tags = tag.generate(tagPercentage, whole_data_set.size // 30)
+    tags = tag.generate(tagPercentage, whole_data_set.size // 30)
     print("Generated Tags")
 
     #Splits the data into 2 sections training and validation
     #Note that this is done for both tags and the actual data
     import SplitData as split
 
-    # split.split(whole_data_set, tags, valPercentage)
-    #
-    # trainingData = split.getTrainingData()
-    # trainingTags = split.getTrainingTags()
-    # validationData = split.getValidationData()
-    # validationTags = split.getValidationTags()
-    # print("Split DATA")
+    split.split(whole_data_set, tags, valPercentage)
+
+    trainingData = split.getTrainingData()
+    trainingTags = split.getTrainingTags()
+    validationData = split.getValidationData()
+    validationTags = split.getValidationTags()
+    print("Split DATA")
 
     #Finds the minimum and maximum of each feature for the training set
     import FindMinAndMax as find
 
-    # findingMinAndMax = find.FindMinAndMax(trainingData)
-    #
-    # min = findingMinAndMax.getMax()
-    # max = findingMinAndMax.getMin()
+    findingMinAndMax = find.FindMinAndMax(trainingData)
+
+    minOf = findingMinAndMax.getMin()
+    maxOf = findingMinAndMax.getMax()
+    #range = findingMinAndMax.getRan()
+
+    for index in range(0,30):
+        print("Range for row ", index, ": ", maxOf[index]-minOf[index])
 
     #Generates new random data within the bounds of each feature
     import GenerateData as gen
@@ -147,9 +144,9 @@ def bandr():
     # print(guas.score(validationData,validationTags))
     # percentageVariable = guas.predict(predictionRow)
 
-    #import KNeighbor as kneighbor
+    import KNeighbor as kneighbor
 
-    # kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
+    kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
 
     pkl_file = open('classy.pkl', 'rb') #open input file
 

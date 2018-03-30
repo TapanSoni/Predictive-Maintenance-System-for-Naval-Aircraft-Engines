@@ -23,8 +23,9 @@ Description:
 
 #Goes through dataset looking for column averages, mins, maxs, and Standard Deviation
 
-min = []
-max = []
+minOf = []
+maxOf = []
+#rangeOf = []
 
 class FindMinAndMax:
 
@@ -47,8 +48,9 @@ class FindMinAndMax:
                 if (current < temp_min):
                     temp_min = current
 
-            max.append(temp)
-            min.append(temp_min)
+            maxOf.append(temp)
+            minOf.append(temp_min)
+            #rangeOf.append(temp-temp_min)
             # print('Max:',temp)
             # print('Min: ',temp_min)
             # print(avg/(whole_data_set.size/30))
@@ -60,8 +62,12 @@ class FindMinAndMax:
 
     @staticmethod
     def getMax():
-        return max
+        return maxOf
 
     @staticmethod
     def getMin():
-        return min
+        return minOf
+
+    #@staticmethod
+    #def getRan():
+        #return rangeOf

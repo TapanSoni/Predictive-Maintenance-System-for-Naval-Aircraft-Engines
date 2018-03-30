@@ -45,15 +45,6 @@ def generate(min, max,size):
 
     for x in range(0,30):
         for y in range(0,size):
-            if(x==0):
-                got_a_number = False
-                while(not got_a_number):
-
-                    number = random.uniform(min[x],max[x])
-                    if (not math.floor(number)==5):
-                        got_a_number = True
-                        new_data_set[y][x] = number
-            else:
-                new_data_set[y][x] = random.uniform(min[x], max[x])
+            new_data_set[y][x] = random.uniform(min[x]/2, max[x]*2)
 
     return new_data_set
