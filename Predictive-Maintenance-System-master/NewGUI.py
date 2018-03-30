@@ -159,8 +159,27 @@ def bandr():
 
     #np.savetxt('wholedataset.csv', whole_data_set_pickle, delimiter=',')
 
+    indices = []
+    #indices = np.asarray(indices)
+    count = 50
+
     for index in range(0, len(testData)):
         average += classy.predict([testData[index]]).item(0)
+        if count <= len(testData):
+            indices.append(testData[count])
+            count += 100
+
+    import plotly.plotly as py
+    import plotly.graph_objs as go
+
+    trace = go.Scatter(
+        x = indices,
+        y = testData
+    )
+
+    data = [trace]
+
+    py.plot(data, filename='testingResults')
 
     print("Average: ", average/len(testData))
     pkl_file.close() #close input file
