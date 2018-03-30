@@ -73,7 +73,7 @@ def bandr():
     whole_data_set = pickle.load(pkl_file_whole)
     whole_data_set = np.asarray(whole_data_set)
     #testData = pickle.load(pkl_file_test)
-    print(whole_data_set[0])
+
     #outputTest.close() #close output file
     #outputWhole.close()
     #pkl_file_test.close() # close input file
@@ -92,25 +92,25 @@ def bandr():
     #Note that this is done for both tags and the actual data
     import SplitData as split
 
-    split.split(whole_data_set, tags, valPercentage)
-
-    trainingData = split.getTrainingData()
-    trainingTags = split.getTrainingTags()
-    validationData = split.getValidationData()
-    validationTags = split.getValidationTags()
+    # split.split(whole_data_set, tags, valPercentage)
+    #
+    # trainingData = split.getTrainingData()
+    # trainingTags = split.getTrainingTags()
+    # validationData = split.getValidationData()
+    # validationTags = split.getValidationTags()
     print("Split DATA")
 
     #Finds the minimum and maximum of each feature for the training set
     import FindMinAndMax as find
 
-    findingMinAndMax = find.FindMinAndMax(trainingData)
-
-    minOf = findingMinAndMax.getMin()
-    maxOf = findingMinAndMax.getMax()
+    # findingMinAndMax = find.FindMinAndMax(trainingData)
+    #
+    # minOf = findingMinAndMax.getMin()
+    # maxOf = findingMinAndMax.getMax()
     #range = findingMinAndMax.getRan()
 
-    for index in range(0,30):
-        print("Range for row ", index, ": ", maxOf[index]-minOf[index])
+    # for index in range(0,30):
+    #     print("Range for row ", index, ": ", maxOf[index]-minOf[index])
 
     #Generates new random data within the bounds of each feature
     import GenerateData as gen
@@ -146,7 +146,7 @@ def bandr():
 
     import KNeighbor as kneighbor
 
-    kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
+    #kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
 
     pkl_file = open('classy.pkl', 'rb') #open input file
 
@@ -190,10 +190,10 @@ def bandr():
 
     timeForClassifier = time.time() - timeForClassifier #end timer for classifier
 
-    # if percentageVariable >.5:
-    #     outputConsole.config(text="No - Everything is OK")
-    # else:
-    #     outputConsole.config(text="Yes - Maintenance needed")
+    if average >.5:
+        outputConsole.config(text="No - Everything is OK")
+    else:
+        outputConsole.config(text="Yes - Maintenance needed")
 
     totaltimeTaken = time.time() - start_time
     print("********* %s seconds *********" % totaltimeTaken)
