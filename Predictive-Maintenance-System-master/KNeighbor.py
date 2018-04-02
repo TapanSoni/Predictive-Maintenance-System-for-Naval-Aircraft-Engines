@@ -15,7 +15,12 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the KNeighbor.py file. It is responsible for creating the K-Neig-
+ hbor classifier and predicting the tags from the test data. It also scor-
+ es how accurately it's training worked on the validation data set and pr-
+ ints out the score.
 
+ Last edit: 4/1/18 @ 2:26 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
