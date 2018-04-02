@@ -15,7 +15,16 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the NewGUI.py file. It is responsible for generating the GUI win-
+ dow and all of its functionality. The functionality consists of a browse
+ and run button which allows the user to select an input test data file a-
+ nd then the program tests the classifier on the test data. It then shows
+ the selected file in the file selection window, and outputs either a "Yes
+ - Maintenance Needed" or "No - Everything is OK". The GUI also shows the
+ total run time of the whole program, as well as the total run time of the
+ classifier.
 
+ Last edit: 4/1/18 @ 2:42 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
