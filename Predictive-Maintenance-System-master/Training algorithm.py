@@ -15,7 +15,11 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the Training\ Algorithm.py file. It is responsible for holding
+ all the components of the training algorithm such as generating tags, ge-
+ nerating the data, importing the CSV file, training the algorithm etc.
 
+ Last edit: 4/1/18 @ 3:02 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
