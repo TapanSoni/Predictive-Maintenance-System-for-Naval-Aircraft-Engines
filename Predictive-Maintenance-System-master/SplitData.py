@@ -45,7 +45,7 @@ def split(whole_data_set,tags, percentage):
     x = []
 
     #Randomly puts 40% of the data into valdation sequencly
-    while index < whole_data_set.size//30 and (len(validationData)) < math.floor((whole_data_set.size//30)* percentage): #change .4 to whichever percentage you'd like togo to valadation set
+    while (len(validationData)) < math.floor((whole_data_set.size//30)* percentage) and (len(trainingData) < math.floor((whole_data_set.size//30)* 1-percentage)): #change .4 to whichever percentage you'd like togo to valadation set
         if(random.random()<percentage):
             validationData.append(whole_data_set[index])
             validationTags.append(tags[index])
@@ -57,13 +57,20 @@ def split(whole_data_set,tags, percentage):
         index += 1
 
     #This loop finishes going through the whole dataset and adding each row to training set
-    while(index < whole_data_set.size//30):
-        trainingData.append(whole_data_set[index])
-        trainingTags.append(tags[index])
-        index += 1
+
+    if (len(validationData)) < math.floor((whole_data_set.size//30)* percentage):
+        while(index < whole_data_set.size//30):
+            trainingData.append(whole_data_set[index])
+            trainingTags.append(tags[index])
+            index += 1
+    else:
+        while (index < whole_data_set.size // 30):
+            validationData.append(whole_data_set[index])
+            validationTags.append(tags[index])
+            index += 1
 
 
-    print(x[len(validationTags)-1])
+    # print(x[len(validationTags)-1])
 
     print("Validation is this percentage: ", len(validationTags)/(len(validationTags)+len(trainingTags)))
 
