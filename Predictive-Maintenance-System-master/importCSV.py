@@ -15,7 +15,10 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the importCSV.py file. It is responsible for taking in the .CSV
+ file and assigning it to a variable.
 
+ Last edit: 4/1/18 @ 2:26 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
