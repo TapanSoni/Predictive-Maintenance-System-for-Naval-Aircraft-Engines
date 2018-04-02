@@ -15,9 +15,11 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the FindMinAndMax.py file. It is responsible for going through e-
+ ach of the columns or features and finding the min and max of each colum-
+ n and the standard deviations of each of the features.
 
-
-
+ Last edit: 4/1/18 @ 2:26 PM by Tapan Soni
 -----------------------------------------------------------------------------
 """
 
