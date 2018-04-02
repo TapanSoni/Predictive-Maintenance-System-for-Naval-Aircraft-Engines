@@ -15,7 +15,12 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the dtree.py file. It is responsible for creating the decision t-
+ ree classifer and using the classifier to predict over a set of test data
+ . It also scores how accurately it's training worked on the validation d-
+ ata set and prints out the score.
 
+ Last edit: 4/1/18 @ 2:26 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
