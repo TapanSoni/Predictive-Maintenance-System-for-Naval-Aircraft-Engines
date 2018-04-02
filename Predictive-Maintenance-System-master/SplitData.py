@@ -15,7 +15,11 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the SplitData.py file. It is responsible for splliting the entire
+ data set into the training data and the validation data. It also generat-
+ es the training and validation tags.
 
+ Last edit: 4/1/18 @ 2:44 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
