@@ -15,7 +15,13 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the GenerateTags.py file. It is responsible for generating the t-
+ ags for each line of data. It does this by assigning the top 70% of the
+ data to a 0, meaning, no maintenance required, and the bottom 30% to a 1,
+ meaining, maintenance is required for these factors derived from the feat-
+ ures.
 
+ Last edit: 4/1/18 @ 2:26 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
