@@ -15,7 +15,16 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the NewGUI.py file. It is responsible for generating the GUI win-
+ dow and all of its functionality. The functionality consists of a browse
+ and run button which allows the user to select an input test data file a-
+ nd then the program tests the classifier on the test data. It then shows
+ the selected file in the file selection window, and outputs either a "Yes
+ - Maintenance Needed" or "No - Everything is OK". The GUI also shows the
+ total run time of the whole program, as well as the total run time of the
+ classifier.
 
+ Last edit: 4/1/18 @ 2:42 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
@@ -37,7 +46,7 @@ def bandr():
     start_time = time.time()
 
     tagPercentage = .7
-    valPercentage = .3
+    valPercentage = .2
 
     # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
@@ -45,15 +54,15 @@ def bandr():
     fileNameDisplay.config(text=anotherWindow.fileName)
 
     #Import data into to a multidimenional array
-    #testData = np.genfromtxt(anotherWindow.fileName, delimiter=',')
+    testData = np.genfromtxt(anotherWindow.fileName, delimiter=',')
     print("Data imported")
 
     #max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
     #whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
-    print("Data Nomalized")
+    # print("Data Nomalized")
 
-    testingData = []
-    index = 50
+    # testingData = []
+    # index = 50
 
     # while(index<whole_data_set.size//30):
     #     testingData.append(whole_data_set[index])
@@ -63,21 +72,21 @@ def bandr():
 
     import pickle
     #outputTest = open("testData.pkl", 'wb') #open output file
-    # outputWhole = open("wholeData.pkl", 'wb')
+    #outputWhole = open("wholeData.pkl", 'wb')
     #pickle.dump(testingData, outputTest)
     #pickle.dump(whole_data_set, outputWhole)
 
     #pkl_file_test = open('testData.pkl', 'rb') # open input file
-    pkl_file_whole = open('wholeData.pkl', 'rb') # open input file
+    # pkl_file_whole = open('wholeData.pkl', 'rb') # open input file
 
-    whole_data_set = pickle.load(pkl_file_whole)
-    whole_data_set = np.asarray(whole_data_set)
+    # whole_data_set = pickle.load(pkl_file_whole)
+    # whole_data_set = np.asarray(whole_data_set)
     #testData = pickle.load(pkl_file_test)
 
     #outputTest.close() #close output file
-    #outputWhole.close()
+    # outputWhole.close()
     #pkl_file_test.close() # close input file
-    pkl_file_whole.close()
+    # pkl_file_whole.close()
 
     # print("Test DATA size: ", len(testData))
     # print("Whole DATA size: ", len(whole_data_set))
@@ -85,28 +94,28 @@ def bandr():
     import GenerateTags as tag
 
     #Generates an array filled with 0's & 1's
-    tags = tag.generate(tagPercentage, whole_data_set.size // 30)
-    print("Generated Tags")
+    # tags = tag.generate(tagPercentage, whole_data_set.size // 30)
+    # print("Generated Tags")
 
     #Splits the data into 2 sections training and validation
     #Note that this is done for both tags and the actual data
     import SplitData as split
 
-    split.split(whole_data_set, tags, valPercentage)
-
-    trainingData = split.getTrainingData()
-    trainingTags = split.getTrainingTags()
-    validationData = split.getValidationData()
-    validationTags = split.getValidationTags()
+    # split.split(whole_data_set, tags, valPercentage)
+    #
+    # trainingData = split.getTrainingData()
+    # trainingTags = split.getTrainingTags()
+    # validationData = split.getValidationData()
+    # validationTags = split.getValidationTags()
     print("Split DATA")
 
     #Finds the minimum and maximum of each feature for the training set
     import FindMinAndMax as find
 
-    findingMinAndMax = find.FindMinAndMax(trainingData)
-
-    minOf = findingMinAndMax.getMin()
-    maxOf = findingMinAndMax.getMax()
+    # findingMinAndMax = find.FindMinAndMax(trainingData)
+    #
+    # minOf = findingMinAndMax.getMin()
+    # maxOf = findingMinAndMax.getMax()
     #range = findingMinAndMax.getRan()
 
     # for index in range(0,30):
@@ -114,16 +123,16 @@ def bandr():
 
     #Generates new random data within the bounds of each feature
     import GenerateData as gen
-    new_data_set = gen.generate(minOf, maxOf, len(trainingData))
+    # new_data_set = gen.generate(minOf, maxOf, len(trainingData))
     # print("Generated New Data")
 
     #Generates new tags to go along with the new data
-    newTags = tag.generate(tagPercentage, new_data_set.size // 30)
+    # newTags = tag.generate(tagPercentage, new_data_set.size // 30)
 
     # combines the old and new dataset in that order
     # Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
-    trainingData = np.concatenate((trainingData, new_data_set), axis=0)
-    trainingTags = np.concatenate((trainingTags, newTags), axis=0)
+    # trainingData = np.concatenate((trainingData, new_data_set), axis=0)
+    # trainingTags = np.concatenate((trainingTags, newTags), axis=0)
 
     timeForClassifier = time.time() #start timer for the classifier
 
@@ -146,12 +155,12 @@ def bandr():
 
     import KNeighbor as kneighbor
 
-    kneighbor.classify(1,trainingData,trainingTags,validationData,validationTags)
+    #kneighbor.classify(99,trainingData,trainingTags,validationData,validationTags)
     #
-    # pkl_file = open('classy.pkl', 'rb') #open input file
-    #
-    # classy = pickle.load(pkl_file) #unpickle pickled file
-    # average = 0
+    pkl_file = open('classy.pkl', 'rb') #open input file
+
+    classy = pickle.load(pkl_file) #unpickle pickled file
+    average = 0
 
     #testData = np.asarray(testData)
 
@@ -163,8 +172,8 @@ def bandr():
     #indices = np.asarray(indices)
     count = 50
 
-    # for index in range(0, len(testData)):
-    #     average += classy.predict([testData[index]]).item(0)
+    for index in range(0, len(testData)):
+        average += classy.predict([testData[index]]).item(0)
     #     if count <= len(testData):
     #         indices.append(testData[count])
     #         count += 100
@@ -181,8 +190,8 @@ def bandr():
     #
     # py.plot(data, filename='testingResults')
     #
-    # print("Average: ", average/len(testData))
-    # pkl_file.close() #close input file
+    print("Average: ", average/len(testData))
+    pkl_file.close() #close input file
 
     import dtree as tree
 
@@ -209,10 +218,10 @@ def bandr():
 
     timeForClassifier = time.time() - timeForClassifier #end timer for classifier
 
-    # if average >.5:
-    #     outputConsole.config(text="No - Everything is OK")
-    # else:
-    #     outputConsole.config(text="Yes - Maintenance needed")
+    if average >.5:
+        outputConsole.config(text="No - Everything is OK")
+    else:
+        outputConsole.config(text="Yes - Maintenance needed")
 
     totaltimeTaken = time.time() - start_time
     print("********* %s seconds *********" % totaltimeTaken)

@@ -15,7 +15,11 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the SplitData.py file. It is responsible for splliting the entire
+ data set into the training data and the validation data. It also generat-
+ es the training and validation tags.
 
+ Last edit: 4/1/18 @ 2:44 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
@@ -35,25 +39,44 @@ validationTags = []
 #   - The tags
 #   - The percentage of rows that you want to go to the validation set
 def split(whole_data_set,tags, percentage):
+
     index = 0
 
     import math
 
-    #Randomly puts 30% of the data into valdation sequencly
-    while index < whole_data_set.size//30 and (len(validationData)) < math.floor((whole_data_set.size//30)* percentage): #change .4 to whichever percentage you'd like togo to valadation set
-        if(random.randint(0,1)==0):
+    average = 0
+
+    x = []
+
+    #Randomly puts 40% of the data into valdation sequencly
+    while (len(validationData)) < math.floor((whole_data_set.size//30)* percentage) and (len(trainingData) < math.floor((whole_data_set.size//30)* 1-percentage)): #change .4 to whichever percentage you'd like togo to valadation set
+        if(random.random()<percentage):
             validationData.append(whole_data_set[index])
             validationTags.append(tags[index])
+            average += index
+            x.append(index)
         else:
             trainingData.append(whole_data_set[index])
             trainingTags.append(tags[index])
         index += 1
 
     #This loop finishes going through the whole dataset and adding each row to training set
-    while(index < whole_data_set.size//30):
-        trainingData.append(whole_data_set[index])
-        trainingTags.append(tags[index])
-        index += 1
+
+    if (len(validationData)) < math.floor((whole_data_set.size//30)* percentage):
+        while(index < whole_data_set.size//30):
+            trainingData.append(whole_data_set[index])
+            trainingTags.append(tags[index])
+            index += 1
+    else:
+        while (index < whole_data_set.size // 30):
+            validationData.append(whole_data_set[index])
+            validationTags.append(tags[index])
+            index += 1
+
+
+    # print(x[len(validationTags)-1])
+
+    print("Validation is this percentage: ", len(validationTags)/(len(validationTags)+len(trainingTags)))
 
 
 def getTrainingData():

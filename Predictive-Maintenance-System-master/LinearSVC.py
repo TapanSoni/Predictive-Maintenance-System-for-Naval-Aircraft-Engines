@@ -15,7 +15,12 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the LinearSVC.py file. It is responsible for creating the linear-
+ SVC classifier and testing it on the test data. It also prints out the
+ validation score of the classifier to see how well it does when testing
+ on the validation data.
 
+ Last edit: 4/1/18 @ 3:01 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------

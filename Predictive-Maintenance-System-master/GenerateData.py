@@ -15,7 +15,13 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
+ This is the GenerateData.py file. It is responsible for generating the a-
+ ugmented data from the data set that we already have. It does this by ge-
+ nerating data randomnly between the min and max values of each of the fe-
+ atures, so it matches the general curve of the master data set because we
+ don't want an arbritarily generated data set.
 
+ Last edit: 4/1/18 @ 2:54 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
