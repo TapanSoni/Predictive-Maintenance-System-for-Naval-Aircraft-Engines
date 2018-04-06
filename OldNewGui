@@ -309,3 +309,67 @@ anotherWindow.grid_columnconfigure(2, weight=1)
 
 anotherWindow.mainloop()
 #=============================================================================================================
+
+removed  code
+
+#Generates an array filled with 0's & 1's
+    # tags = tag.generate(tagPercentage, whole_data_set.size // 30)
+    # print("Generated Tags")
+
+    #Splits the data into 2 sections training and validation
+    #Note that this is done for both tags and the actual data
+    import SplitData as split
+
+    # split.split(whole_data_set, tags, valPercentage)
+    #
+    # trainingData = split.getTrainingData()
+    # trainingTags = split.getTrainingTags()
+    # validationData = split.getValidationData()
+    # validationTags = split.getValidationTags()
+
+    from sklearn.neural_network import MLPClassifier
+
+    # neural network (note might not want to use generated data with neural net)
+    # net = MLPClassifier(solver='lbfgs', shuffle=False,random_state=1, verbose=True)
+    # net.fit(trainingData, trainingTags)
+    # print(net.score(validationData,validationTags))
+    #
+    # percentageVariable = net.predict(predictionRow)
+
+
+# Naive Bayes
+    from sklearn.naive_bayes import GaussianNB
+
+    # guas = GaussianNB()
+    # guas.fit(trainingData, trainingTags)
+    # print(guas.score(validationData,validationTags))
+    # percentageVariable = guas.predict(predictionRow)
+
+    import KNeighbor as kneighbor
+
+    #kneighbor.classify(99,trainingData,trainingTags,validationData,validationTags)
+    #
+
+
+    import dtree as tree
+
+    #percentageVariable = tree.classify(trainingData,trainingTags,validationData,validationTags,predictionRow)
+
+    from sklearn import tree
+    from sklearn.linear_model import SGDClassifier
+    from sklearn.externals.six import StringIO
+    #from IPython.display import Image
+    from sklearn.tree import export_graphviz
+    #import pydotplus
+
+    # GradientBoostingClassifier
+    from sklearn.datasets import make_hastie_10_2
+    # from sklearn.ensemble import GradientBoostingClassifier
+    # print("Gradient Boosting Classifier: ")
+    # clf = GradientBoostingClassifier(n_estimators=50, learning_rate=1.0, max_depth=3, random_state=0).fit(trainingData,trainingTags)
+    # print(clf.score(validationData, validationTags))
+    # percentageVariable = clf.predict(predictionRow)
+
+    import LinearSVC as linear
+
+    #percentageVariable = linear.classify(trainingData,trainingTags,validationData,validationTags,predictionRow)
