@@ -30,6 +30,9 @@ from sklearn.svm import LinearSVC
 
 #LinearSVC
 
+#Classifier for LinearSVC takes in the data sets
+
+##=============================================================================================================
 def classify(trainingData,trainingTags,validationData,validationTags,predict):
     print("LinearSVC:")
     clf = LinearSVC()
@@ -37,3 +40,4 @@ def classify(trainingData,trainingTags,validationData,validationTags,predict):
     print(clf.score(validationData,validationTags))
     #print(clf.decision_function(validationData))
     return clf.predict(predict)
+#=============================================================================================================

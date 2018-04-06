@@ -40,8 +40,13 @@ import time
 from sklearn import preprocessing
 import pickle
 
-
+#the seeding allows for the same random at this point in the data every time
+#=============================================================================================================
 random.seed(1331)
+#=============================================================================================================
+
+
+#=============================================================================================================
 def bandr():
     start_time = time.time()
 
@@ -107,7 +112,10 @@ def bandr():
     # trainingTags = split.getTrainingTags()
     # validationData = split.getValidationData()
     # validationTags = split.getValidationTags()
+
+    # =============================================================================================================
     print("Split DATA")
+    # =============================================================================================================
 
     #Finds the minimum and maximum of each feature for the training set
     import FindMinAndMax as find
@@ -300,3 +308,4 @@ anotherWindow.grid_columnconfigure(1, weight=1)
 anotherWindow.grid_columnconfigure(2, weight=1)
 
 anotherWindow.mainloop()
+#=============================================================================================================

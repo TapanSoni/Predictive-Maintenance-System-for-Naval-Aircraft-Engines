@@ -30,5 +30,8 @@ Description:
 
 import numpy as np
 
+#takes in the CSV to obtain the data
+#=============================================================================================================
 def readIn(filePath):
     return np.genfromtxt(filePath, delimiter='\t') #File path for file you'd like to import
+#=============================================================================================================

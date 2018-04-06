@@ -24,14 +24,21 @@ Description:
 
 -----------------------------------------------------------------------------
 """
+#=============================================================================================================
+#importing the library/packages we need
 
 import random
 import numpy as np
+#=============================================================================================================
+
+#=============================================================================================================
+#These varibles are arrays that will hold training and validation data sets and tags
 
 trainingData = []
 trainingTags = []
 validationData = []
 validationTags = []
+#=============================================================================================================
 
 #Splits the data into 2 datasets one for training and the other for validation
 #Parameters are as follows
@@ -78,15 +85,22 @@ def split(whole_data_set,tags, percentage):
 
     print("Validation is this percentage: ", len(validationTags)/(len(validationTags)+len(trainingTags)))
 
-
+#=============================================================================================================
+#The following method will obtain the training data set
 def getTrainingData():
     return trainingData
+#=============================================================================================================
 
+#The following method will obtain the training tag data set
 def getTrainingTags():
     return trainingTags
+#=============================================================================================================
 
+#The following method will obtain the validation data set
 def getValidationData():
     return validationData
+#=============================================================================================================
 
+#The following method will obtain the validation tag data set
 def getValidationTags():
     return validationTags

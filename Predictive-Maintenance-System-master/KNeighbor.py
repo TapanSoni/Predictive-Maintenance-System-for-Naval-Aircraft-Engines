@@ -30,6 +30,8 @@ Description:
 import pickle
 from sklearn.neighbors import KNeighborsClassifier
 
+#This has serialization (pickling) of classifier as well as inputting the data to the classifier
+#=======================================================================================================================
 def classify(neighbor,trainingData,trainingTags,validationData,validationTags):
     print("Kneighbor:")
     classy = KNeighborsClassifier(n_neighbors=neighbor);
@@ -43,3 +45,4 @@ def classify(neighbor,trainingData,trainingTags,validationData,validationTags):
 
     output.close() #close output file
     # pkl_file.close() #close input file
+#=======================================================================================================================

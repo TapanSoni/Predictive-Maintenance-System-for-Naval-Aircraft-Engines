@@ -46,6 +46,8 @@ from sklearn import preprocessing
 #Generate takes three parameters
 #   min - the minimum bound
 #   max - the maximum bound
+
+#=============================================================================================================
 def generate(min, max,size):
     new_data_set = np.zeros((size, 30))
 
@@ -54,3 +56,4 @@ def generate(min, max,size):
             new_data_set[y][x] = random.uniform(min[x]/2, max[x]*2)
 
     return new_data_set
+#=============================================================================================================

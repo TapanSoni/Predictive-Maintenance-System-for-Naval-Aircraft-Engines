@@ -38,11 +38,13 @@ This is the browsefile() function. It is activated when the
 user presses the button "Browse" and it brings up the File
 Explorer where the user can select the source file
 """
+
+#=======================================================================================================================
 def browsefile():
     window.fileName = filedialog.askopenfilename(filetypes=( ("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
     print(window.fileName)
     fileNameDisplay.config(text=window.fileName)
-
+#=======================================================================================================================
 
 def clickKN():
     kn.config(bg="orange")
@@ -51,7 +53,7 @@ def clickKN():
     classifierConsole.config(text="K-Nearest Neighbor SELECTED")
     selection = 1
     print(selection)
-
+#=======================================================================================================================
 
 def clickDT():
     kn.config(bg="#F0F0F0")
@@ -60,7 +62,7 @@ def clickDT():
     classifierConsole.config(text="Decision Tree SELECTED")
     selection = 2
     print(selection)
-
+#=======================================================================================================================
 
 def clickLSVC():
     kn.config(bg="#F0F0F0")
@@ -69,12 +71,12 @@ def clickLSVC():
     classifierConsole.config(text="Linear SVC SELECTED")
     selection = 3
     print(selection)
-
+#=======================================================================================================================
 
 def clickRun():
     runClicked = 1
     print(runClicked)
-
+#=======================================================================================================================
 
 # Creating the main window
 window = Tk()
