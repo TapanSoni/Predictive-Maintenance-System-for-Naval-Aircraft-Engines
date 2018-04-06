@@ -312,20 +312,7 @@ anotherWindow.mainloop()
 
 removed  code
 
-#Generates an array filled with 0's & 1's
-    # tags = tag.generate(tagPercentage, whole_data_set.size // 30)
-    # print("Generated Tags")
 
-    #Splits the data into 2 sections training and validation
-    #Note that this is done for both tags and the actual data
-    import SplitData as split
-
-    # split.split(whole_data_set, tags, valPercentage)
-    #
-    # trainingData = split.getTrainingData()
-    # trainingTags = split.getTrainingTags()
-    # validationData = split.getValidationData()
-    # validationTags = split.getValidationTags()
 
     from sklearn.neural_network import MLPClassifier
 
