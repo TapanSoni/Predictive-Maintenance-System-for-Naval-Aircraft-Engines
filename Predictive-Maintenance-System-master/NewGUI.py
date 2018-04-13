@@ -54,7 +54,7 @@ def bandr():
     valPercentage = .1
 
     # Take in input
-    anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
+    anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ))
     #print(anotherWindow.fileName)
     fileNameDisplay.config(text=anotherWindow.fileName)
 
@@ -337,7 +337,7 @@ runButton.config(background="#79FF6D", font="fixedsys 9")
 fake_1.config(background="#EEF4EB")
 fake_2.config(background="#EEF4EB")
 anotherWindow.config(background="#EEF4EB")
-aboutButton.config(background="white")
+aboutButton.config(background="orange", font="fixedsys 9")
 
 # Giving position to the widgets and telling them to fill the area if resized
 fileNamePrompt.grid(row=0, column=1, sticky=NSEW)
