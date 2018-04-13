@@ -15,23 +15,12 @@ Product Owner:  Craig Wert
 -----------------------------------------------------------------------------
 
 Description:
- This is the importCSV.py file. It is responsible for taking in the .CSV
- file and assigning it to a variable.
+ This is the Kcluster.py file. The K cluster classifier is unsuppervised
+ machine learning that will be able to make predictions on the data set.
+
 
  Last edit: 4/1/18 @ 2:26 PM by Tapan Soni
 
 
 -----------------------------------------------------------------------------
 """
-
-#Written by Michael Matthews
-#Reads in dataset as an array.
-#Must have numpy installed to run
-
-import numpy as np
-
-#takes in the CSV to obtain the data
-#=============================================================================================================
-def readIn(filePath):
-    return np.genfromtxt(filePath, delimiter='\t') #File path for file you'd like to import
-#=============================================================================================================
