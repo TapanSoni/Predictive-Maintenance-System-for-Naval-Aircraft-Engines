@@ -54,7 +54,7 @@ def bandr():
     valPercentage = .1
 
     # Take in input
-    anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
+    anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
     #print(anotherWindow.fileName)
     fileNameDisplay.config(text=anotherWindow.fileName)
 
@@ -297,10 +297,16 @@ def bandr():
     # fileObject.close()
 
 
+def about():
+    aboutWindow = Tk()
+    aboutWindow.iconbitmap(r'RowanLogo.ico')
+    aboutWindow.title("About")
+    aboutWindow.geometry("400x500")
+
 anotherWindow = Tk()
 
 anotherWindow.iconbitmap(r'RowanLogo.ico')
-anotherWindow.geometry("370x200")
+anotherWindow.geometry("400x200")
 anotherWindow.title("Predictive Maintenance System")
 
 fileNamePrompt = Label(anotherWindow, text="Source")
@@ -320,6 +326,8 @@ timestampC = Label(anotherWindow, bg = "#F0F0F0", width="30")
 # fileNameBrowseButton = Button(anotherWindow, text="Browse", command=bandr)
 
 runButton = Button(anotherWindow, text="Browse & Run", command=bandr)
+aboutButton = Button(anotherWindow, text = "About", command=about)
+
 
 # Configurations of the widgets
 fileNamePrompt.config(font="fixedsys 9")
@@ -329,6 +337,7 @@ runButton.config(background="#79FF6D", font="fixedsys 9")
 fake_1.config(background="#EEF4EB")
 fake_2.config(background="#EEF4EB")
 anotherWindow.config(background="#EEF4EB")
+aboutButton.config(background="white")
 
 # Giving position to the widgets and telling them to fill the area if resized
 fileNamePrompt.grid(row=0, column=1, sticky=NSEW)
@@ -340,6 +349,7 @@ outputConsolePrompt.grid(row=4, column=1, sticky=NSEW)
 outputConsole.grid(row=5, column=1, sticky=NSEW)
 timestampC.grid(row=6, column=1, sticky=NSEW)
 timestamp.grid(row=7, column=1, sticky=NSEW)
+aboutButton.grid(row=8, column=1, sticky=NSEW)
 
 # The widgets will fill with the parent
 anotherWindow.grid_rowconfigure(0, weight=1)
@@ -351,8 +361,6 @@ anotherWindow.grid_rowconfigure(5, weight=1)
 anotherWindow.grid_rowconfigure(6, weight=1)
 anotherWindow.grid_rowconfigure(7, weight=1)
 anotherWindow.grid_rowconfigure(8, weight=1)
-anotherWindow.grid_rowconfigure(9, weight=1)
-anotherWindow.grid_rowconfigure(10, weight=1)
 
 anotherWindow.grid_columnconfigure(0, weight=1)
 anotherWindow.grid_columnconfigure(1, weight=1)
