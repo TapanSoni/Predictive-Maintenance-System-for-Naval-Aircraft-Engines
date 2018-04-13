@@ -46,7 +46,7 @@ def bandr():
     start_time = time.time()
 
     tagPercentage = .7
-    valPercentage = .2
+    valPercentage = .1
 
     # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
@@ -54,7 +54,9 @@ def bandr():
     fileNameDisplay.config(text=anotherWindow.fileName)
 
     #Import data into to a multidimenional array
-    testData = np.genfromtxt(anotherWindow.fileName, delimiter=',')
+    #whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
+    #print("datasize: ", whole_data_set.size//30)
+    #testData = np.genfromtxt(anotherWindow.fileName, delimiter=',') #the origanl
     print("Data imported")
 
     #max_abs_scaler = preprocessing.MaxAbsScaler()  # normalizes data
@@ -62,31 +64,110 @@ def bandr():
     # print("Data Nomalized")
 
     # testingData = []
-    # index = 50
-
-    # while(index<whole_data_set.size//30):
-    #     testingData.append(whole_data_set[index])
-    #     #whole_data_set = np.delete(whole_data_set, index, 0)
-    #     index += 100
-    #     print(index)
+    # index = 500000
+    # count = 500000
+    #
+    # while(count<509223):
+    #     #testingData.append(whole_data_set[index])
+    #     whole_data_set = np.delete(whole_data_set, index, 0)
+    #     count += 1
+    #     print(count)
+    #
+    # print(whole_data_set.size//30)
 
     import pickle
-    #outputTest = open("testData.pkl", 'wb') #open output file
-    #outputWhole = open("wholeData.pkl", 'wb')
+    #outputTest = open("testData_500k_501k.pkl", 'wb') #open output file
+    #outputWhole = open("wholeData_500k_501k.pkl", 'wb')
     #pickle.dump(testingData, outputTest)
     #pickle.dump(whole_data_set, outputWhole)
 
-    #pkl_file_test = open('testData.pkl', 'rb') # open input file
-    # pkl_file_whole = open('wholeData.pkl', 'rb') # open input file
+    pkl_file_test = open('testData.pkl', 'rb') # open input file
+    pkl_file_whole = open('wholeData.pkl', 'rb') # open input file
 
-    # whole_data_set = pickle.load(pkl_file_whole)
+    testData = pickle.load(pkl_file_test)
+    whole_data_set = pickle.load(pkl_file_whole)
+    #print(whole_data_set.data.shape)
+    from sklearn.cluster import KMeans
+    """
+    data = np.zeros(shape=(whole_data_set.size//30, 2))
+
+    for row in range(0, whole_data_set.size//30):
+        firstAverage = 0
+        secondAverage = 0
+        for column in range(0,25):
+            firstAverage += whole_data_set[row][column]
+        for column in range(25,30):
+            secondAverage += whole_data_set[row][column]
+        data[row][0] = firstAverage/25
+        data[row][1] = secondAverage/5
+
+    #print(data)
+
+    x_total = 0
+    y_total = 0
+    average = np.zeros(shape=(2,whole_data_set.size//30))
+
+    for row in range(0, whole_data_set.size//30):
+        x_total += data[row][0]
+        y_total += data[row][1]
+        average[0][row] = x_total/(row+1)
+        average[1][row] = y_total/(row+1)
+
+    #print(average)
+    
+    print(average[0])
+    print(average[1])
+
+    new_points = np.zeros(shape=(2,whole_data_set.size//30))
+
+    for row in range(0, whole_data_set.size//30):
+        new_points[0][row] = row
+        new_points[1][row] = (average[0][row] + average[1][row])/2
+
+    import matplotlib.pyplot as plt
+
+    plt.plot(new_points[0], new_points[1])
+    plt.show()
+
+    # for number in range(0,average.size//2):
+    #     print(average[number])
+
+    #print(whole_data_set)
+
+    #y = [0, 0, 0, 0, 0, 1]
+    """
+
+    from sklearn import mixture
+
+    #ok = mixture.GaussianMixture().fit(whole_data_set)
+
+
+    # for index in range(2, whole_data_set.size//30+1):
+    #     ok = KMeans(n_clusters=2,random_state=0).fit(whole_data_set[:index])
+    #     #print(ok.cluster_centers_)
+    #     print(index)
+
+    #print(ok)
+
+    average = 0
+    max = 0
+
+    # for index in range(0, len(testData)):
+    #     average += ok.predict([testData[index]])
+    #     print("prediction: ", ok.predict([testData[index]]))
+    #     if ok.predict([testData[index]]) > max:
+    #         max = ok.predict([testData[index]])
+    #
+    # print("average: ", average/len(testData))
+    # print("max: ", max)
+
     # whole_data_set = np.asarray(whole_data_set)
     #testData = pickle.load(pkl_file_test)
 
     #outputTest.close() #close output file
-    # outputWhole.close()
-    #pkl_file_test.close() # close input file
-    # pkl_file_whole.close()
+    #outputWhole.close()
+    pkl_file_test.close() # close input file
+    pkl_file_whole.close()
 
     # print("Test DATA size: ", len(testData))
     # print("Whole DATA size: ", len(whole_data_set))
@@ -94,28 +175,29 @@ def bandr():
     import GenerateTags as tag
 
     #Generates an array filled with 0's & 1's
-    # tags = tag.generate(tagPercentage, whole_data_set.size // 30)
+    tags = tag.generate(tagPercentage, whole_data_set.size // 30)
     # print("Generated Tags")
 
     #Splits the data into 2 sections training and validation
     #Note that this is done for both tags and the actual data
     import SplitData as split
 
-    # split.split(whole_data_set, tags, valPercentage)
-    #
-    # trainingData = split.getTrainingData()
-    # trainingTags = split.getTrainingTags()
-    # validationData = split.getValidationData()
-    # validationTags = split.getValidationTags()
+    print(whole_data_set.size//30)
+    split.split(whole_data_set, tags, valPercentage)
+
+    trainingData = split.getTrainingData()
+    trainingTags = split.getTrainingTags()
+    validationData = split.getValidationData()
+    validationTags = split.getValidationTags()
     print("Split DATA")
 
     #Finds the minimum and maximum of each feature for the training set
     import FindMinAndMax as find
 
-    # findingMinAndMax = find.FindMinAndMax(trainingData)
-    #
-    # minOf = findingMinAndMax.getMin()
-    # maxOf = findingMinAndMax.getMax()
+    findingMinAndMax = find.FindMinAndMax(trainingData)
+
+    minOf = findingMinAndMax.getMin()
+    maxOf = findingMinAndMax.getMax()
     #range = findingMinAndMax.getRan()
 
     # for index in range(0,30):
@@ -123,16 +205,16 @@ def bandr():
 
     #Generates new random data within the bounds of each feature
     import GenerateData as gen
-    # new_data_set = gen.generate(minOf, maxOf, len(trainingData))
-    # print("Generated New Data")
+    new_data_set = gen.generate(minOf, maxOf, len(trainingData))
+    print("Generated New Data")
 
     #Generates new tags to go along with the new data
-    # newTags = tag.generate(tagPercentage, new_data_set.size // 30)
+    newTags = tag.generate(tagPercentage, new_data_set.size // 30)
 
     # combines the old and new dataset in that order
     # Todo: maybe have it so that it randomly combines the dataset sets whilst maintaining sequential order
-    # trainingData = np.concatenate((trainingData, new_data_set), axis=0)
-    # trainingTags = np.concatenate((trainingTags, newTags), axis=0)
+    trainingData = np.concatenate((trainingData, new_data_set), axis=0)
+    trainingTags = np.concatenate((trainingTags, newTags), axis=0)
 
     timeForClassifier = time.time() #start timer for the classifier
 
@@ -155,11 +237,11 @@ def bandr():
 
     import KNeighbor as kneighbor
 
-    #kneighbor.classify(99,trainingData,trainingTags,validationData,validationTags)
-    #
-    pkl_file = open('classy.pkl', 'rb') #open input file
+    kneighbor.classify(99,trainingData,trainingTags,validationData,validationTags)
 
-    classy = pickle.load(pkl_file) #unpickle pickled file
+    #pkl_file = open('classy.pkl', 'rb') #open input file
+
+    #classy = pickle.load(pkl_file) #unpickle pickled file
     average = 0
 
     #testData = np.asarray(testData)
