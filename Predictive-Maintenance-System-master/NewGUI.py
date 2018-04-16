@@ -274,7 +274,7 @@ def about():
     aboutWindow = Tk()
     aboutWindow.iconbitmap(r'RowanLogo.ico')
     aboutWindow.title("About")
-    aboutWindow.geometry("400x400")
+    aboutWindow.geometry("400x430")
     titleText = Label(aboutWindow, text="Predictive Maintenance System")
     titleText.config(bg = "#EEF4EB", font="fixedsys 9")
     titleText.place(x=200, y=10, anchor="center")
@@ -332,6 +332,9 @@ def about():
 
     sponsor2 = Label(aboutWindow, text="2. Rukan Shao")
     sponsor2.place(x=0, y=380, anchor="w")
+
+    sponsor3 = Label(aboutWindow, text="3. Anuradha Bhat")
+    sponsor3.place(x=0, y=400, anchor="w")
 
 
 
