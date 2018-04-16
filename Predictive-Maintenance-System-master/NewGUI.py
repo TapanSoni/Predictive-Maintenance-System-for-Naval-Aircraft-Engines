@@ -53,7 +53,7 @@ def bandr():
     valPercentage = .15
 
     # Take in input
-    anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("txt files", ".txt"), ("CSV files", ".csv"), ("All files", "*.*")))
+    anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
     print(anotherWindow.fileName)
     fileNameDisplay.config(text=anotherWindow.fileName)
 
