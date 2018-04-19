@@ -37,6 +37,7 @@ import math
 import numpy as np
 import random
 import time
+import webbrowser
 from sklearn import preprocessing
 import pickle
 
@@ -274,7 +275,7 @@ def about():
     aboutWindow = Tk()
     aboutWindow.iconbitmap(r'RowanLogo.ico')
     aboutWindow.title("About")
-    aboutWindow.geometry("400x430")
+    aboutWindow.geometry("400x500")
     titleText = Label(aboutWindow, text="Predictive Maintenance System")
     titleText.config(bg = "#EEF4EB", font="fixedsys 9")
     titleText.place(x=200, y=10, anchor="center")
@@ -336,6 +337,23 @@ def about():
     sponsor3 = Label(aboutWindow, text="3. Anuradha Bhat")
     sponsor3.place(x=0, y=400, anchor="w")
 
+    # Link to the sample data files
+    libraryOfCSVFiles = Label(aboutWindow, text="Library of Sample Test Data - Drop Box Link", cursor="hand2",
+                              fg="brown", font="fixedsys 9")
+    libraryOfCSVFiles.place(x=200, y=420, anchor="center")
+    libraryOfCSVFiles.bind("<Button-1>", callback)
+
+    # Link to the github for our project
+    linkToGit = Label(aboutWindow, text="Source Code for Predictive Maintenance System", cursor="hand2",
+                      fg="brown", font="fixedsys 9")
+    linkToGit.place(x=200, y=440, anchor="center")
+    linkToGit.bind("<Button-1>", callback2)
+
+def callback(event):
+    webbrowser.open_new(r"https://www.dropbox.com/sh/ettb3cckfm3aus6/AABewPX7pRlnAXokqGAYM414a?dl=0")
+
+def callback2(event):
+    webbrowser.open_new("https://github.com/TapanSoni/SoftwareEngineeringFinalProject")
 
 
 anotherWindow = Tk()
