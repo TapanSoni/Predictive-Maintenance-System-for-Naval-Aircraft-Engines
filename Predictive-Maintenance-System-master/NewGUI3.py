@@ -18,7 +18,7 @@ class loginGUI:
         self.parent = root
         self.parent.title("Login")
         self.parent.iconbitmap(r'RowanLogo.ico')
-        self.parent.geometry("200x100")
+        self.parent.geometry("200x150")
         self.LoginWindow(root)
 
     def LoginWindow(self, root):
@@ -37,7 +37,7 @@ class loginGUI:
 
         self.usernameEntry.grid(row=0, column=1)
         self.passwordEntry.grid(row=1, column=1)
-        self.errorOrCorrect.grid(row = 2, column = 0, sticky = NSEW)
+        self.errorOrCorrect.grid(row = 2, column = 0, columnspan = 2)
 
         self.loginButton = Button(self.parent, text="Login", command=self.loginInButtonClicked)
         self.loginButton.grid(columnspan=2)
@@ -61,18 +61,16 @@ class loginGUI:
         # print(pbkdf2_sha256.encrypt(self.password, rounds = 2000000, ))
 
         # If everything is correct and move on
-        loggedIn = False
-
 
         if self.username == "admin" and self.password == "password":
-            self.errorOrCorrect.config(text = "Logging in...")
+            print("Correct login")
             self.mainWindow()
             self.parent.destroy()
         else:
             self.passwordEntry.delete(0, 'end')
             self.usernameEntry.delete(0, 'end')
             self.usernameEntry.focus_set()
-            self.errorOrCorrect.config(text = "Incorrect username or password. Try again")
+            self.errorOrCorrect.config(text = "Incorrect credentials")
 
     def mainWindow(self):
         self.anotherWindow = Tk()
