@@ -73,6 +73,8 @@ def bandr():
     #whole_data_set = max_abs_scaler.fit_transform(whole_data_set)
     # print("Data Nomalized")
 
+#Redo subsampling
+
     # testingData = []
     # index = 500000
     # count = 500000
@@ -147,67 +149,69 @@ def bandr():
     # trainingData = np.concatenate((trainingData, new_data_set), axis=0)
     # trainingTags = np.concatenate((trainingTags, newTags), axis=0)
 
+#Kcluster
+
     timeForClassifier = time.time() #start timer for the classifier
-
-    from sklearn.cluster import KMeans
-
-    data = np.zeros(shape=(whole_data_set.size // 30, 2))
-
-    for row in range(0, whole_data_set.size // 30):
-        firstAverage = 0
-        secondAverage = 0
-        for column in range(0, 15):
-            firstAverage += whole_data_set[row][column]
-        for column in range(15, 30):
-            secondAverage += whole_data_set[row][column]
-        data[row][0] = firstAverage / 2
-        data[row][1] = secondAverage / 2
-
-    whole_data_set = data
-    clusterCenters = [[0, 0]]
-    newTest = np.zeros(shape=(len(testData), 2))
-
-    for row in range(0, len(testData)):
-        firstAverage = 0
-        secondAverage = 0
-        for column in range(0, 15):
-            firstAverage += testData[row][column]
-        for column in range(15, 30):
-            secondAverage += testData[row][column]
-        newTest[row][0] = firstAverage / 2
-        newTest[row][1] = secondAverage / 2
-
-    index = whole_data_set.size // 2
-
-    newTest = np.concatenate((whole_data_set, newTest), axis=0)
-
-    average = 0
-
-    while index < len(newTest):
-        ok = KMeans(n_clusters=1, random_state=0).fit(newTest[:index])
-        if (ok.cluster_centers_[0][0] + ok.cluster_centers_[0][1] > 4.514):
-            average = 1
-            break
-        clusterCenters.append(ok.cluster_centers_[0])
-        index += 100
-
-    clusterCenters.pop(0)
-
-    import matplotlib.pyplot as plt
-
-    # pkl_file_whole = open('clusterCenters.pkl', 'rb') # open input file
-    # clusterCenters = pickle.load(pkl_file_whole)
     #
-    # pkl_file_whole.close()
-
-    sums = np.zeros(shape=(2, len(clusterCenters)))
-    averages = np.zeros(shape=(2, len(clusterCenters)))
-
-    for index in range(0, len(clusterCenters)):
-        averages[0][index] = index
-        averages[1][index] = (clusterCenters[index][0] + clusterCenters[index][1]) / 2
-        sums[0][index] = index
-        sums[1][index] = clusterCenters[index][0] + clusterCenters[index][1]
+    # from sklearn.cluster import KMeans
+    #
+    # data = np.zeros(shape=(whole_data_set.size // 30, 2))
+    #
+    # for row in range(0, whole_data_set.size // 30):
+    #     firstAverage = 0
+    #     secondAverage = 0
+    #     for column in range(0, 15):
+    #         firstAverage += whole_data_set[row][column]
+    #     for column in range(15, 30):
+    #         secondAverage += whole_data_set[row][column]
+    #     data[row][0] = firstAverage / 2
+    #     data[row][1] = secondAverage / 2
+    #
+    #whole_data_set = data
+    # clusterCenters = [[0, 0]]
+    # newTest = np.zeros(shape=(len(testData), 2))
+    #
+    # for row in range(0, len(testData)):
+    #     firstAverage = 0
+    #     secondAverage = 0
+    #     for column in range(0, 15):
+    #         firstAverage += testData[row][column]
+    #     for column in range(15, 30):
+    #         secondAverage += testData[row][column]
+    #     newTest[row][0] = firstAverage / 2
+    #     newTest[row][1] = secondAverage / 2
+    #
+    # index = whole_data_set.size // 2
+    #
+    # newTest = np.concatenate((whole_data_set, newTest), axis=0)
+    #
+    average = 0
+    #
+    # while index < len(newTest):
+    #     ok = KMeans(n_clusters=1, random_state=0).fit(newTest[:index])
+    #     if (ok.cluster_centers_[0][0] + ok.cluster_centers_[0][1] > 4.514):
+    #         average = 1
+    #         break
+    #     clusterCenters.append(ok.cluster_centers_[0])
+    #     index += 100
+    #
+    # clusterCenters.pop(0)
+    #
+    # import matplotlib.pyplot as plt
+    #
+    # # pkl_file_whole = open('clusterCenters.pkl', 'rb') # open input file
+    # # clusterCenters = pickle.load(pkl_file_whole)
+    # #
+    # # pkl_file_whole.close()
+    #
+    # sums = np.zeros(shape=(2, len(clusterCenters)))
+    # averages = np.zeros(shape=(2, len(clusterCenters)))
+    #
+    # for index in range(0, len(clusterCenters)):
+    #     averages[0][index] = index
+    #     averages[1][index] = (clusterCenters[index][0] + clusterCenters[index][1]) / 2
+    #     sums[0][index] = index
+    #     sums[1][index] = clusterCenters[index][0] + clusterCenters[index][1]
 
     # plt.plot(averages[0],averages[1])
     # plt.show()
