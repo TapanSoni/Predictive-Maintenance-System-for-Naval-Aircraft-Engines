@@ -40,8 +40,6 @@ import time
 import webbrowser
 from sklearn import preprocessing
 import pickle
-import traceback
-from tkinter.messagebox import showerror
 
 #the seeding allows for the same random at this point in the data every time
 #=============================================================================================================
@@ -52,17 +50,16 @@ random.seed(1331)
 def bandr():
     start_time = time.time()
 
-    tagPercentage = .99
+    tagPercentage = .93
     valPercentage = .15
-    msg = "Please select a file or exit"
 
+    # Take in input
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
     print(anotherWindow.fileName)
     fileNameDisplay.config(text=anotherWindow.fileName)
 
     #Import data into to a multidimenional array
     #whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
-
     testData = np.genfromtxt(anotherWindow.fileName, delimiter=',')
 
     #print("datasize: ", whole_data_set.size//30)
@@ -107,14 +104,14 @@ def bandr():
 
     #Generates an array filled with 0's & 1's
     #tags = tag.generate(tagPercentage, whole_data_set.size // 30)
-    print("Generated Tags")
+    # print("Generated Tags")
 
     # Splits the data into 2 sections training and validation
     # Note that this is done for both tags and the actual data
     import SplitData as split
 
-    # split.split(whole_data_set, tags, valPercentage)
-    #
+    #split.split(whole_data_set, tags, valPercentage)
+
     # trainingData = split.getTrainingData()
     # trainingTags = split.getTrainingTags()
     # validationData = split.getValidationData()
@@ -131,7 +128,7 @@ def bandr():
     #
     # minOf = findingMinAndMax.getMin()
     # maxOf = findingMinAndMax.getMax()
-    # #range = findingMinAndMax.getRan()
+    #range = findingMinAndMax.getRan()
 
     # for index in range(0,30):
     #     print("Range for row ", index, ": ", maxOf[index]-minOf[index])
@@ -220,13 +217,17 @@ def bandr():
 
     import KNeighbor as kneighbor
 
-    # kneighbor.classify(99,trainingData,trainingTags,validationData,validationTags)
+    #kneighbor.classify(299,trainingData,trainingTags,validationData,validationTags)
 
     #pkl_file = open('classy.pkl', 'rb') #open input file
 
     #classy = pickle.load(pkl_file) #unpickle pickled file
 
     #testData = np.asarray(testData)
+
+    #np.savetxt('testData.csv', testData, delimiter=',')
+
+    #np.savetxt('wholedataset.csv', whole_data_set_pickle, delimiter=',')
 
     indices = []
     #indices = np.asarray(indices)
@@ -237,6 +238,18 @@ def bandr():
     #     if count <= len(testData):
     #         indices.append(testData[count])
     #         count += 100
+    #
+    # import plotly.plotly as py
+    # import plotly.graph_objs as go
+    #
+    # trace = go.Scatter(
+    #     x = indices,
+    #     y = testData
+    # )
+    #
+    # data = [trace]
+    #
+    # py.plot(data, filename='testingResults')
     #
     #print("Average: ", average/len(testData))
 
@@ -261,18 +274,12 @@ def bandr():
     #
     # fileObject.close()
 
-"""
-This method is for the about button - The about button has the 
-purpose, instructions, team member names, sponsor names, and the
-links to the github repository for the code, and to the drop box
-link for the testing data
-"""
+
 def about():
     aboutWindow = Tk()
     aboutWindow.iconbitmap(r'RowanLogo.ico')
     aboutWindow.title("About")
-    aboutWindow.geometry("400x550")
-
+    aboutWindow.geometry("400x500")
     titleText = Label(aboutWindow, text="Predictive Maintenance System")
     titleText.config(bg = "#EEF4EB", font="fixedsys 9")
     titleText.place(x=200, y=10, anchor="center")
@@ -285,91 +292,72 @@ def about():
     forText.config(bg = "#EEF4EB", font="fixedsys 9")
     forText.place(x=200, y=50, anchor="center")
 
+    instructions = Label(aboutWindow, text="Instructions:", fg="brown")
+    instructions.config(bg = "#EEF4EB", font="fixedsys 9")
+    instructions.place(x=0, y=80, anchor="w")
+
+    firstInstruction = Label(aboutWindow, text="1. Click on the \"Browse & Run\" button")
+    firstInstruction.place(x=0, y=100, anchor="w")
+
+    secondInstruction = Label(aboutWindow, text="2. Once the file explorer pops up, select your .CSV file to test")
+    secondInstruction.place(x=0, y=120, anchor="w")
+
+    thirdInstruction = Label(aboutWindow, text="3. Wait for the program to finish. The output will be shown")
+    thirdInstruction.place(x=0, y=140, anchor="w")
+
+    thirdContinued = Label(aboutWindow, text="under the \"Browse & Run\" button")
+    thirdContinued.place(x=12, y=160, anchor="w")
+
+    teamMembers = Label(aboutWindow, text="Team Ostriches:", font="fixedsys 9", fg = "brown")
+    teamMembers.place(x=0, y=190, anchor="w")
+
+    productOwner = Label(aboutWindow, text="Product Owner: Craig Wert")
+    productOwner.place(x=0, y=210, anchor="w")
+
+    scrumMaster = Label(aboutWindow, text="Scrum Master: John Stranahan")
+    scrumMaster.place(x=0, y=230, anchor="w")
+
+    devTeam1 = Label(aboutWindow, text="Dev Team: Michael Matthews")
+    devTeam1.place(x=0, y=250, anchor="w")
+
+    devTeam2 = Label(aboutWindow, text="Dev Team: Tapan Soni")
+    devTeam2.place(x=0, y=270, anchor="w")
+
+    devTeam3 = Label(aboutWindow, text="Dev Team: Joshua Jackson")
+    devTeam3.place(x=0, y=290, anchor="w")
+
+    devTeam4 = Label(aboutWindow, text="Dev Team: Nicholas La Sala")
+    devTeam4.place(x=0, y=310, anchor="w")
+
+    sponsor = Label(aboutWindow, text="Sponsors: ", font="fixedsys 9", fg = "brown")
+    sponsor.place(x=0, y=340, anchor="w")
+
+    sponsor1 = Label(aboutWindow, text="1. Mike Berenato")
+    sponsor1.place(x=0, y=360, anchor="w")
+
+    sponsor2 = Label(aboutWindow, text="2. Rukan Shao")
+    sponsor2.place(x=0, y=380, anchor="w")
+
+    sponsor3 = Label(aboutWindow, text="3. Anuradha Bhat")
+    sponsor3.place(x=0, y=400, anchor="w")
+
     # Link to the sample data files
     libraryOfCSVFiles = Label(aboutWindow, text="Library of Sample Test Data - Drop Box Link", cursor="hand2",
-                              fg="brown",font="fixedsys 9")
-    libraryOfCSVFiles.place(x=200, y=70, anchor="center")
+                              fg="brown", font="fixedsys 9")
+    libraryOfCSVFiles.place(x=200, y=420, anchor="center")
     libraryOfCSVFiles.bind("<Button-1>", callback)
 
     # Link to the github for our project
-    linkToGit = Label(aboutWindow, text="Source Code - Github Link", cursor="hand2",
-                      fg="brown",font="fixedsys 9")
-    linkToGit.place(x=200, y=90, anchor="center")
+    linkToGit = Label(aboutWindow, text="Source Code for Predictive Maintenance System", cursor="hand2",
+                      fg="brown", font="fixedsys 9")
+    linkToGit.place(x=200, y=440, anchor="center")
     linkToGit.bind("<Button-1>", callback2)
-
-    """  Purpose of the project 
-     
-    The purpose of the PMS is to use machine learning to predict when an engine needs maintenance based on the
-    performance data provided by on-board sensors.
-    
-     """
-    purposeTitle = Label(aboutWindow, text="Purpose:", fg="brown", font="fixedsys 9")
-    purposeTitle.place(x=0, y=120, anchor="w")
-
-    purpose1 = Label(aboutWindow, text="The purpose of the Predictive Maintenance System is to predict")
-    purpose1.place(x=0, y=140, anchor="w")
-    purpose2 = Label(aboutWindow, text="whether or not a aircraft engine needs maintenance. It uses the")
-    purpose2.place(x=0, y=160, anchor="w")
-    purpose3 = Label(aboutWindow, text="K-Nearest Neighbor (KNN) Machine Learning algorithm.")
-    purpose3.place(x=0, y=180, anchor="w")
-
-
-    instructions = Label(aboutWindow, text="Instructions:", fg="brown")
-    instructions.config(bg = "#EEF4EB", font="fixedsys 9")
-    instructions.place(x=0, y=210, anchor="w")
-
-    firstInstruction = Label(aboutWindow, text="1. Click on the \"Browse & Run\" button")
-    firstInstruction.place(x=0, y=230, anchor="w")
-
-    secondInstruction = Label(aboutWindow, text="2. Once the file explorer pops up, select your .CSV file to test")
-    secondInstruction.place(x=0, y=250, anchor="w")
-
-    thirdInstruction = Label(aboutWindow, text="3. Wait for the program to finish. The output will be shown")
-    thirdInstruction.place(x=0, y=270, anchor="w")
-
-    thirdContinued = Label(aboutWindow, text="under the \"Browse & Run\" button")
-    thirdContinued.place(x=12, y=290, anchor="w")
-
-    teamMembers = Label(aboutWindow, text="Team Ostriches:", font="fixedsys 9", fg = "brown")
-    teamMembers.place(x=0, y=320, anchor="w")
-
-    productOwner = Label(aboutWindow, text="Product Owner: Craig Wert")
-    productOwner.place(x=0, y=340, anchor="w")
-
-    scrumMaster = Label(aboutWindow, text="Scrum Master: John Stranahan")
-    scrumMaster.place(x=0, y=360, anchor="w")
-
-    devTeam1 = Label(aboutWindow, text="Dev Team: Michael Matthews")
-    devTeam1.place(x=0, y=380, anchor="w")
-
-    devTeam2 = Label(aboutWindow, text="Dev Team: Tapan Soni")
-    devTeam2.place(x=0, y=400, anchor="w")
-
-    devTeam3 = Label(aboutWindow, text="Dev Team: Joshua Jackson")
-    devTeam3.place(x=0, y=420, anchor="w")
-
-    devTeam4 = Label(aboutWindow, text="Dev Team: Nicholas La Sala")
-    devTeam4.place(x=0, y=440, anchor="w")
-
-    sponsor = Label(aboutWindow, text="Sponsors: ", font="fixedsys 9", fg = "brown")
-    sponsor.place(x=0, y=470, anchor="w")
-
-    sponsor1 = Label(aboutWindow, text="1. Mike Berenato")
-    sponsor1.place(x=0, y=490, anchor="w")
-
-    sponsor2 = Label(aboutWindow, text="2. Rukan Shao")
-    sponsor2.place(x=0, y=510, anchor="w")
-
-    sponsor3 = Label(aboutWindow, text="3. Anuradha Bhat")
-    sponsor3.place(x=0, y=530, anchor="w")
-
 
 def callback(event):
     webbrowser.open_new(r"https://www.dropbox.com/sh/ettb3cckfm3aus6/AABewPX7pRlnAXokqGAYM414a?dl=0")
 
 def callback2(event):
     webbrowser.open_new("https://github.com/TapanSoni/SoftwareEngineeringFinalProject")
-
 
 
 anotherWindow = Tk()
@@ -395,7 +383,6 @@ timestampC = Label(anotherWindow, bg = "#F0F0F0", width="30")
 # fileNameBrowseButton = Button(anotherWindow, text="Browse", command=bandr)
 
 runButton = Button(anotherWindow, text="Browse & Run", command=bandr)
-
 aboutButton = Button(anotherWindow, text = "About", command=about)
 
 
@@ -435,7 +422,6 @@ anotherWindow.grid_rowconfigure(8, weight=1)
 anotherWindow.grid_columnconfigure(0, weight=1)
 anotherWindow.grid_columnconfigure(1, weight=1)
 anotherWindow.grid_columnconfigure(2, weight=1)
-
 
 anotherWindow.mainloop()
 #=============================================================================================================
