@@ -273,40 +273,47 @@ class loginGUI:
         self.fileNameDisplay.config(text= self.fileName)
 
         # Parse the csv file
-        self.testData = np.genfromtxt(self.fileName, delimiter = ",")
 
-        print("Data imported")
+        try:
+            self.testData = np.genfromtxt(self.fileName, delimiter = ",")
 
-        # Start the timer for the classifier
-        self.timeForClassifier = time.time()
+            print("Data imported")
 
-        self.average = 0
+            # Start the timer for the classifier
+            self.timeForClassifier = time.time()
 
-        # Open the input file - the pickled classifier
-        self.pkl_file = open('classy.pkl', 'rb')
+            self.average = 0
 
-        # Unpickle the pickled classifier
-        self.classy = pickle.load(self.pkl_file)
+            # Open the input file - the pickled classifier
+            self.pkl_file = open('classy.pkl', 'rb')
 
-        for self.index in range(0, len(self.testData)):
-            self.average += self.classy.predict([self.testData[self.index]])
+            # Unpickle the pickled classifier
+            self.classy = pickle.load(self.pkl_file)
 
-        self.average = self.average / len(self.testData)
+            for self.index in range(0, len(self.testData)):
+                self.average += self.classy.predict([self.testData[self.index]])
 
-        print("Average: ", self.average)
+            self.average = self.average / len(self.testData)
 
-        # Compute the time for the classifier
-        self.timeForClassifier = time.time() - self.timeForClassifier
+            print("Average: ", self.average)
 
-        if self.average < .5:
-            self.outputConsole.config(text = "No - Everything is OK")
-        else:
-            self.outputConsole.config(text = "Yes - Maintenance needed")
+            # Compute the time for the classifier
+            self.timeForClassifier = time.time() - self.timeForClassifier
 
-        self.totalTime = time.time() - self.startTime
-        print("********* %s seconds *********" % self.totalTime)
-        self.timestampC.config(text="Classifier Run Time: %s seconds" % self.timeForClassifier)
-        self.timestamp.config(text="  Total Time Elapsed: %s seconds" % self.totalTime)
+            if self.average < .5:
+                self.outputConsole.config(text = "No - Everything is OK")
+            else:
+                self.outputConsole.config(text = "Yes - Maintenance needed")
+
+            self.totalTime = time.time() - self.startTime
+            print("********* %s seconds *********" % self.totalTime)
+            self.timestampC.config(text="Classifier Run Time: %s seconds" % self.timeForClassifier)
+            self.timestamp.config(text="  Total Time Elapsed: %s seconds" % self.totalTime)
+        except IOError:
+            print("No file selected")
+            # self.outputConsole.config(text = "No file selected")
+            # self.timestampC.config(text = "Classifier Run Time: %s seconds" % 0)
+            # self.timestamp.config(text = "Total Time Elapsed: %s seconds" % 0)
 
     # Training GUI:
     def trainingAlgo(self):
