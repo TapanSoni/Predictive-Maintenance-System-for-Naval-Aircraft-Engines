@@ -315,6 +315,7 @@ class loginGUI:
             # self.timestampC.config(text = "Classifier Run Time: %s seconds" % 0)
             # self.timestamp.config(text = "Total Time Elapsed: %s seconds" % 0)
 
+
     # Training GUI:
     def trainingAlgo(self):
         print("Goodbye World!")
