@@ -12,6 +12,8 @@ from passlib import *
 from passlib.hash import pbkdf2_sha256
 from ilio import read
 
+random.seed(1331)
+
 
 class loginGUI:
     def __init__(self, root):
@@ -19,6 +21,7 @@ class loginGUI:
         self.parent.title("Login")
         self.parent.iconbitmap(r'RowanLogo.ico')
         self.parent.geometry("200x150")
+        self.selection = -1
         self.LoginWindow(root)
 
     def LoginWindow(self, root):
@@ -26,22 +29,35 @@ class loginGUI:
         self.passwordPrompt = Label(root, text="Password")
         self.errorOrCorrect = Label(root)
 
+        self.radioButtonVariable = IntVar()
+
+        self.predictButt = Radiobutton(root, text = "Predict", variable = self.radioButtonVariable, value = 1,
+                                       command = self.selectPredict)
+        self.trainButt = Radiobutton(root, text = "Train", variable = self.radioButtonVariable, value = 2,
+                                       command = self.selectTrain)
+
+        self.loginButton = Button(self.parent, text="Login", command=self.loginInButtonClicked)
+        self.loginButton.grid(row = 5, columnspan=2)
+        self.loginButton.config(font="fixedsys 9")
+
         self.usernamePrompt.config(font="fixedsys 9")
         self.passwordPrompt.config(font="fixedsys 9")
 
         self.usernameEntry = Entry()
         self.passwordEntry = Entry(show=" ")
 
-        self.usernamePrompt.grid(row=0, sticky=E)
-        self.passwordPrompt.grid(row=1, sticky=E)
+        self.usernamePrompt.place(x = 0, y = 10, anchor = "w")
+        self.passwordPrompt.place(x = 0, y = 30, anchor = "w")
 
-        self.usernameEntry.grid(row=0, column=1)
-        self.passwordEntry.grid(row=1, column=1)
-        self.errorOrCorrect.grid(row = 2, column = 0, columnspan = 2)
+        self.usernameEntry.place(x = 70, y = 10, anchor = "w")
+        self.passwordEntry.place(x = 70, y = 30, anchor = "w")
 
-        self.loginButton = Button(self.parent, text="Login", command=self.loginInButtonClicked)
-        self.loginButton.grid(columnspan=2)
-        self.loginButton.config(font="fixedsys 9")
+        self.predictButt.place(x = 70, y = 50, anchor = "w")
+        self.trainButt.place(x = 70, y = 70, anchor = "w")
+
+        self.errorOrCorrect.place(x = 100, y = 90, anchor = "center")
+        self.loginButton.place(x = 100, y = 115, anchor = "center")
+
 
     def loginInButtonClicked(self):
         print("Login Button Clicked")
@@ -54,23 +70,18 @@ class loginGUI:
         print("Username: ", str(self.username))
         print("Password: ", str(self.password))
 
-        # content = read('password.txt')
-
-        # print("Content from file: ", content)
-
-        # print(pbkdf2_sha256.encrypt(self.password, rounds = 2000000, ))
-
-        # If everything is correct and move on
-
-        if self.username == "admin" and self.password == "password":
+        if self.username == "admin" and self.password == "password" and (self.selection == 1 or self.selection == 0):
             print("Correct login")
             self.mainWindow()
             self.parent.destroy()
-        else:
+        elif self.username != "admin" or self.password != "password":
             self.passwordEntry.delete(0, 'end')
             self.usernameEntry.delete(0, 'end')
             self.usernameEntry.focus_set()
             self.errorOrCorrect.config(text = "Incorrect credentials")
+        elif self.selection != 0 or self.selection != 1:
+            self.errorOrCorrect.config(text = "Select an option")
+
 
     def mainWindow(self):
         self.anotherWindow = Tk()
@@ -90,7 +101,7 @@ class loginGUI:
         self.timestamp = Label(self.anotherWindow, bg="#F0F0F0", width="30")
         self.timestampC = Label(self.anotherWindow, bg="#F0F0F0", width="30")
 
-        self.runButton = Button(self.anotherWindow, text="Browse & Run", command=self.bandr)
+        self.runButton = Button(self.anotherWindow, text="Browse & Run", command=self.trainOrPredict)
 
         self.aboutButton = Button(self.anotherWindow, text="About", command=self.about)
 
@@ -235,8 +246,71 @@ class loginGUI:
     def callback2(self, event):
         webbrowser.open_new("https://github.com/TapanSoni/SoftwareEngineeringFinalProject")
 
+    def selectPredict(self):
+        self.selection = 0
+        print(self.selection)
+
+    def selectTrain(self):
+        self.selection = 1
+        print(self.selection)
+
+    def trainOrPredict(self):
+        if self.selection == 0:
+            self.bandr()
+        else:
+            self.trainingAlgo()
+
+    # Predicting GUI
     def bandr(self):
         print("Hello World!")
+
+        # Start the count
+        self.startTime = time.time()
+
+        # Take in input
+        self.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
+        print(self.fileName)
+        self.fileNameDisplay.config(text= self.fileName)
+
+        # Parse the csv file
+        self.testData = np.genfromtxt(self.fileName, delimiter = ",")
+
+        print("Data imported")
+
+        # Start the timer for the classifier
+        self.timeForClassifier = time.time()
+
+        self.average = 0
+
+        # Open the input file - the pickled classifier
+        self.pkl_file = open('classy.pkl', 'rb')
+
+        # Unpickle the pickled classifier
+        self.classy = pickle.load(self.pkl_file)
+
+        for self.index in range(0, len(self.testData)):
+            self.average += self.classy.predict([self.testData[self.index]])
+
+        self.average = self.average / len(self.testData)
+
+        print("Average: ", self.average)
+
+        # Compute the time for the classifier
+        self.timeForClassifier = time.time() - self.timeForClassifier
+
+        if self.average < .5:
+            self.outputConsole.config(text = "No - Everything is OK")
+        else:
+            self.outputConsole.config(text = "Yes - Maintenance needed")
+
+        self.totalTime = time.time() - self.startTime
+        print("********* %s seconds *********" % self.totalTime)
+        self.timestampC.config(text="Classifier Run Time: %s seconds" % self.timeForClassifier)
+        self.timestamp.config(text="  Total Time Elapsed: %s seconds" % self.totalTime)
+
+    # Training GUI:
+    def trainingAlgo(self):
+        print("Goodbye World!")
 
 
 if __name__ == '__main__':
