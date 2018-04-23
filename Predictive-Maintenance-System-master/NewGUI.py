@@ -59,11 +59,12 @@ def bandr():
     anotherWindow.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
     print(anotherWindow.fileName)
     fileNameDisplay.config(text=anotherWindow.fileName)
-
+    try:
     #Import data into to a multidimenional array
     #whole_data_set = np.genfromtxt(anotherWindow.fileName, delimiter='\t')
-
-    testData = np.genfromtxt(anotherWindow.fileName, delimiter=',')
+        testData = np.genfromtxt(anotherWindow.fileName, delimiter=',')
+    except IOError:
+        print("No file selected")
 
     #print("datasize: ", whole_data_set.size//30)
     #testData = np.genfromtxt(anotherWindow.fileName, delimiter=',') #the origanl

@@ -75,7 +75,6 @@ def bandr():
     pkl_file = open('classy.pkl', 'rb') #open input file
     classy = pickle.load(pkl_file) #unpickle pickled file
 
-
     for index in range(0, len(testData)):
         average += classy.predict([testData[index]])
 
