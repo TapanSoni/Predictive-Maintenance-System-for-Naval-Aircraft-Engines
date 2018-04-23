@@ -49,7 +49,7 @@ random.seed(1331)
 def bandr():
     start_time = time.time()
 
-    tagPercentage = .93
+    tagPercentage = .99
     valPercentage = .15
 
     # Take in input
@@ -101,14 +101,14 @@ def bandr():
 
     #Generates an array filled with 0's & 1's
     #tags = tag.generate(tagPercentage, whole_data_set.size // 30)
-    # print("Generated Tags")
+    print("Generated Tags")
 
     # Splits the data into 2 sections training and validation
     # Note that this is done for both tags and the actual data
     import SplitData as split
 
-    #split.split(whole_data_set, tags, valPercentage)
-
+    # split.split(whole_data_set, tags, valPercentage)
+    #
     # trainingData = split.getTrainingData()
     # trainingTags = split.getTrainingTags()
     # validationData = split.getValidationData()
@@ -125,7 +125,7 @@ def bandr():
     #
     # minOf = findingMinAndMax.getMin()
     # maxOf = findingMinAndMax.getMax()
-    #range = findingMinAndMax.getRan()
+    # #range = findingMinAndMax.getRan()
 
     # for index in range(0,30):
     #     print("Range for row ", index, ": ", maxOf[index]-minOf[index])
@@ -212,17 +212,13 @@ def bandr():
 
     import KNeighbor as kneighbor
 
-    #kneighbor.classify(299,trainingData,trainingTags,validationData,validationTags)
+    # kneighbor.classify(99,trainingData,trainingTags,validationData,validationTags)
 
     #pkl_file = open('classy.pkl', 'rb') #open input file
 
     #classy = pickle.load(pkl_file) #unpickle pickled file
 
     #testData = np.asarray(testData)
-
-    #np.savetxt('testData.csv', testData, delimiter=',')
-
-    #np.savetxt('wholedataset.csv', whole_data_set_pickle, delimiter=',')
 
     indices = []
     #indices = np.asarray(indices)
@@ -233,18 +229,6 @@ def bandr():
     #     if count <= len(testData):
     #         indices.append(testData[count])
     #         count += 100
-    #
-    # import plotly.plotly as py
-    # import plotly.graph_objs as go
-    #
-    # trace = go.Scatter(
-    #     x = indices,
-    #     y = testData
-    # )
-    #
-    # data = [trace]
-    #
-    # py.plot(data, filename='testingResults')
     #
     #print("Average: ", average/len(testData))
 
