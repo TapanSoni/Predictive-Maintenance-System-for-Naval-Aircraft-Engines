@@ -54,9 +54,9 @@ class loginGUI:
         print("Username: ", str(self.username))
         print("Password: ", str(self.password))
 
-        content = read('password.txt')
+        # content = read('password.txt')
 
-        print("Content from file: ", content)
+        # print("Content from file: ", content)
 
         # print(pbkdf2_sha256.encrypt(self.password, rounds = 2000000, ))
 
@@ -65,13 +65,13 @@ class loginGUI:
 
 
         if self.username == "admin" and self.password == "password":
-            loggedIn = True
             self.errorOrCorrect.config(text = "Logging in...")
             self.mainWindow()
             self.parent.destroy()
         else:
-            self.usernameEntry.delete(0, 'end')
             self.passwordEntry.delete(0, 'end')
+            self.usernameEntry.delete(0, 'end')
+            self.usernameEntry.focus_set()
             self.errorOrCorrect.config(text = "Incorrect username or password. Try again")
 
     def mainWindow(self):
