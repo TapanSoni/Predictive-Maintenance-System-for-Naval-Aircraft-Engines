@@ -8,9 +8,6 @@ import time
 import webbrowser
 from sklearn import preprocessing
 import pickle
-from passlib import *
-from passlib.hash import pbkdf2_sha256
-from ilio import read
 
 random.seed(1331)
 
@@ -287,6 +284,7 @@ class loginGUI:
         # Inside a Try/Except block to catch the IO Error thrown when
         # no file is selected - fixed the bug
         try:
+            self.fileNameDisplay.config(text = "")
             self.testData = np.genfromtxt(self.fileName, delimiter = ",")
 
             print("Data imported")
@@ -323,6 +321,7 @@ class loginGUI:
             self.timestamp.config(text="  Total Time Elapsed: %s seconds" % self.totalTime)
         except IOError:
             print("No file selected")
+            self.fileNameDisplay.config(text = "No file selected")
 
 
     # Training GUI:
