@@ -19,7 +19,7 @@ class loginGUI:
         self.parent = root
         self.parent.title("Login")
         self.parent.iconbitmap(r'RowanLogo.ico')
-        self.parent.geometry("200x150")
+        self.parent.geometry("200x200")
         self.selection = -1
         self.LoginWindow(root)
 
@@ -35,7 +35,11 @@ class loginGUI:
         self.trainButt = Radiobutton(root, text = "Train", variable = self.radioButtonVariable, value = 2,
                                        command = self.selectTrain)
 
-        self.loginButton = Button(self.parent, text="Login", command=self.loginInButtonClicked)
+        self.loginButton = Button(root, text="Login", command=self.loginInButtonClicked)
+
+        self.aboutButton = Button(root, text="About", command=self.about)
+        self.aboutButton.config(background="orange", font="fixedsys 9")
+
         self.loginButton.grid(row = 5, columnspan=2)
         self.loginButton.config(font="fixedsys 9")
 
@@ -57,6 +61,7 @@ class loginGUI:
         self.errorOrCorrect.place(x = 100, y = 90, anchor = "center")
         self.loginButton.place(x = 100, y = 115, anchor = "center")
 
+        self.aboutButton.place(x = 100, y = 155, anchor = 'center')
 
     def loginInButtonClicked(self):
         print("Login Button Clicked")
@@ -102,7 +107,14 @@ class loginGUI:
 
         self.runButton = Button(self.anotherWindow, text="Browse & Run", command=self.trainOrPredict)
 
-        self.aboutButton = Button(self.anotherWindow, text="About", command=self.about)
+        self.trainOrPredictLabel = "Blah"
+
+        if self.selection == 1:
+            self.trainOrPredictLabel = "Training Mode"
+        else:
+            self.trainOrPredictLabel = "Predicting Mode"
+
+        self.trainOrPredictLabel = Label(self.anotherWindow, text = self.trainOrPredictLabel, font = "fixedsys 9")
 
         # Configurations of the widgets
         self.fileNamePrompt.config(font="fixedsys 9")
@@ -112,7 +124,7 @@ class loginGUI:
         self.fake_1.config(background="#EEF4EB")
         self.fake_2.config(background="#EEF4EB")
         self.anotherWindow.config(background="#EEF4EB")
-        self.aboutButton.config(background="orange", font="fixedsys 9")
+
 
         # Giving position to the widgets and telling them to fill the area if resized
         self.fileNamePrompt.grid(row=0, column=1, sticky=NSEW)
@@ -124,7 +136,7 @@ class loginGUI:
         self.outputConsole.grid(row=5, column=1, sticky=NSEW)
         self.timestampC.grid(row=6, column=1, sticky=NSEW)
         self.timestamp.grid(row=7, column=1, sticky=NSEW)
-        self.aboutButton.grid(row=8, column=1, sticky=NSEW)
+        self.trainOrPredictLabel.grid(row = 8, column = 1, sticky = NSEW)
 
         # The widgets will fill with the parent
         self.anotherWindow.grid_rowconfigure(0, weight=1)
@@ -172,12 +184,13 @@ class loginGUI:
         self.linkToGit.place(x=200, y=90, anchor="center")
         self.linkToGit.bind("<Button-1>", self.callback2)
 
-        """  Purpose of the project 
+        """  
+        Purpose of the project 
 
         The purpose of the PMS is to use machine learning to predict when an engine needs maintenance based on the
         performance data provided by on-board sensors.
 
-         """
+        """
         self.purposeTitle = Label(self.aboutWindow, text="Purpose:", fg="brown", font="fixedsys 9")
         self.purposeTitle.place(x=0, y=120, anchor="w")
 
@@ -310,15 +323,58 @@ class loginGUI:
             self.timestamp.config(text="  Total Time Elapsed: %s seconds" % self.totalTime)
         except IOError:
             print("No file selected")
-            # self.outputConsole.config(text = "No file selected")
-            # self.timestampC.config(text = "Classifier Run Time: %s seconds" % 0)
-            # self.timestamp.config(text = "Total Time Elapsed: %s seconds" % 0)
 
 
     # Training GUI:
     def trainingAlgo(self):
         print("Goodbye World!")
 
+        self.startTime = time.time()
+
+        self.tagPercentage = .93
+        self.valPercentage = .15
+
+        # Take in input
+        self.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
+        print(self.fileName)
+        self.fileNameDisplay.config(text=self.fileName)
+
+        try:
+            # Import data into a multidimensional array
+            self.whole_data_set = np.genfromtxt(self.fileName, delimiter = '\t')
+            self.testData = np.genfromtxt(self.fileName, delimiter = ',')
+
+            print("Data size: ", self.whole_data_set//30)
+
+            # The original
+            self.testData = np.genfromtxt(self.fileName, delimiter = ',')
+
+            print("Data imported")
+
+            # Normalize the data
+            self.max_abs_scaler = preprocessing.MaxAbsScaler()
+            self.whole_data_set = self.max_abs_scaler.fit_transform(self.whole_data_set)
+
+            print("Data normalized")
+
+            # Redo sub-sampling
+            self.testingData = []
+            self.index = 5000000
+            self.count = 5000000
+
+            while (self.count < 509223):
+                self.testingData.append(self.whole_data_set[self.index])
+                self.whole_data_set = np.delete(self.whole_data_set, self.index, 0)
+                self.count += 1
+                print(self.count)
+
+            print(self.whole_data_set//30)
+
+            # Open the output file
+            print("Hello World")
+
+        except IOError:
+            print("No file selected")
 
 if __name__ == '__main__':
     root = Tk()
