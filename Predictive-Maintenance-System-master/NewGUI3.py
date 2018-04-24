@@ -14,7 +14,6 @@ from ilio import read
 
 random.seed(1331)
 
-
 class loginGUI:
     def __init__(self, root):
         self.parent = root
@@ -72,8 +71,8 @@ class loginGUI:
 
         if self.username == "admin" and self.password == "password" and (self.selection == 1 or self.selection == 0):
             print("Correct login")
-            self.mainWindow()
             self.parent.destroy()
+            self.mainWindow()
         elif self.username != "admin" or self.password != "password":
             self.passwordEntry.delete(0, 'end')
             self.usernameEntry.delete(0, 'end')
@@ -272,8 +271,8 @@ class loginGUI:
         print(self.fileName)
         self.fileNameDisplay.config(text= self.fileName)
 
-        # Parse the csv file
-
+        # Inside a Try/Except block to catch the IO Error thrown when
+        # no file is selected - fixed the bug
         try:
             self.testData = np.genfromtxt(self.fileName, delimiter = ",")
 
