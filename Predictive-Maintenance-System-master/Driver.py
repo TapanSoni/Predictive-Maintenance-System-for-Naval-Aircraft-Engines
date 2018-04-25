@@ -95,7 +95,12 @@ class loginGUI:
         self.anotherWindow.iconbitmap(r'RowanLogo.ico')
         self.anotherWindow.geometry("400x200")
         self.fileNamePrompt = Label(self.anotherWindow, text="Source")
-        self.outputConsolePrompt = Label(self.anotherWindow, text="Maintenance Needed (Yes or No)")
+        self.outputConsolePrompt = Label(self.anotherWindow)
+
+        if self.selection == 0:
+            self.outputConsolePrompt.config(text = "Maintenance Needed (Yes or No)")
+        else:
+            self.outputConsolePrompt.config(text = "Accuracy")
 
         # Labels for output or showing selections
         self.fileNameDisplay = Label(self.anotherWindow, bg="white", width="30")  # Where the source file will be shown
@@ -343,10 +348,13 @@ class loginGUI:
         self.fileNameDisplay.config(text=self.fileName)
 
         try:
+
             # Import data into a multidimensional array
             self.whole_data_set = np.genfromtxt(self.fileName, delimiter = '\t')
 
             print("Data imported")
+
+            self.trainingTime = time.time()
 
             # Normalize the data
             self.max_abs_scaler = preprocessing.MaxAbsScaler()
@@ -382,7 +390,24 @@ class loginGUI:
             self.trainingData = np.concatenate((self.trainingData, self.new_data_set), axis=0)
             self.trainingTags = np.concatenate((self.trainingTags, self.newTags), axis=0)
 
-            accuracy = kneighbor.classify(self.neighborNumber, self.trainingData, self.trainingTags, self.validationData, self.validationTags)
+            self.accuracy = kneighbor.classify(self.neighborNumber, self.trainingData, self.trainingTags, self.validationData, self.validationTags)
+
+            # Training time
+            self.trainingTime = time.time() - self.trainingTime
+
+            # Total time
+
+            self.startTime = time.time() - self.startTime
+
+
+            self.outputConsole.config(text = (self.accuracy * 100))
+
+            # Output training time
+            self.timestampC.config(text = "Classifier Training Time: %s" % self.trainingTime)
+
+            # Output total training time
+            self.timestamp.config(text = "Total Training Time: %s" % self.startTime)
+
 
         except IOError:
             print("No file selected for training")
