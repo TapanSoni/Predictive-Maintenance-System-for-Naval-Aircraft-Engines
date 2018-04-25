@@ -382,7 +382,7 @@ class loginGUI:
             self.trainingData = np.concatenate((self.trainingData, self.new_data_set), axis=0)
             self.trainingTags = np.concatenate((self.trainingTags, self.newTags), axis=0)
 
-            kneighbor.classify(self.neighborNumber, self.trainingData, self.trainingTags, self.validationData, self.validationTags)
+            accuracy = kneighbor.classify(self.neighborNumber, self.trainingData, self.trainingTags, self.validationData, self.validationTags)
 
         except IOError:
             print("No file selected for training")

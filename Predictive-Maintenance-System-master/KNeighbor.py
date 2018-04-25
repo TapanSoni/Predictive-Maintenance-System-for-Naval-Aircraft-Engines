@@ -42,8 +42,11 @@ def classify(neighbor,trainingData,trainingTags,validationData,validationTags):
 
     # classy = pickle.load(pkl_file) #unpickle pickled file
     print("Score:")
-    print(classy.score(validationData,validationTags)) #how successful the test was
+    accuracy = classy.score(validationData,validationTags)
+    print(accuracy) #how successful the test was
 
     output.close() #close output file
     # pkl_file.close() #close input file
+
+    return accuracy
 #=======================================================================================================================
