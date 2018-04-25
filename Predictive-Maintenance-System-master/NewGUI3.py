@@ -295,7 +295,7 @@ class loginGUI:
             self.average = 0
 
             # Open the input file - the pickled classifier
-            self.pkl_file = open('classy.pkl', 'rb')
+            self.pkl_file = open('classy_500.pkl', 'rb')
 
             # Unpickle the pickled classifier
             self.classy = pickle.load(self.pkl_file)
