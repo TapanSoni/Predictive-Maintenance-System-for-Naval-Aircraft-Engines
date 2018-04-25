@@ -279,7 +279,6 @@ class loginGUI:
         # Take in input
         self.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
         print(self.fileName)
-        self.fileNameDisplay.config(text= self.fileName)
 
         # Inside a Try/Except block to catch the IO Error thrown when
         # no file is selected - fixed the bug
@@ -315,13 +314,15 @@ class loginGUI:
             else:
                 self.outputConsole.config(text = "Yes - Maintenance needed")
 
+            self.fileNameDisplay.config(text = self.fileName)
+
             self.totalTime = time.time() - self.startTime
             print("********* %s seconds *********" % self.totalTime)
             self.timestampC.config(text="Classifier Run Time: %s seconds" % self.timeForClassifier)
             self.timestamp.config(text="  Total Time Elapsed: %s seconds" % self.totalTime)
         except IOError:
             print("No file selected")
-            self.fileNameDisplay.config(text = "No file selected")
+            self.fileNameDisplay.config(text = "No file selected for prediction")
 
 
     # Training GUI:
@@ -377,7 +378,7 @@ class loginGUI:
             """
 
         except IOError:
-            print("No file selected")
+            print("No file selected for training")
 
 if __name__ == '__main__':
     root = Tk()
