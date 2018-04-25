@@ -384,13 +384,6 @@ class loginGUI:
 
             kneighbor.classify(self.neighborNumber, self.trainingData, self.trainingTags, self.validationData, self.validationTags)
 
-            # Open the output file
-            print("Hello World")
-
-            """
-            NOT DONE YET - STILL NEED TO FINISH THIS
-            """
-
         except IOError:
             print("No file selected for training")
 
