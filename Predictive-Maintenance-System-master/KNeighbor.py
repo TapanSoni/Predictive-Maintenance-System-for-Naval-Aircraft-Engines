@@ -33,16 +33,17 @@ from sklearn.neighbors import KNeighborsClassifier
 #This has serialization (pickling) of classifier as well as inputting the data to the classifier
 #=======================================================================================================================
 def classify(neighbor,trainingData,trainingTags,validationData,validationTags):
-    print("Kneighbor:")
+    print("Kneighbor")
     classy = KNeighborsClassifier(n_neighbors=neighbor);
     classy = classy.fit(trainingData, trainingTags) #change name of classy
-    output = open("classy.pkl", 'wb') #open output file
-    pickle.dump(classy, output) #pickle classifier
+    # output = open("classy_500.pkl", 'wb') #open output file
+    # pickle.dump(classy, output) #pickle classifier
     # pkl_file = open('classy.pkl', 'rb') #open input file
 
     # classy = pickle.load(pkl_file) #unpickle pickled file
+    print("Score:")
     print(classy.score(validationData,validationTags)) #how successful the test was
 
-    output.close() #close output file
+    # output.close() #close output file
     # pkl_file.close() #close input file
 #=======================================================================================================================

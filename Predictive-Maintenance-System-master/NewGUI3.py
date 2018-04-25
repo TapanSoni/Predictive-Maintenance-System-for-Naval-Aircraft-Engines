@@ -8,6 +8,11 @@ import time
 import webbrowser
 from sklearn import preprocessing
 import pickle
+import GenerateTags as tag
+import SplitData as split
+import FindMinAndMax as find
+import GenerateData as gen
+import KNeighbor as kneighbor
 
 random.seed(1331)
 
@@ -271,7 +276,6 @@ class loginGUI:
 
     # Predicting GUI
     def bandr(self):
-        print("Hello World!")
 
         # Start the count
         self.startTime = time.time()
@@ -323,15 +327,14 @@ class loginGUI:
             print("No file selected")
             self.fileNameDisplay.config(text = "No file selected")
 
-
     # Training GUI:
     def trainingAlgo(self):
-        print("Goodbye World!")
 
         self.startTime = time.time()
 
-        self.tagPercentage = .93
+        self.tagPercentage = .80
         self.valPercentage = .15
+        self.neighborNumber = 99
 
         # Take in input
         self.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
@@ -341,12 +344,6 @@ class loginGUI:
         try:
             # Import data into a multidimensional array
             self.whole_data_set = np.genfromtxt(self.fileName, delimiter = '\t')
-            self.testData = np.genfromtxt(self.fileName, delimiter = ',')
-
-            print("Data size: ", self.whole_data_set//30)
-
-            # The original
-            self.testData = np.genfromtxt(self.fileName, delimiter = ',')
 
             print("Data imported")
 
@@ -356,18 +353,35 @@ class loginGUI:
 
             print("Data normalized")
 
-            # Redo sub-sampling
-            self.testingData = []
-            self.index = 5000000
-            self.count = 5000000
+            self.tags = tag.generate(self.tagPercentage, self.whole_data_set.size // 30)
+            print("Generated Tags")
 
-            while (self.count < 509223):
-                self.testingData.append(self.whole_data_set[self.index])
-                self.whole_data_set = np.delete(self.whole_data_set, self.index, 0)
-                self.count += 1
-                print(self.count)
+            split.split(self.whole_data_set, self.tags, self.valPercentage)
 
-            print(self.whole_data_set//30)
+            self.trainingData = split.getTrainingData()
+            self.trainingTags = split.getTrainingTags()
+            self.validationData = split.getValidationData()
+            self.validationTags = split.getValidationTags()
+
+            print("Split Data")
+
+            findingMinAndMax = find.FindMinAndMax(self.trainingData)
+
+            self.minOf = findingMinAndMax.getMin()
+            self.maxOf = findingMinAndMax.getMax()
+
+            print("Found Min and Max")
+
+            self.new_data_set = gen.generate(self.minOf, self.maxOf, len(self.trainingData))
+            print("Generated New Data")
+
+            self.newTags = tag.generate(self.tagPercentage, self.new_data_set.size // 30)
+            print("Generted New Tags")
+
+            self.trainingData = np.concatenate((self.trainingData, self.new_data_set), axis=0)
+            self.trainingTags = np.concatenate((self.trainingTags, self.newTags), axis=0)
+
+            kneighbor.classify(self.neighborNumber, self.trainingData, self.trainingTags, self.validationData, self.validationTags)
 
             # Open the output file
             print("Hello World")
