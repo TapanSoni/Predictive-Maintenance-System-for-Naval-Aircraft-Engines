@@ -41,10 +41,8 @@ class FindMinAndMax:
             temp = self.data [0][column]
             temp_min = self.data [0][column]
 
-            flag = False
-
-            for x in range(1, len(self.data)):
-                current = self.data [x][column]
+            for row in range(1, len(self.data)):
+                current = self.data [row][column]
                 if (current > temp):
                     temp = current
                 if (current < temp_min):
