@@ -124,7 +124,6 @@ class loginGUI:
         # Configurations of the widgets
         self.fileNamePrompt.config(font="fixedsys 9")
         self.outputConsolePrompt.config(font="fixedsys 9")
-        # fileNameBrowseButton.config(background="#EDDEA4", font="fixedsys 9")
         self.runButton.config(background="#79FF6D", font="fixedsys 9")
         self.fake_1.config(background="#EEF4EB")
         self.fake_2.config(background="#EEF4EB")

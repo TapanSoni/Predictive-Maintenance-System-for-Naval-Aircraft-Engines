@@ -62,7 +62,3 @@ class FindMinAndMax:
     def getMin():
         return minOf
     # =============================================================================================================
-
-    #@staticmethod
-    #def getRan():
-        #return rangeOf
