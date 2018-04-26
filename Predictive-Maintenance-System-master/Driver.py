@@ -73,9 +73,6 @@ class loginGUI:
         self.username = self.usernameEntry.get()
         self.password = self.passwordEntry.get()
 
-        print("Username: ", str(self.username))
-        print("Password: ", str(self.password))
-
         if self.username == "admin" and self.password == "password" and (self.selection == 1 or self.selection == 0):
             print("Correct login")
             self.parent.destroy()
