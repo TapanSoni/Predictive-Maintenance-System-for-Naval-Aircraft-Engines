@@ -55,7 +55,7 @@ def split(whole_data_set,tags, percentage):
 
     x = []
 
-    #Randomly puts 40% of the data into valdation sequencly
+    #Randomly puts 15% of the data into valdation sequencly
     while (len(validationData)) < math.floor((whole_data_set.size//30)* percentage) and (len(trainingData) < math.floor((whole_data_set.size//30)* 1-percentage)): #change .4 to whichever percentage you'd like togo to valadation set
         if(random.random()<percentage):
             validationData.append(whole_data_set[index])

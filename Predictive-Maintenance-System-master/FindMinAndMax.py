@@ -52,15 +52,6 @@ class FindMinAndMax:
 
             maxOf.append(temp)
             minOf.append(temp_min)
-            #rangeOf.append(temp-temp_min)
-            # print('Max:',temp)
-            # print('Min: ',temp_min)
-            # print(avg/(whole_data_set.size/30))
-
-            # print('Range: ', temp - temp_min)
-            # print('SD: ',np.std(whole_data_set[:,column]))
-            # print('Var: ',np.var(whole_data_set[:,column]))
-            # print('Avg: ',np.mean(whole_data_set[:,column]))
 
     # =============================================================================================================
     @staticmethod

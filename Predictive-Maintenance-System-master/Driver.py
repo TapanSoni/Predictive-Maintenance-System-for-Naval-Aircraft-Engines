@@ -116,6 +116,7 @@ class loginGUI:
 
         self.trainOrPredictLabel = "Blah"
 
+        # Selects the output for the label at the bottom of the GUI
         if self.selection == 1:
             self.trainOrPredictLabel = "Training Mode"
         else:
@@ -191,13 +192,6 @@ class loginGUI:
         self.linkToGit.place(x=200, y=90, anchor="center")
         self.linkToGit.bind("<Button-1>", self.callback2)
 
-        """  
-        Purpose of the project 
-
-        The purpose of the PMS is to use machine learning to predict when an engine needs maintenance based on the
-        performance data provided by on-board sensors.
-
-        """
         self.purposeTitle = Label(self.aboutWindow, text="Purpose:", fg="brown", font="fixedsys 9")
         self.purposeTitle.place(x=0, y=120, anchor="w")
 
@@ -345,10 +339,10 @@ class loginGUI:
         # Take in input
         self.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
         print(self.fileName)
-        self.fileNameDisplay.config(text=self.fileName)
+
 
         try:
-
+            self.fileNameDisplay.config(text=self.fileName)
             # Import data into a multidimensional array
             self.whole_data_set = np.genfromtxt(self.fileName, delimiter = '\t')
 
@@ -407,8 +401,6 @@ class loginGUI:
 
             # Output total training time
             self.timestamp.config(text = "Total Training Time: %s" % self.startTime)
-
-
         except IOError:
             print("No file selected for training")
 
