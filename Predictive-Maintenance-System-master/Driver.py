@@ -272,9 +272,6 @@ class loginGUI:
     # Predicting GUI
     def bandr(self):
 
-        # Start the count
-        self.startTime = time.time()
-
         # Take in input
         self.fileName = filedialog.askopenfilename(filetypes=(("CSV files", ".csv"), ("All files", "*.*")))
         print(self.fileName)
@@ -282,7 +279,8 @@ class loginGUI:
         # Inside a Try/Except block to catch the IO Error thrown when
         # no file is selected - fixed the bug
         try:
-            self.fileNameDisplay.config(text = "")
+            # Start the count
+            self.startTime = time.time()
             self.testData = np.genfromtxt(self.fileName, delimiter = ",")
 
             print("Data imported")
@@ -323,10 +321,14 @@ class loginGUI:
             print("No file selected")
             self.fileNameDisplay.config(text = "No file selected for prediction")
 
+            # Clears the fields
+            self.outputConsole.config(text = "")
+            self.timestamp.config(text = "")
+            self.timestampC.config(text = "")
+
+
     # Training GUI:
     def trainingAlgo(self):
-
-        self.startTime = time.time()
 
         self.tagPercentage = .80
         self.valPercentage = .15
@@ -338,6 +340,7 @@ class loginGUI:
 
 
         try:
+            self.startTime = time.time()
             self.fileNameDisplay.config(text=self.fileName)
             # Import data into a multidimensional array
             self.whole_data_set = np.genfromtxt(self.fileName, delimiter = '\t')
