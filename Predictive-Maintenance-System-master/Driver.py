@@ -402,6 +402,12 @@ class loginGUI:
             self.timestamp.config(text = "Total Training Time: %s" % self.startTime)
         except IOError:
             print("No file selected for training")
+            self.fileNameDisplay.config(text="No file selected for training")
+
+            # Clears the fields
+            self.outputConsole.config(text="")
+            self.timestampC.config(text = "")
+            self.timestamp.config(text = "")
 
 if __name__ == '__main__':
     root = Tk()
